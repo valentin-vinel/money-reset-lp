@@ -1,0 +1,88 @@
+---
+/** Grande phrase d'accroche + chiffres clés. */
+import { fr } from '../../lib/format';
+
+interface Props {
+  titre: string;
+  texte: string;
+  chiffres: { valeur: string; libelle: string }[];
+}
+const { titre, texte, chiffres } = Astro.props;
+---
+
+<section class="section probleme" aria-labelledby="probleme-titre">
+  <div class="conteneur">
+    <h2 id="probleme-titre" class="probleme__titre">{fr(titre)}</h2>
+    <p class="probleme__texte">{fr(texte)}</p>
+
+    <dl class="chiffres">
+      {
+        chiffres.map((c) => (
+          <div>
+            <dt>{fr(c.libelle)}</dt>
+            <dd>{fr(c.valeur)}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>
+
+<style>
+  .probleme {
+    text-align: center;
+    padding-bottom: 0;
+  }
+  .probleme__titre {
+    font-size: clamp(2rem, 4.4vw, 3.25rem);
+    line-height: 1.12;
+    max-width: 18em;
+    margin-inline: auto;
+  }
+  .probleme__texte {
+    margin: 1.5rem auto 0;
+    font-size: clamp(1.075rem, 1.6vw, 1.2rem);
+    color: var(--texte-doux);
+    max-width: 34em;
+  }
+  .chiffres {
+    margin: clamp(3rem, 6vw, 4.5rem) 0 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+  }
+  .chiffres div {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    gap: 0.6rem;
+    padding: 1.75rem 1.25rem;
+    border-radius: var(--r-l);
+    background: var(--bleu-voile);
+    border: 1px solid var(--trait);
+  }
+  .chiffres dd {
+    margin: 0;
+    font-family: var(--f-titre);
+    font-size: clamp(2.4rem, 4.6vw, 3.4rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .chiffres dt {
+    font-size: 0.95rem;
+    color: var(--texte-doux);
+    max-width: 14em;
+    margin-inline: auto;
+  }
+  @media (max-width: 52rem) {
+    .chiffres {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .chiffres div {
+      padding: 1.5rem 0.75rem;
+    }
+    .chiffres dd {
+      font-size: clamp(1.8rem, 9vw, 3rem);
+    }
+  }
+</style>

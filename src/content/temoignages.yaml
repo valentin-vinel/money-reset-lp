@@ -1,0 +1,15 @@
+# ─────────────────────────────────────────────────────────────
+#  TÉMOIGNAGES
+#  La section n'apparaît sur la page que s'il y a au moins un témoignage
+#  avec publie: true. N'ajoute que de vrais retours clients.
+#  Pour en ajouter un : duplique le bloc ci-dessous, remplis-le et passe
+#  publie à true.
+# ─────────────────────────────────────────────────────────────
+
+- id: modele
+  ordre: 1
+  publie: false
+  prenom: Prénom
+  contexte: Ex. maman de 2 enfants, freelance…
+  formule: complete
+  citation: Le vrai retour de ta cliente.

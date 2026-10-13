@@ -1,0 +1,99 @@
+# ─────────────────────────────────────────────────────────────
+#  LANDING PAGE « GOOGLE SHEETS » (page d'accueil actuelle)
+#  Les offres, fonctionnalités et questions viennent des autres fichiers
+#  de src/content/ ; ici, uniquement les textes propres à cette page.
+# ─────────────────────────────────────────────────────────────
+
+seo:
+  titre: Money Reset — L'outil Google Sheets pour reprendre le contrôle de ton argent
+  description: >-
+    Un outil Google Sheets qui calcule tout pour toi : catégories automatiques, tableau de bord,
+    Money Reset Score sur 100 et projets chiffrés. Dès 19 €, paiement unique.
+
+hero:
+  badge: Outil Google Sheets, sans abonnement
+  titre: Vois enfin où va ton argent
+  sousTitre: >-
+    Le système Money Reset pour suivre tout ton budget au même endroit, sans prise de tête :
+    tu saisis, il calcule.
+  boutonPrincipal: Je commence dès 19 €
+  boutonSecondaire: Voir l'outil en détail
+  rassurance:
+    - Paiement unique, accès à vie
+    - Reçu par e-mail immédiatement
+    - Un compte Google gratuit suffit
+
+chiffres:
+  - valeur: 19 €
+    libelle: Paiement unique, accès à vie
+  - valeur: 0 €
+    libelle: D'abonnement, ni d'application payante
+  - valeur: 6 étapes
+    libelle: De démarrage guidé
+  - valeur: /100
+    libelle: Ton Money Reset Score, calculé sur 5 critères
+
+probleme:
+  titre: Fini le stress de fin de mois et la question « mais où part mon argent ? »
+  texte: >-
+    Tu saisis tes dépenses, l'outil devine tout seul les catégories, et ton tableau de bord se
+    met à jour avec tes graphiques et ton score.
+
+essentiels:
+  titre: Tout ton budget au même endroit
+  intro: Inclus dans les deux formules. Tu saisis, il calcule.
+
+complete:
+  etiquette: Formule Complète
+  titre: Analyser et anticiper
+  intro: >-
+    3 onglets avancés et un guide jour par jour pour passer de « je subis mon budget » à
+    « je le pilote ».
+
+etapes:
+  titre: Comment ça marche ?
+  liste:
+    - titre: Tu reçois ton outil
+      texte: Tu achètes l'outil et tu reçois le lien par e-mail immédiatement.
+    - titre: Tu en fais une copie
+      texte: >-
+        Tu fais une copie dans ton propre Google Drive (gratuit, il suffit d'un compte Google).
+    - titre: Tu te laisses guider
+      texte: >-
+        Tu suis les 6 étapes de démarrage, et l'outil calcule tout pour toi : impossible de
+        casser une formule.
+  codeCouleur:
+    - couleur: jaune
+      libelle: Cases à remplir
+    - couleur: blanc
+      libelle: Libres pour tes notes
+    - couleur: bleu
+      libelle: Se calculent toutes seules
+
+tarifs:
+  titre: Choisis la formule qui te ressemble
+  intro: Un paiement unique, sans abonnement. Ton outil arrive par e-mail juste après l'achat.
+  garantie: Le prix de l'Essentielle est déduit si tu passes à une formule supérieure.
+  conseil: >-
+    Tu hésites ? Si tu es plutôt autonome et que tu veux simplement voir où va ton argent,
+    l'Essentielle suffit. Si tu as déjà essayé de tenir un budget sans tenir sur la durée, la
+    Complète et son guide jour par jour feront la différence.
+
+temoignages:
+  titre: Elles et ils ont repris la main
+
+apropos:
+  signature: Amandine
+  texte: >-
+    Je m'appelle Amandine. J'ai créé Money Reset parce que je ne trouvais aucun outil à la fois
+    simple, complet et adapté à la vraie vie d'un foyer. Aujourd'hui, je le partage avec toi.
+
+faq:
+  titre: Questions fréquentes
+
+ctaFinal:
+  titre: Reprends le contrôle de ton argent
+  texte: >-
+    En quelques minutes par jour, tu sais combien tu as dépensé, où, et ce qu'il te reste.
+    Ton score te montre tes progrès mois après mois, et tes projets ont enfin une date.
+  bouton: Choisir ma formule

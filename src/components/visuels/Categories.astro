@@ -1,0 +1,111 @@
+---
+/** Onglet Dépenses : catégories devinées à partir du libellé (données d'exemple). */
+const lignes = [
+  { date: '03/10', libelle: 'CARREFOUR MARKET', montant: '54,20', categorie: 'Alimentation' },
+  { date: '04/10', libelle: 'NETFLIX.COM', montant: '13,49', categorie: 'Abonnements' },
+  { date: '06/10', libelle: 'SNCF CONNECT', montant: '38,00', categorie: 'Transport' },
+  { date: '07/10', libelle: 'VIR LIVRET A', montant: '100,00', categorie: 'Exclu des dépenses', exclu: true },
+  { date: '08/10', libelle: 'PHARMACIE DU CENTRE', montant: '12,90', categorie: 'Santé' },
+];
+---
+
+<div class="visuel" aria-hidden="true">
+  <p class="visuel__entete">Dépenses <span>Octobre 2026</span></p>
+  <table>
+    <thead>
+      <tr><th class="w-date">Date</th><th>Libellé</th><th class="d w-montant">Montant</th><th class="w-cat">Catégorie</th></tr>
+    </thead>
+    <tbody>
+      {
+        lignes.map((l) => (
+          <tr>
+            <td class="c-jaune nombre">{l.date}</td>
+            <td class="c-jaune lib">{l.libelle}</td>
+            <td class="c-jaune nombre d">{l.montant}&nbsp;€</td>
+            <td class="c-bleu">
+              <span class:list={['puce', { exclu: l.exclu }]}>{l.categorie}</span>
+            </td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</div>
+
+<style>
+  table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+    border-spacing: 3px;
+    font-size: 0.78rem;
+  }
+  th {
+    text-align: left;
+    font-weight: 600;
+    color: var(--texte-doux);
+    padding: 0 0.5rem 0.25rem;
+  }
+  td {
+    padding: 0.45rem 0.5rem;
+    border-radius: 4px;
+  }
+  .d {
+    text-align: right;
+  }
+  .w-date {
+    width: 3.6rem;
+  }
+  .w-montant {
+    width: 5.2rem;
+  }
+  .w-cat {
+    width: 38%;
+  }
+  .lib {
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .puce {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .puce {
+    background: var(--blanc);
+  }
+  .puce.exclu {
+    overflow: visible;
+    white-space: normal;
+    background: transparent;
+    color: var(--texte-doux);
+    font-weight: 600;
+    padding-inline: 0;
+  }
+  @media (max-width: 30rem) {
+    th:first-child,
+    td:first-child {
+      display: none;
+    }
+    table {
+      font-size: 0.72rem;
+      border-spacing: 2px;
+    }
+    td {
+      padding: 0.4rem 0.35rem;
+    }
+    .w-montant {
+      width: 4.1rem;
+    }
+    .w-cat {
+      width: 36%;
+    }
+    .puce {
+      padding: 0.2rem 0.45rem;
+      font-size: 0.68rem;
+    }
+  }
+</style>

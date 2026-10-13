@@ -1,0 +1,73 @@
+---
+/** Onglet Money Audit : voyants vert / orange / rouge (données d'exemple). */
+const points = [
+  {
+    voyant: 'rouge',
+    nom: 'Charges fixes',
+    valeur: '63 % des revenus',
+    note: 'Au-dessus de 60 %, le moindre imprévu fait mal.',
+  },
+  { voyant: 'orange', nom: 'Fonds d’urgence', valeur: '2,4 mois' },
+  { voyant: 'orange', nom: 'Abonnements résiliables', valeur: '29,90 €/mois' },
+  { voyant: 'vert', nom: 'Taux d’épargne', valeur: '15,5 %' },
+];
+---
+
+<div class="visuel" aria-hidden="true">
+  <p class="visuel__entete">Money Audit <span>Octobre</span></p>
+  <ul>
+    {
+      points.map((p) => (
+        <li>
+          <span class:list={['voyant', p.voyant]} />
+          <span class="nom">{p.nom}</span>
+          <span class="nombre valeur">{p.valeur.replace(' %', ' %').replace(' €', ' €')}</span>
+          {p.note && <span class="note">{p.note}</span>}
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  ul {
+    list-style: none;
+    display: grid;
+    gap: 0.4rem;
+  }
+  li {
+    display: grid;
+    grid-template-columns: 0.75rem 1fr auto;
+    align-items: center;
+    gap: 0.4rem 0.7rem;
+    padding: 0.55rem 0.7rem;
+    border-radius: 6px;
+    background: var(--bleu-voile);
+    font-size: 0.8rem;
+  }
+  .voyant {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+  }
+  .rouge {
+    background: var(--rouge);
+    box-shadow: 0 0 0 3px rgb(208 87 79 / 0.2);
+  }
+  .orange {
+    background: var(--orange);
+    box-shadow: 0 0 0 3px rgb(227 154 59 / 0.2);
+  }
+  .vert {
+    background: var(--vert);
+    box-shadow: 0 0 0 3px rgb(63 154 107 / 0.2);
+  }
+  .valeur {
+    font-weight: 700;
+  }
+  .note {
+    grid-column: 2 / -1;
+    font-size: 0.75rem;
+    color: var(--texte-doux);
+  }
+</style>

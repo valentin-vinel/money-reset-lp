@@ -1,0 +1,228 @@
+---
+/**
+ * Fonctionnalités incluses dans les deux formules :
+ * celles qui ont un `visuel` sont présentées en grands panneaux alternés,
+ * les autres dans une grille compacte en dessous.
+ */
+import type { CollectionEntry } from 'astro:content';
+import EnteteSection from '../ui/EnteteSection.astro';
+import Icone from '../ui/Icone.astro';
+import Visuel from '../visuels/Visuel.astro';
+import { fr } from '../../lib/format';
+
+interface Props {
+  titre: string;
+  intro: string;
+  fonctionnalites: CollectionEntry<'fonctionnalites'>[];
+}
+const { titre, intro, fonctionnalites } = Astro.props;
+const vedettes = fonctionnalites.filter((f) => f.data.visuel);
+const autres = fonctionnalites.filter((f) => !f.data.visuel);
+const tons = ['bleu-pale', 'bordeaux', 'creme', 'bleu'] as const;
+---
+
+<section class="section essentiels" id="fonctionnalites" aria-labelledby="essentiels-titre">
+  <div class="conteneur">
+    <EnteteSection id="essentiels-titre" titre={titre} intro={intro} align="centre" />
+
+    <div class="panneaux">
+      {
+        vedettes.map((f, i) => (
+          <article class:list={['panneau', `panneau--${tons[i % tons.length]}`, { 'panneau--inverse': i % 2 === 1 }]}>
+            <div class="panneau__texte">
+              <span class="panneau__icone">
+                <Icone nom={f.data.icone} taille={22} />
+              </span>
+              <h3>{fr(f.data.titre)}</h3>
+              <p>{fr(f.data.texte)}</p>
+              {f.data.points && (
+                <ul class="panneau__points">
+                  {f.data.points.map((p) => (
+                    <li>
+                      <Icone nom="coche" taille={16} />
+                      {fr(p)}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            <div class="panneau__visuel">
+              <Visuel nom={f.data.visuel!} />
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    {
+      autres.length > 0 && (
+        <>
+          <h3 class="autres__titre">Et aussi</h3>
+          <ul class="autres">
+            {autres.map((f) => (
+              <li>
+                <span class="autres__icone">
+                  <Icone nom={f.data.icone} taille={20} />
+                </span>
+                <h4>{fr(f.data.titre)}</h4>
+                <p>{fr(f.data.texte)}</p>
+              </li>
+            ))}
+          </ul>
+        </>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .panneaux {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .panneau {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    align-items: center;
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    padding: clamp(1.5rem, 4vw, 3.5rem);
+    border-radius: var(--r-l);
+    overflow: hidden;
+  }
+  .panneau--inverse .panneau__texte {
+    order: 2;
+  }
+  .panneau--bleu-pale {
+    background: var(--bleu-pale);
+  }
+  .panneau--bordeaux {
+    background: var(--bordeaux);
+    color: var(--creme);
+  }
+  .panneau--creme {
+    background: var(--creme-pale);
+  }
+  .panneau--bleu {
+    background: var(--bleu);
+  }
+
+  .panneau__texte {
+    display: grid;
+    gap: 1rem;
+    align-content: center;
+  }
+  .panneau__icone {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 0.8rem;
+    background: var(--blanc);
+    color: var(--bordeaux);
+  }
+  .panneau--bordeaux .panneau__icone {
+    background: var(--creme);
+  }
+  .panneau h3 {
+    font-size: clamp(1.75rem, 3.2vw, 2.4rem);
+  }
+  .panneau p {
+    font-size: 1.075rem;
+    max-width: 30em;
+  }
+  .panneau__points {
+    list-style: none;
+    display: grid;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+    font-size: 0.975rem;
+  }
+  .panneau__points li {
+    display: grid;
+    grid-template-columns: 1.25rem 1fr;
+    gap: 0.5rem;
+  }
+  .panneau__points :global(svg) {
+    margin-top: 0.2rem;
+  }
+  .panneau__visuel {
+    min-width: 0;
+    display: flex;
+    justify-content: center;
+  }
+  .panneau__visuel > :global(.visuel) {
+    max-width: 30rem;
+  }
+
+  .autres__titre {
+    margin: clamp(3.5rem, 7vw, 5rem) 0 1.75rem;
+    font-size: clamp(1.6rem, 2.8vw, 2rem);
+  }
+  .autres {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--trait);
+  }
+  .autres li {
+    display: grid;
+    align-content: start;
+    gap: 0.6rem;
+    padding: 1.75rem 1.75rem 1.75rem 0;
+    border-bottom: 1px solid var(--trait);
+  }
+  .autres li:not(:nth-child(3n + 1)) {
+    padding-left: 1.75rem;
+    border-left: 1px solid var(--trait);
+  }
+  .autres__icone {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.7rem;
+    background: var(--bleu-pale);
+  }
+  .autres h4 {
+    font-family: var(--f-texte);
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: 0;
+  }
+  .autres p {
+    font-size: 0.95rem;
+    color: var(--texte-doux);
+  }
+
+  @media (max-width: 56rem) {
+    .panneau {
+      grid-template-columns: minmax(0, 1fr);
+      padding: 1.5rem 1rem;
+    }
+    .panneau--inverse .panneau__texte {
+      order: 0;
+    }
+    .autres {
+      grid-template-columns: 1fr 1fr;
+    }
+    .autres li,
+    .autres li:not(:nth-child(3n + 1)) {
+      padding: 1.5rem 1.25rem 1.5rem 0;
+      border-left: 0;
+    }
+    .autres li:nth-child(2n) {
+      padding-left: 1.25rem;
+      border-left: 1px solid var(--trait);
+    }
+  }
+  @media (max-width: 34rem) {
+    .autres {
+      grid-template-columns: 1fr;
+    }
+    .autres li,
+    .autres li:nth-child(2n) {
+      padding: 1.25rem 0;
+      border-left: 0;
+    }
+  }
+</style>

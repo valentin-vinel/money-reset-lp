@@ -1,0 +1,52 @@
+---
+/**
+ * Landing page « Google Sheets » : présente uniquement les offres de type `outil`
+ * (Essentielle et Complète). Textes : src/content/pages/google-sheets.yaml
+ */
+import Base from '../layouts/Base.astro';
+import Entete from '../components/sections/Entete.astro';
+import Hero from '../components/sections/Hero.astro';
+import Probleme from '../components/sections/Probleme.astro';
+import Essentiels from '../components/sections/Essentiels.astro';
+import Complete from '../components/sections/Complete.astro';
+import Etapes from '../components/sections/Etapes.astro';
+import Tarifs from '../components/sections/Tarifs.astro';
+import Temoignages from '../components/sections/Temoignages.astro';
+import APropos from '../components/sections/APropos.astro';
+import Faq from '../components/sections/Faq.astro';
+import CtaFinal from '../components/sections/CtaFinal.astro';
+import PiedDePage from '../components/sections/PiedDePage.astro';
+import CtaMobile from '../components/sections/CtaMobile.astro';
+import { site } from '../config/site';
+import { offresPubliees, fonctionnalites, faqPour, temoignagesPublies, page } from '../lib/contenu';
+
+const ID_PAGE = 'google-sheets';
+const p = await page(ID_PAGE);
+const offres = await offresPubliees('outil');
+const essentielles = await fonctionnalites('essentielle');
+const plusComplete = await fonctionnalites('complete');
+const questions = await faqPour(ID_PAGE);
+const temoignages = await temoignagesPublies();
+
+const offreBase = offres.find((o) => o.id === 'essentielle');
+const offreComplete = offres.find((o) => o.id === 'complete');
+const prixMin = Math.min(...offres.map((o) => o.data.prix));
+---
+
+<Base titre={p.seo.titre} description={p.seo.description}>
+  <Entete slot="entete" cta="Je commence" ctaHref="#formules" />
+
+  <Hero {...p.hero} />
+  <Probleme titre={p.probleme.titre} texte={p.probleme.texte} chiffres={p.chiffres} />
+  <Essentiels titre={p.essentiels.titre} intro={p.essentiels.intro} fonctionnalites={essentielles} />
+  <Complete {...p.complete} fonctionnalites={plusComplete} offre={offreComplete} offreBase={offreBase} />
+  <Etapes {...p.etapes} />
+  <Tarifs {...p.tarifs} offres={offres} />
+  <Temoignages titre={p.temoignages.titre} temoignages={temoignages} />
+  <APropos {...p.apropos} />
+  <Faq titre={p.faq.titre} questions={questions} />
+  <CtaFinal {...p.ctaFinal} offres={offres} />
+
+  <PiedDePage slot="pied" />
+  <CtaMobile slot="pied" nom={site.nom} prixMin={prixMin} bouton="Choisir" />
+</Base>

@@ -1,0 +1,56 @@
+---
+import { fr, url } from '../../lib/format';
+import { site } from '../../config/site';
+
+interface Props {
+  signature: string;
+  texte: string;
+}
+const { signature, texte } = Astro.props;
+---
+
+<section class="section apropos" aria-label="Qui a créé Money Reset">
+  <div class="conteneur apropos__grille">
+    <img src={url('logo.jpg')} alt={`Logo ${site.marque}`} width="512" height="512" loading="lazy" />
+    <div class="apropos__texte">
+      <p class="apropos__citation">{fr(texte)}</p>
+      <p class="apropos__signature">{signature}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .apropos {
+    padding-top: clamp(1rem, 4vw, 3rem);
+  }
+  .apropos__grille {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: clamp(1.75rem, 5vw, 4rem);
+    max-width: 62rem;
+  }
+  img {
+    width: clamp(8rem, 18vw, 12rem);
+    height: auto;
+    border-radius: var(--r-l);
+    transform: rotate(-3deg);
+    box-shadow: var(--ombre);
+  }
+  .apropos__citation {
+    font-family: var(--f-titre);
+    font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+    line-height: 1.35;
+  }
+  .apropos__signature {
+    margin-top: 0.75rem;
+    font-family: var(--f-script);
+    font-size: clamp(2.2rem, 4vw, 2.8rem);
+    line-height: 1.1;
+  }
+  @media (max-width: 40rem) {
+    .apropos__grille {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

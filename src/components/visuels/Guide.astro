@@ -1,0 +1,100 @@
+---
+/** Le guide PDF « 30 jours » : couverture + progression. */
+const phases = ['Comprendre', 'Nettoyer', 'Organiser', 'Construire'];
+const jourCourant = 12;
+---
+
+<div class="visuel guide" aria-hidden="true">
+  <div class="couverture">
+    <span class="rayures"></span>
+    <p class="couverture__titre">30 jours</p>
+    <p class="couverture__sous-titre">pour comprendre, nettoyer, organiser et construire ton système financier</p>
+  </div>
+  <div class="progression">
+    <p class="visuel__entete">Ta progression <span>Jour {jourCourant}/30</span></p>
+    <ol class="jours">
+      {Array.from({ length: 30 }, (_, i) => <li class:list={{ fait: i < jourCourant, courant: i === jourCourant }} />)}
+    </ol>
+    <ul class="phases">
+      {phases.map((p) => <li class="puce">{p}</li>)}
+    </ul>
+  </div>
+</div>
+
+<style>
+  .guide {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    gap: 1.1rem;
+    align-items: center;
+  }
+  .couverture {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    border-radius: 6px 10px 10px 6px;
+    background: var(--bordeaux);
+    color: var(--creme);
+    padding: 1.4rem 0.7rem 0.7rem;
+    box-shadow: 4px 6px 0 var(--bleu-pale);
+    overflow: hidden;
+  }
+  .rayures {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 0.6rem;
+    background: var(--rayures);
+    background-size: 12px 100%;
+  }
+  .couverture__titre {
+    font-family: var(--f-titre);
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+  .couverture__sous-titre {
+    margin-top: 0.4rem;
+    font-size: 0.6rem;
+    line-height: 1.3;
+  }
+  .jours {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 4px;
+  }
+  .jours li {
+    aspect-ratio: 1;
+    border-radius: 4px;
+    background: var(--bleu-voile);
+    border: 1px solid var(--trait);
+  }
+  .jours .fait {
+    background: var(--bleu);
+    border-color: transparent;
+  }
+  .jours .courant {
+    background: var(--creme);
+    border-color: var(--bordeaux);
+  }
+  .phases {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.8rem;
+  }
+  .phases .puce {
+    background: var(--bleu-pale);
+  }
+  @media (max-width: 24rem) {
+    .guide {
+      grid-template-columns: 5.5rem minmax(0, 1fr);
+      gap: 0.75rem;
+    }
+    .couverture__titre {
+      font-size: 1.15rem;
+    }
+    .couverture__sous-titre {
+      display: none;
+    }
+  }
+</style>

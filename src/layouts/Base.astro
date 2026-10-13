@@ -1,0 +1,45 @@
+---
+import '@fontsource/gloock/400.css';
+import '@fontsource/parisienne/400.css';
+import '@fontsource/figtree/400.css';
+import '@fontsource/figtree/600.css';
+import '@fontsource/figtree/700.css';
+import '../styles/global.css';
+import { url } from '../lib/format';
+
+interface Props {
+  titre: string;
+  description: string;
+}
+const { titre, description } = Astro.props;
+const canonique = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+const image = Astro.site ? new URL(url('logo.jpg'), Astro.site).href : url('logo.jpg');
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titre}</title>
+    <meta name="description" content={description} />
+    {canonique && <link rel="canonical" href={canonique} />}
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:title" content={titre} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta name="theme-color" content="#571534" />
+    <link rel="icon" type="image/png" href={url('favicon.png')} />
+    <link rel="apple-touch-icon" href={url('apple-touch-icon.png')} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="lien-evitement" href="#contenu">Aller au contenu</a>
+    <slot name="entete" />
+    <main id="contenu">
+      <slot />
+    </main>
+    <slot name="pied" />
+  </body>
+</html>

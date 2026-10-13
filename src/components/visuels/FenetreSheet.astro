@@ -1,0 +1,169 @@
+---
+/**
+ * Cadre « tableur » réutilisable : barre de titre, barre de formule, quadrillage et onglets.
+ * Le contenu de la feuille se place dans le slot.
+ */
+import Icone from '../ui/Icone.astro';
+
+interface Props {
+  fichier?: string;
+  formule?: string;
+  onglets?: string[];
+  ongletActif?: string;
+  class?: string;
+}
+const {
+  fichier = 'Money Reset',
+  formule,
+  onglets = [],
+  ongletActif,
+  class: classe,
+} = Astro.props;
+const colonnes = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+---
+
+<div class:list={['fenetre', classe]}>
+  <div class="fenetre__titre">
+    <span class="fenetre__logo"><Icone nom="tableur" taille={16} /></span>
+    <span class="fenetre__fichier">{fichier}</span>
+    <span class="fenetre__points" aria-hidden="true"><i></i><i></i><i></i></span>
+  </div>
+  {
+    formule && (
+      <div class="fenetre__formule" aria-hidden="true">
+        <span class="fenetre__fx">fx</span>
+        <span>{formule}</span>
+      </div>
+    )
+  }
+  <div class="fenetre__colonnes" aria-hidden="true">
+    <span></span>
+    {colonnes.map((c) => <span>{c}</span>)}
+  </div>
+  <div class="fenetre__feuille">
+    <slot />
+  </div>
+  {
+    onglets.length > 0 && (
+      <div class="fenetre__onglets" aria-hidden="true">
+        {onglets.map((o) => (
+          <span class:list={{ actif: o === ongletActif }}>{o}</span>
+        ))}
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .fenetre {
+    --ligne: 2.25rem;
+    background: var(--blanc);
+    border: 1px solid var(--trait);
+    border-radius: var(--r-l);
+    box-shadow: var(--ombre-forte);
+    overflow: hidden;
+    font-size: 0.875rem;
+    text-align: left;
+  }
+  .fenetre__titre {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.8rem 1.1rem;
+    border-bottom: 1px solid var(--trait);
+  }
+  .fenetre__logo {
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 7px;
+    background: var(--bordeaux);
+    color: var(--creme);
+  }
+  .fenetre__fichier {
+    font-weight: 700;
+  }
+  .fenetre__points {
+    margin-left: auto;
+    display: flex;
+    gap: 0.3rem;
+  }
+  .fenetre__points i {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: var(--trait-fort);
+  }
+  .fenetre__formule {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 0.45rem 1.1rem;
+    border-bottom: 1px solid var(--trait);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.78rem;
+    color: var(--texte-doux);
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .fenetre__fx {
+    font-style: italic;
+    font-weight: 700;
+    color: var(--bleu);
+  }
+  .fenetre__colonnes {
+    display: grid;
+    grid-template-columns: 2.25rem repeat(8, 1fr);
+    background: var(--bleu-voile);
+    border-bottom: 1px solid var(--trait);
+    font-size: 0.7rem;
+    color: var(--texte-doux);
+  }
+  .fenetre__colonnes span {
+    text-align: center;
+    padding: 0.2rem 0;
+    border-right: 1px solid var(--trait);
+  }
+  .fenetre__feuille {
+    position: relative;
+    padding: 1.25rem 1.25rem 1.25rem 3.5rem;
+    background-image:
+      linear-gradient(var(--bleu-voile), var(--bleu-voile)),
+      repeating-linear-gradient(180deg, transparent 0 calc(var(--ligne) - 1px), rgb(87 21 52 / 0.06) calc(var(--ligne) - 1px) var(--ligne));
+    background-size:
+      2.25rem 100%,
+      100% 100%;
+    background-repeat: no-repeat, repeat;
+  }
+  .fenetre__onglets {
+    display: flex;
+    gap: 0.25rem;
+    padding: 0.4rem 0.75rem;
+    border-top: 1px solid var(--trait);
+    background: var(--bleu-voile);
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 0.75rem;
+    color: var(--texte-doux);
+  }
+  .fenetre__onglets span {
+    padding: 0.3rem 0.7rem;
+    border-radius: 6px;
+  }
+  .fenetre__onglets .actif {
+    background: var(--blanc);
+    color: var(--bordeaux);
+    font-weight: 700;
+    box-shadow: 0 1px 2px rgb(87 21 52 / 0.12);
+  }
+  @media (max-width: 40rem) {
+    .fenetre__colonnes {
+      display: none;
+    }
+    .fenetre__feuille {
+      padding: 1rem;
+      background-image: none;
+    }
+  }
+</style>

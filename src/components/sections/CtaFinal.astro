@@ -1,0 +1,73 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Bouton from '../ui/Bouton.astro';
+import { fr, prix } from '../../lib/format';
+
+interface Props {
+  titre: string;
+  texte: string;
+  bouton: string;
+  offres: CollectionEntry<'offres'>[];
+}
+const { titre, texte, bouton, offres } = Astro.props;
+const prixMin = Math.min(...offres.map((o) => o.data.prix));
+---
+
+<section class="cta-final" aria-labelledby="cta-final-titre">
+  <div class="conteneur">
+    <div class="cta-final__panneau">
+      <span class="cta-final__rayures" aria-hidden="true"></span>
+      <h2 id="cta-final-titre">{fr(titre)}</h2>
+      <p>{fr(texte)}</p>
+      <div class="cta-final__actions">
+        <Bouton href="#formules" variante="clair" taille="l">{fr(bouton)}</Bouton>
+        <span class="cta-final__prix">Dès {prix(prixMin)}, paiement unique</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-final {
+    padding-block: var(--section);
+  }
+  .cta-final__panneau {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 1.25rem;
+    padding: clamp(3rem, 8vw, 5.5rem) clamp(1.5rem, 5vw, 4rem);
+    border-radius: var(--r-l);
+    background: var(--bordeaux);
+    color: var(--creme);
+    text-align: center;
+    overflow: hidden;
+  }
+  .cta-final__rayures {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 0.75rem;
+    background: repeating-linear-gradient(90deg, var(--bleu) 0 14px, var(--bordeaux) 14px 28px);
+  }
+  h2 {
+    font-size: clamp(2.4rem, 6vw, 4.25rem);
+    max-width: 14em;
+  }
+  p {
+    max-width: 34em;
+    font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+    color: rgb(255 242 172 / 0.85);
+  }
+  .cta-final__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem 1.5rem;
+    margin-top: 0.75rem;
+  }
+  .cta-final__prix {
+    font-size: 0.95rem;
+    color: rgb(255 242 172 / 0.8);
+  }
+</style>

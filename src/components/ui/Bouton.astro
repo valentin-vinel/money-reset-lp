@@ -1,0 +1,107 @@
+---
+/**
+ * Bouton-lien.
+ * variante : primaire (bordeaux), clair (crème), contour, fantome
+ */
+interface Props {
+  href: string;
+  variante?: 'primaire' | 'clair' | 'contour' | 'fantome';
+  taille?: 'm' | 'l';
+  pleineLargeur?: boolean;
+  class?: string;
+  [attr: string]: unknown;
+}
+const {
+  href,
+  variante = 'primaire',
+  taille = 'm',
+  pleineLargeur = false,
+  class: classe,
+  ...attrs
+} = Astro.props;
+---
+
+<a
+  href={href}
+  class:list={['bouton', `bouton--${variante}`, `bouton--${taille}`, { 'bouton--plein': pleineLargeur }, classe]}
+  {...attrs}
+>
+  <slot />
+</a>
+
+<style>
+  .bouton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55em;
+    border-radius: 999px;
+    border: 1.5px solid transparent;
+    font-family: var(--f-texte);
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      background-color 0.18s ease,
+      color 0.18s ease,
+      border-color 0.18s ease,
+      transform 0.18s ease;
+  }
+  .bouton:active {
+    transform: translateY(1px);
+  }
+  .bouton:focus-visible {
+    border-radius: 999px;
+  }
+  .bouton--m {
+    font-size: 0.95rem;
+    padding: 0.8em 1.35em;
+  }
+  .bouton--l {
+    font-size: 1.05rem;
+    padding: 1em 1.7em;
+  }
+  .bouton--plein {
+    display: flex;
+    width: 100%;
+    white-space: normal;
+  }
+
+  .bouton--primaire {
+    background: var(--bordeaux);
+    color: var(--creme);
+  }
+  .bouton--primaire:hover {
+    background: var(--bordeaux-fonce);
+  }
+
+  .bouton--clair {
+    background: var(--creme);
+    color: var(--bordeaux);
+  }
+  .bouton--clair:hover {
+    background: var(--blanc);
+  }
+
+  .bouton--contour {
+    border-color: var(--trait-fort);
+    color: var(--bordeaux);
+    background: var(--blanc);
+  }
+  .bouton--contour:hover {
+    border-color: var(--bordeaux);
+  }
+
+  .bouton--fantome {
+    color: var(--bordeaux);
+    background: transparent;
+    padding-inline: 0.6em;
+  }
+  .bouton--fantome:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+</style>

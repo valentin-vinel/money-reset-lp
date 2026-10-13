@@ -1,0 +1,32 @@
+---
+/**
+ * Choisit le visuel à afficher à partir de son nom (champ `visuel` des fonctionnalités).
+ * Pour ajouter un visuel : crée le composant, ajoute-le ici et dans `visuels` (src/content.config.ts).
+ */
+import Categories from './Categories.astro';
+import Score from './Score.astro';
+import Objectifs from './Objectifs.astro';
+import Abonnements from './Abonnements.astro';
+import Audit from './Audit.astro';
+import Projection from './Projection.astro';
+import Soldes from './Soldes.astro';
+import Guide from './Guide.astro';
+
+interface Props {
+  nom: string;
+}
+const composants = {
+  categories: Categories,
+  score: Score,
+  objectifs: Objectifs,
+  abonnements: Abonnements,
+  audit: Audit,
+  projection: Projection,
+  soldes: Soldes,
+  guide: Guide,
+} as const;
+
+const Composant = composants[Astro.props.nom as keyof typeof composants];
+---
+
+{Composant && <Composant />}

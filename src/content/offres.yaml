@@ -1,0 +1,127 @@
+# ─────────────────────────────────────────────────────────────
+#  LES OFFRES MONEY RESET
+#  • publie: false → l'offre est prête mais n'apparaît pas encore sur le site.
+#  • lien → ton lien de paiement (Stripe, Gumroad, Lemon Squeezy…).
+#  • Les espaces insécables (avant ? ! : €…) sont ajoutés automatiquement.
+# ─────────────────────────────────────────────────────────────
+
+- id: essentielle
+  ordre: 1
+  publie: true
+  type: outil
+  nom: Essentielle
+  prix: 19
+  modalite: Paiement unique, accès à vie
+  titre: Vois enfin où va ton argent
+  resume: >-
+    Tout le système Money Reset pour suivre tes revenus, tes dépenses, tes abonnements,
+    tes dettes, ton épargne et tes objectifs, avec ton tableau de bord et ton score.
+  pourQui:
+    - Tu veux commencer à suivre ton budget mais tu ne sais pas par où commencer.
+    - Tu cherches un outil clair, sans application payante ni abonnement.
+    - Tu es plutôt autonome et tu veux avancer à ton rythme.
+  inclus:
+    - Démarrage guidé en 6 étapes
+    - Dépenses avec catégories automatiques
+    - Suivi des revenus
+    - Bilan de tes abonnements
+    - Suivi de tes dettes
+    - Enveloppes d'épargne
+    - Objectifs chiffrés
+    - Tableau de bord automatique
+    - Money Reset Score sur 100
+    - Bilan mensuel
+    - Outil personnalisable
+  change: >-
+    En quelques minutes par jour, tu sais combien tu as dépensé, où, et ce qu'il te reste.
+    Ton score te montre tes progrès mois après mois, et tes projets ont enfin une date.
+  bouton: Je commence avec l'Essentielle
+  lien: "#"
+
+- id: complete
+  ordre: 2
+  publie: true
+  type: outil
+  nom: Complète
+  prix: 34
+  modalite: Paiement unique, accès à vie
+  etiquette: La plus choisie
+  titre: 1 mois pour reprendre ton budget en main
+  resume: >-
+    Tout Money Reset, 3 onglets avancés pour analyser et anticiper, et un guide jour par jour
+    pour passer de « je subis mon budget » à « je le pilote ».
+  pourQui:
+    - Tu as déjà essayé de tenir un budget, mais tu abandonnes au bout de quelques semaines.
+    - Tu veux non seulement suivre tes dépenses, mais aussi savoir quoi faire concrètement pour améliorer ta situation.
+    - Tu veux voir où tu en seras dans un an si tu continues comme ça.
+    - Tu aimes être guidé(e) étape par étape, tout en restant autonome.
+  inclusIntro: Tout ce que contient l'Essentielle, plus
+  inclus:
+    - "Money Audit : ton diagnostic financier automatique"
+    - "Projection 12 mois : « Si je continue comme ça... »"
+    - "Soldes réels : le détecteur d'oublis"
+    - Le guide PDF « 30 jours pour comprendre, nettoyer, organiser et construire ton système financier »
+  change: >-
+    En 30 jours, tu passes d'un budget flou et stressant à un budget organisé. Tu sais ce que tu
+    peux dépenser, ce que tu mets de côté, où tu en seras dans un an, et tu as repris confiance.
+  bouton: Je reprends mon budget en main
+  lien: "#"
+
+# ── Offres d'accompagnement : prêtes pour la future page complète ──
+
+- id: audit-budget
+  ordre: 3
+  publie: false
+  type: service
+  nom: Audit budget
+  prix: 89
+  modalite: Séance unique
+  titre: Fais le point sur ton budget avec un regard extérieur
+  resume: >-
+    La version Complète + une séance d'audit d'1h30 en visio. On analyse ensemble ta situation
+    et tu repars avec un plan clair.
+  pourQui:
+    - Tu te sens perdu(e) face à tes comptes et tu ne sais pas par où commencer.
+    - Tu as l'impression de bien gagner ta vie, mais l'argent file sans que tu saches où.
+    - Tu veux un avis personnalisé, sans t'engager sur un accompagnement long.
+  inclus:
+    - Un questionnaire préparatoire
+    - L'outil Money Reset version Complète
+    - Une séance d'audit d'1h30 en visio
+    - Une synthèse écrite avec tes 3 actions prioritaires
+  change: >-
+    Tu repars avec une vision claire de ta situation, les fuites d'argent identifiées et des
+    actions concrètes à mettre en place dès le lendemain.
+  bouton: Je réserve mon audit
+  lien: "#"
+
+- id: accompagnement-premium
+  ordre: 4
+  publie: false
+  type: service
+  nom: Accompagnement Premium
+  # ⚠️ Le document indique 247 € (accueil, tableau) et 249 € (page offre). 3 × 83 € = 249 €.
+  prix: 249
+  prixDetail: ou 3 × 83 € sans frais
+  modalite: Paiement en une ou trois fois
+  titre: 3 mois pour transformer durablement ton rapport à l'argent
+  resume: >-
+    Tout inclus + 3 mois de suivi en visio. Un plan d'ajustement sur mesure et un point chaque
+    mois pour installer de nouvelles habitudes.
+  pourQui:
+    - Le budget est une source de stress chaque mois, et tu as besoin de quelqu'un à tes côtés.
+    - Tu as déjà essayé seul(e), mais les bonnes résolutions ne tiennent pas dans le temps.
+    - Tu as un projet et tu veux un plan concret pour l'atteindre.
+    - Tu veux gérer le budget du foyer à deux et tu as besoin d'un cadre neutre pour en parler.
+  inclus:
+    - L'audit de départ complet
+    - Un plan d'ajustement personnalisé
+    - 3 points mensuels de 45 minutes en visio
+    - L'outil Money Reset version Complète
+    - Le guide « 1 mois pour reprendre son budget en main »
+    - Un accès par message entre les séances
+  change: >-
+    Au bout de 3 mois, tu as un budget clair, des habitudes installées, un score qui progresse
+    et la confiance de gérer seul(e).
+  bouton: Je réserve mon appel découverte
+  lien: "#"

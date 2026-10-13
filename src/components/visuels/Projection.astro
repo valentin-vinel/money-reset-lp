@@ -1,0 +1,95 @@
+---
+/** Projection 12 mois : épargne qui monte, dette qui baisse (données d'exemple). */
+const mois = Array.from({ length: 13 }, (_, i) => i);
+const epargne = mois.map((m) => 3200 + 380 * m);
+const dette = mois.map((m) => Math.max(0, 3480 - 290 * m));
+const max = 8000;
+const L = 300;
+const H = 120;
+const x = (m: number) => (m / 12) * L;
+const y = (v: number) => H - (v / max) * H;
+const trace = (serie: number[]) => serie.map((v, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
+const euros = (n: number) => `${new Intl.NumberFormat('fr-FR').format(n)} €`;
+const reperes = [3, 6, 12];
+---
+
+<div class="visuel" aria-hidden="true">
+  <p class="visuel__entete">Projection 12 mois <span>Si je continue comme ça…</span></p>
+  <svg viewBox={`-4 -6 ${L + 8} ${H + 24}`} class="graphe">
+    {[0, 0.5, 1].map((t) => <line x1="0" x2={L} y1={H * t} y2={H * t} class="grille" />)}
+    <path d={trace(dette)} class="dette" />
+    <path d={trace(epargne)} class="epargne" />
+    {
+      reperes.map((m) => (
+        <g>
+          <circle cx={x(m)} cy={y(epargne[m])} r="3.5" class="point-epargne" />
+          <text x={x(m)} y={H + 15} text-anchor={m === 12 ? 'end' : 'middle'}>
+            {m} mois
+          </text>
+        </g>
+      ))
+    }
+  </svg>
+  <div class="legende">
+    <span><i class="l-epargne"></i>Épargne <strong class="nombre">{euros(epargne[12])}</strong></span>
+    <span><i class="l-dette"></i>Dette <strong class="nombre">{euros(dette[12])}</strong></span>
+  </div>
+</div>
+
+<style>
+  .graphe {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+  .grille {
+    stroke: var(--trait);
+    stroke-width: 1;
+  }
+  path {
+    fill: none;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .epargne {
+    stroke: var(--bordeaux);
+  }
+  .dette {
+    stroke: var(--bleu);
+    stroke-dasharray: 6 5;
+  }
+  .point-epargne {
+    fill: var(--creme);
+    stroke: var(--bordeaux);
+    stroke-width: 2;
+  }
+  text {
+    font-size: 10px;
+    fill: var(--texte-doux);
+    font-family: var(--f-texte);
+  }
+  .legende {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.25rem;
+    margin-top: 0.6rem;
+    font-size: 0.78rem;
+  }
+  .legende span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .legende i {
+    width: 1rem;
+    height: 3px;
+    border-radius: 2px;
+  }
+  .l-epargne {
+    background: var(--bordeaux);
+  }
+  .l-dette {
+    background: var(--bleu);
+  }
+</style>

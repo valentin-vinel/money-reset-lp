@@ -1,0 +1,326 @@
+---
+import Bouton from '../ui/Bouton.astro';
+import Icone from '../ui/Icone.astro';
+import TableauDeBord from '../visuels/TableauDeBord.astro';
+import { fr } from '../../lib/format';
+
+interface Props {
+  badge: string;
+  titre: string;
+  sousTitre: string;
+  boutonPrincipal: string;
+  boutonSecondaire: string;
+  rassurance: string[];
+}
+const { badge, titre, sousTitre, boutonPrincipal, boutonSecondaire, rassurance } = Astro.props;
+---
+
+<section class="hero" aria-labelledby="hero-titre">
+  <div class="conteneur hero__texte">
+    <p class="hero__badge">
+      <Icone nom="tableur" taille={16} />
+      {fr(badge)}
+    </p>
+    <h1 id="hero-titre">{fr(titre)}</h1>
+    <p class="hero__sous-titre">{fr(sousTitre)}</p>
+    <div class="hero__actions">
+      <Bouton href="#formules" taille="l" data-cta-hero>{fr(boutonPrincipal)}</Bouton>
+      <Bouton href="#fonctionnalites" taille="l" variante="contour">{fr(boutonSecondaire)}</Bouton>
+    </div>
+    <ul class="hero__rassurance">
+      {
+        rassurance.map((r) => (
+          <li>
+            <Icone nom="coche" taille={16} />
+            {fr(r)}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <div class="conteneur hero__visuel">
+    <div class="hero__scene">
+      <TableauDeBord />
+
+      <!-- Cartes flottantes : données d'exemple -->
+      <div class="flottante flottante--gauche" aria-hidden="true">
+        <p class="flottante__label">Nouvelle dépense</p>
+        <div class="flottante__ligne">
+          <span class="flottante__libelle">CARREFOUR MARKET</span>
+          <span class="flottante__montant">−54,20&nbsp;€</span>
+        </div>
+        <p class="flottante__auto">
+          <span class="puce-categorie">Alimentation</span>
+          <span>catégorie devinée</span>
+        </p>
+      </div>
+
+      <div class="flottante flottante--droite" aria-hidden="true">
+        <p class="flottante__label">
+          <Icone nom="cible" taille={16} /> Objectif Vacances
+        </p>
+        <p class="flottante__progression"><strong>1&nbsp;360&nbsp;€</strong> / 2&nbsp;000&nbsp;€</p>
+        <span class="flottante__barre"><i></i></span>
+        <p class="flottante__note">Atteint en juin 2027</p>
+      </div>
+
+      <div class="flottante flottante--bas" aria-hidden="true">
+        <p class="flottante__label">Abonnement</p>
+        <p class="flottante__abo">
+          18&nbsp;€<small>/mois</small>
+          <span class="flottante__egal">=</span>
+          <strong>216&nbsp;€<small>/an</small></strong>
+        </p>
+      </div>
+    </div>
+    <p class="hero__legende">Aperçu illustratif, avec des données d’exemple.</p>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    padding-top: clamp(3rem, 8vw, 5.5rem);
+    padding-bottom: clamp(3rem, 6vw, 4.5rem);
+    background:
+      radial-gradient(60rem 28rem at 50% 100%, var(--bleu-pale), transparent 70%),
+      linear-gradient(180deg, var(--blanc) 0%, var(--bleu-voile) 100%);
+    overflow: hidden;
+  }
+  .hero__texte {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    gap: 1.4rem;
+  }
+  .hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.95rem 0.4rem 0.5rem;
+    border-radius: 999px;
+    background: var(--creme);
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+  .hero__badge :global(svg) {
+    width: 1.6rem;
+    height: 1.6rem;
+    padding: 0.25rem;
+    border-radius: 50%;
+    background: var(--bordeaux);
+    color: var(--creme);
+  }
+  h1 {
+    font-size: clamp(3rem, 8.4vw, 6.5rem);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    max-width: 11em;
+  }
+  .hero__sous-titre {
+    font-size: clamp(1.1rem, 2vw, 1.3rem);
+    color: var(--texte-doux);
+    max-width: 32em;
+  }
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+  }
+  .hero__rassurance {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1.5rem;
+    font-size: 0.9rem;
+    color: var(--texte-doux);
+  }
+  .hero__rassurance li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .hero__rassurance :global(svg) {
+    color: var(--bordeaux);
+  }
+
+  /* ---------- Scène du visuel ---------- */
+  .hero__visuel {
+    margin-top: clamp(3rem, 7vw, 4.5rem);
+  }
+  .hero__scene {
+    position: relative;
+    max-width: 56rem;
+    margin-inline: auto;
+    animation: monte 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.1s both;
+  }
+  .hero__legende {
+    margin-top: 1.25rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--texte-doux);
+  }
+
+  .flottante {
+    position: absolute;
+    z-index: 2;
+    background: var(--blanc);
+    border: 1px solid var(--trait);
+    border-radius: var(--r-m);
+    box-shadow: var(--ombre-forte);
+    padding: 0.9rem 1rem;
+    font-size: 0.85rem;
+    display: grid;
+    gap: 0.45rem;
+    animation: flotte 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  .flottante--gauche {
+    left: -9rem;
+    top: 30%;
+    width: 15.5rem;
+    animation-delay: 0.45s;
+  }
+  .flottante--droite {
+    right: -8.5rem;
+    top: 46%;
+    width: 13.5rem;
+    animation-delay: 0.6s;
+  }
+  .flottante--bas {
+    right: 7%;
+    bottom: -1.75rem;
+    animation-delay: 0.75s;
+  }
+  .flottante__label {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--texte-doux);
+  }
+  .flottante__ligne {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    font-weight: 700;
+  }
+  .flottante__libelle {
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+  }
+  .flottante__montant {
+    font-variant-numeric: tabular-nums;
+  }
+  .flottante__auto {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--texte-doux);
+  }
+  .puce-categorie {
+    background: var(--bleu-pale);
+    color: var(--bordeaux);
+    font-weight: 700;
+    border-radius: 999px;
+    padding: 0.2rem 0.6rem;
+  }
+  .flottante__progression {
+    font-size: 0.85rem;
+    color: var(--texte-doux);
+  }
+  .flottante__progression strong {
+    font-family: var(--f-titre);
+    font-weight: 400;
+    font-size: 1.3rem;
+    color: var(--bordeaux);
+  }
+  .flottante__barre {
+    height: 0.5rem;
+    border-radius: 999px;
+    background: var(--bleu-pale);
+    overflow: hidden;
+  }
+  .flottante__barre i {
+    display: block;
+    width: 68%;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--bordeaux);
+  }
+  .flottante__note {
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+  .flottante__abo {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-family: var(--f-titre);
+    font-size: 1.2rem;
+    line-height: 1;
+  }
+  .flottante__abo small {
+    font-family: var(--f-texte);
+    font-size: 0.75rem;
+    color: var(--texte-doux);
+  }
+  .flottante__abo strong {
+    font-weight: 400;
+    background: var(--creme);
+    padding: 0.2rem 0.45rem;
+    border-radius: 6px;
+  }
+  .flottante__egal {
+    color: var(--texte-doux);
+  }
+
+  @keyframes monte {
+    from {
+      opacity: 0;
+      transform: translateY(2rem);
+    }
+  }
+  @keyframes flotte {
+    from {
+      opacity: 0;
+      transform: translateY(1rem) scale(0.96);
+    }
+  }
+
+  @media (max-width: 72rem) {
+    .flottante--gauche {
+      left: -1.5rem;
+    }
+    .flottante--droite {
+      right: -1.5rem;
+    }
+  }
+  @media (max-width: 52rem) {
+    .flottante--gauche,
+    .flottante--droite {
+      display: none;
+    }
+    .flottante--bas {
+      position: relative;
+      right: auto;
+      bottom: auto;
+      width: fit-content;
+      margin: -1.5rem auto 0;
+    }
+  }
+  @media (max-width: 30rem) {
+    .hero__actions {
+      width: 100%;
+      flex-direction: column;
+    }
+    .hero__actions :global(.bouton) {
+      width: 100%;
+    }
+  }
+</style>

@@ -1,0 +1,95 @@
+---
+/** Onglet Abonnements : coût mensuel → coût annuel (données d'exemple). */
+const abonnements = [
+  { nom: 'Streaming vidéo', mois: 13.49 },
+  { nom: 'Musique', mois: 10.99 },
+  { nom: 'Salle de sport', mois: 29.9, resilier: true },
+  { nom: 'Stockage en ligne', mois: 2.99 },
+];
+const euros = (n: number) =>
+  `${new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n)} €`;
+const totalMois = abonnements.reduce((s, a) => s + a.mois, 0);
+const resiliable = abonnements.filter((a) => a.resilier).reduce((s, a) => s + a.mois * 12, 0);
+---
+
+<div class="visuel" aria-hidden="true">
+  <p class="visuel__entete">Abonnements <span>Mensuel → annuel</span></p>
+  <table>
+    <tbody>
+      {
+        abonnements.map((a) => (
+          <tr>
+            <td class="c-jaune nom">
+              {a.nom}
+              {a.resilier && <span class="puce resilier">À résilier</span>}
+            </td>
+            <td class="c-jaune nombre d">{euros(a.mois)}</td>
+            <td class="c-bleu nombre d fort">{euros(a.mois * 12)}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+    <tfoot>
+      <tr>
+        <td>Total</td>
+        <td class="nombre d">{euros(totalMois)}</td>
+        <td class="nombre d fort">{euros(totalMois * 12)}</td>
+      </tr>
+    </tfoot>
+  </table>
+  <p class="resiliable">
+    Tu pourrais économiser <strong class="nombre">{euros(resiliable)}</strong> par an
+  </p>
+</div>
+
+<style>
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 3px;
+    font-size: 0.8rem;
+  }
+  td {
+    padding: 0.5rem 0.6rem;
+    border-radius: 4px;
+  }
+  .nom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  .d {
+    text-align: right;
+  }
+  .fort {
+    font-weight: 700;
+  }
+  .resilier {
+    background: var(--bordeaux);
+    color: var(--creme);
+    font-size: 0.68rem;
+  }
+  tfoot td {
+    font-weight: 700;
+    border-top: 1px solid var(--trait-fort);
+    border-radius: 0;
+  }
+  @media (max-width: 30rem) {
+    table {
+      font-size: 0.74rem;
+      border-spacing: 2px;
+    }
+    td {
+      padding: 0.45rem 0.4rem;
+    }
+  }
+  .resiliable {
+    margin-top: 0.8rem;
+    padding: 0.7rem 0.8rem;
+    border-radius: 8px;
+    background: var(--creme-pale);
+    font-size: 0.85rem;
+  }
+</style>

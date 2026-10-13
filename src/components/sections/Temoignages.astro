@@ -1,0 +1,68 @@
+---
+/** Affichée uniquement s'il existe des témoignages publiés (src/content/temoignages.yaml). */
+import type { CollectionEntry } from 'astro:content';
+import EnteteSection from '../ui/EnteteSection.astro';
+import { fr } from '../../lib/format';
+
+interface Props {
+  titre: string;
+  temoignages: CollectionEntry<'temoignages'>[];
+}
+const { titre, temoignages } = Astro.props;
+---
+
+{
+  temoignages.length > 0 && (
+    <section class="section temoignages" aria-labelledby="temoignages-titre">
+      <div class="conteneur">
+        <EnteteSection id="temoignages-titre" titre={titre} />
+        <ul class="temoignages__liste">
+          {temoignages.map(({ data: t }) => (
+            <li>
+              <figure>
+                <blockquote>{fr(t.citation)}</blockquote>
+                <figcaption>
+                  <strong>{t.prenom}</strong>
+                  {t.contexte && <span>{fr(t.contexte)}</span>}
+                </figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .temoignages__liste {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: 1.25rem;
+  }
+  figure {
+    margin: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1.75rem;
+    border-radius: var(--r-l);
+    background: var(--creme-pale);
+  }
+  blockquote {
+    margin: 0;
+    font-family: var(--f-titre);
+    font-size: 1.3rem;
+    line-height: 1.35;
+  }
+  figcaption {
+    display: grid;
+    font-size: 0.9rem;
+  }
+  figcaption span {
+    color: var(--texte-doux);
+  }
+</style>

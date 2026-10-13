@@ -1,0 +1,45 @@
+---
+/** Onglet Soldes réels : estimation vs solde réel (données d'exemple). */
+---
+
+<div class="visuel" aria-hidden="true">
+  <p class="visuel__entete">Soldes réels <span>Fin octobre</span></p>
+  <dl>
+    <div class="c-bleu"><dt>Estimation de l’outil</dt><dd class="nombre">1&nbsp;284,50&nbsp;€</dd></div>
+    <div class="c-jaune"><dt>Solde réel du compte</dt><dd class="nombre">1&nbsp;242,30&nbsp;€</dd></div>
+    <div class="ecart"><dt>Écart</dt><dd class="nombre">−42,20&nbsp;€</dd></div>
+  </dl>
+  <p class="indice">Une dépense oubliée&#8239;? Retrouve-la et ton suivi redevient juste.</p>
+</div>
+
+<style>
+  dl {
+    margin: 0;
+    display: grid;
+    gap: 3px;
+  }
+  dl div {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.55rem 0.7rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+  }
+  dd {
+    margin: 0;
+    font-weight: 700;
+  }
+  .ecart {
+    border: 1.5px dashed var(--rouge);
+    color: var(--bordeaux);
+  }
+  .ecart dd {
+    color: #b23f38;
+  }
+  .indice {
+    margin-top: 0.75rem;
+    font-size: 0.78rem;
+    color: var(--texte-doux);
+  }
+</style>

@@ -1,0 +1,122 @@
+---
+/** Money Reset Score : 5 critères notés sur 20 (données d'exemple). */
+const criteres = [
+  { nom: 'Taux d’épargne', note: 16 },
+  { nom: 'Fonds d’urgence', note: 12 },
+  { nom: 'Dettes', note: 18 },
+  { nom: 'Objectifs', note: 14 },
+  { nom: 'Régularité du suivi', note: 12 },
+];
+const total = criteres.reduce((s, c) => s + c.note, 0);
+const circ = 2 * Math.PI * 42;
+---
+
+<div class="visuel score" aria-hidden="true">
+  <div class="score__anneau">
+    <svg viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="42" class="fond"></circle>
+      <circle cx="50" cy="50" r="42" class="valeur" stroke-dasharray={`${(total / 100) * circ} ${circ}`}></circle>
+    </svg>
+    <p><strong>{total}</strong><span>/100</span></p>
+  </div>
+  <div class="score__criteres">
+    <p class="visuel__entete">Money Reset Score <span>Octobre</span></p>
+    <ul>
+      {
+        criteres.map((c) => (
+          <li>
+            <span class="nom">{c.nom}</span>
+            <span class="barre"><i style={`width:${(c.note / 20) * 100}%`} /></span>
+            <span class="nombre note">{c.note}/20</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</div>
+
+<style>
+  .score {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr;
+    gap: 1.25rem;
+    align-items: center;
+  }
+  .score__anneau {
+    position: relative;
+    aspect-ratio: 1;
+  }
+  svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+  circle {
+    fill: none;
+    stroke-width: 9;
+  }
+  .fond {
+    stroke: var(--bleu-pale);
+  }
+  .valeur {
+    stroke: var(--bordeaux);
+    stroke-linecap: round;
+  }
+  .score__anneau p {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    text-align: center;
+    line-height: 1;
+  }
+  .score__anneau strong {
+    font-family: var(--f-titre);
+    font-weight: 400;
+    font-size: 2.4rem;
+  }
+  .score__anneau span {
+    font-size: 0.75rem;
+    color: var(--texte-doux);
+  }
+  ul {
+    list-style: none;
+    display: grid;
+    gap: 0.55rem;
+  }
+  li {
+    display: grid;
+    grid-template-columns: 8.5rem 1fr 2.6rem;
+    gap: 0.6rem;
+    align-items: center;
+    font-size: 0.78rem;
+  }
+  .barre {
+    height: 0.5rem;
+    border-radius: 999px;
+    background: var(--bleu-pale);
+    overflow: hidden;
+  }
+  .barre i {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--bleu);
+  }
+  .note {
+    text-align: right;
+    color: var(--texte-doux);
+  }
+  @media (max-width: 30rem) {
+    .score {
+      grid-template-columns: 1fr;
+    }
+    .score__anneau {
+      width: 8rem;
+      margin-inline: auto;
+    }
+    li {
+      grid-template-columns: 7.5rem 1fr 2.4rem;
+    }
+  }
+</style>

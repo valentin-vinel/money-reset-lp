@@ -1,0 +1,141 @@
+---
+/** Ce que la formule Complète ajoute : cartes avec visuel. */
+import type { CollectionEntry } from 'astro:content';
+import EnteteSection from '../ui/EnteteSection.astro';
+import Icone from '../ui/Icone.astro';
+import Bouton from '../ui/Bouton.astro';
+import Visuel from '../visuels/Visuel.astro';
+import { fr, prix } from '../../lib/format';
+
+interface Props {
+  etiquette: string;
+  titre: string;
+  intro: string;
+  fonctionnalites: CollectionEntry<'fonctionnalites'>[];
+  offre?: CollectionEntry<'offres'>;
+  /** Offre de base, pour afficher la différence de prix. */
+  offreBase?: CollectionEntry<'offres'>;
+}
+const { etiquette, titre, intro, fonctionnalites, offre, offreBase } = Astro.props;
+const difference = offre && offreBase ? offre.data.prix - offreBase.data.prix : undefined;
+---
+
+<section class="section complete" aria-labelledby="complete-titre">
+  <div class="conteneur">
+    <EnteteSection id="complete-titre" etiquette={etiquette} titre={titre} intro={intro} />
+
+    <ul class="cartes">
+      {
+        fonctionnalites.map((f) => (
+          <li class="carte">
+            <div class="carte__visuel">{f.data.visuel && <Visuel nom={f.data.visuel} />}</div>
+            <div class="carte__texte">
+              <h3>
+                <Icone nom={f.data.icone} taille={20} />
+                <span>{fr(f.data.titre)}</span>
+              </h3>
+              <p>{fr(f.data.texte)}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+
+    {
+      offre && (
+        <div class="complete__cta">
+          <p>
+            {difference !== undefined && offreBase ? (
+              <>
+                Tout ça en plus de l’{offreBase.data.nom}, pour seulement <strong>{prix(difference)} de plus</strong>.
+              </>
+            ) : (
+              <>
+                Formule {offre.data.nom} : <strong>{prix(offre.data.prix)}</strong>
+              </>
+            )}
+          </p>
+          <Bouton href="#formules">{fr(offre.data.bouton)}</Bouton>
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .complete {
+    background: var(--bleu-voile);
+    border-block: 1px solid var(--trait);
+  }
+  .cartes {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+  .carte {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    background: var(--blanc);
+    border: 1px solid var(--trait);
+    border-radius: var(--r-l);
+    overflow: hidden;
+  }
+  .carte__visuel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    background: var(--bleu-pale);
+    min-height: 17rem;
+  }
+  .carte__visuel > :global(.visuel) {
+    max-width: 26rem;
+    min-width: 0;
+  }
+  .carte__texte {
+    display: grid;
+    align-content: start;
+    gap: 0.6rem;
+    padding: 1.5rem clamp(1.25rem, 3vw, 2rem) 1.75rem;
+  }
+  .carte h3 {
+    display: flex;
+    gap: 0.6rem;
+    align-items: flex-start;
+    font-size: clamp(1.3rem, 2.2vw, 1.55rem);
+  }
+  .carte h3 :global(svg) {
+    flex: none;
+    margin-top: 0.25rem;
+  }
+  .carte p {
+    color: var(--texte-doux);
+  }
+  .complete__cta {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    padding: 1.25rem 1.25rem 1.25rem 1.75rem;
+    border-radius: 999px;
+    background: var(--creme);
+  }
+  .complete__cta p {
+    font-size: 1.075rem;
+  }
+  @media (max-width: 52rem) {
+    .cartes {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .carte__visuel {
+      padding: 1rem 0.75rem;
+    }
+    .complete__cta {
+      border-radius: var(--r-l);
+      padding: 1.5rem;
+    }
+  }
+</style>

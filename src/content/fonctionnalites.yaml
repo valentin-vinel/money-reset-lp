@@ -1,0 +1,156 @@
+# ─────────────────────────────────────────────────────────────
+#  CE QUE FAIT L'OUTIL
+#  • formule: essentielle → inclus dans les deux formules
+#    formule: complete    → uniquement dans la Complète
+#  • visuel: … → la fonctionnalité est présentée en grand, avec une illustration.
+#    Visuels disponibles : categories, score, objectifs, abonnements,
+#    audit, projection, soldes, guide
+#  • icone: fusee, ticket, porte-monnaie, telephone, carte, tirelire, cible,
+#    graphique, trophee, calendrier, reglages, loupe, tendance, banque, livre
+# ─────────────────────────────────────────────────────────────
+
+# ── Inclus dans l'Essentielle (et donc dans la Complète) ──
+
+- id: categories
+  ordre: 1
+  formule: essentielle
+  icone: ticket
+  visuel: categories
+  titre: Les catégories se devinent toutes seules
+  texte: >-
+    Tu tapes « Carrefour », l'outil range la dépense dans Alimentation. « Netflix » ?
+    Abonnements. Tu ne perds plus de temps à trier.
+  points:
+    - Tu saisis la date, le libellé et le montant
+    - Les virements vers ton épargne sont exclus automatiquement de tes dépenses
+
+- id: tableau-de-bord
+  ordre: 2
+  formule: essentielle
+  icone: trophee
+  visuel: score
+  titre: Un tableau de bord qui calcule tout, et ton score sur 100
+  texte: >-
+    Choisis un mois et tu vois tout en un coup d'œil : revenus, dépenses, épargne du mois,
+    taux d'épargne, dettes, répartition par poste et graphiques. Ton Money Reset Score mesure
+    ta santé financière sur 5 critères et te montre exactement où progresser.
+  points:
+    - Taux d'épargne, fonds d'urgence, dettes, objectifs et régularité de ton suivi
+    - Tes progrès visibles mois après mois
+
+- id: objectifs
+  ordre: 3
+  formule: essentielle
+  icone: cible
+  visuel: objectifs
+  titre: Tes projets enfin chiffrés
+  texte: >-
+    Pour chaque objectif, l'outil te dit quand tu l'atteindras avec ton versement actuel, et
+    combien mettre de côté chaque mois pour tenir le délai que tu choisis.
+  points:
+    - Fonds d'urgence, vacances, voiture, projets
+    - Plafonds des livrets et intérêts estimés
+
+- id: abonnements
+  ordre: 4
+  formule: essentielle
+  icone: telephone
+  visuel: abonnements
+  titre: Le vrai coût de tes abonnements
+  texte: >-
+    Coût mensuel et annuel de chaque abonnement, et le montant que tu pourrais résilier. Voir
+    qu'un abonnement à 18 € par mois coûte 216 € par an, ça change tout.
+
+- id: demarrage
+  ordre: 5
+  formule: essentielle
+  icone: fusee
+  titre: Un démarrage guidé en 6 étapes
+  texte: >-
+    Tu renseignes tes chiffres de départ (revenu, solde, objectif d'épargne, fonds d'urgence
+    souhaité) et l'outil t'explique quoi remplir, dans quel ordre.
+
+- id: revenus
+  ordre: 6
+  formule: essentielle
+  icone: porte-monnaie
+  titre: Le suivi de tes revenus
+  texte: "Réguliers ou ponctuels : salaire, primes, aides, freelance, ventes."
+
+- id: dettes
+  ordre: 7
+  formule: essentielle
+  icone: carte
+  titre: Le suivi de tes dettes
+  texte: >-
+    Pour chaque crédit : solde restant, mois restants en tenant compte du taux, date de fin
+    estimée et progression du remboursement.
+
+- id: epargne
+  ordre: 8
+  formule: essentielle
+  icone: tirelire
+  titre: Tes enveloppes d'épargne
+  texte: >-
+    Pour chaque enveloppe, ta progression, ce qu'il reste à mettre et le temps restant.
+
+- id: bilan
+  ordre: 9
+  formule: essentielle
+  icone: calendrier
+  titre: Ton bilan mensuel
+  texte: >-
+    Chaque fin de mois, l'outil récapitule tes chiffres et ton poste variable n°1 : c'est là
+    que le budget devient une habitude.
+
+- id: personnalisable
+  ordre: 10
+  formule: essentielle
+  icone: reglages
+  titre: Un outil personnalisable
+  texte: >-
+    Catégories, mots-clés de détection, types de revenus, supports d'épargne : tout s'adapte
+    à ta vie.
+
+# ── En plus dans la Complète ──
+
+- id: money-audit
+  ordre: 11
+  formule: complete
+  icone: loupe
+  visuel: audit
+  titre: "Money Audit : ton diagnostic financier automatique"
+  texte: >-
+    Une photographie complète de ton mois. Chaque point reçoit un voyant vert, orange ou rouge
+    avec une explication claire : tu sais exactement où agir en priorité.
+
+- id: projection
+  ordre: 12
+  formule: complete
+  icone: tendance
+  visuel: projection
+  titre: "Projection 12 mois : « Si je continue comme ça... »"
+  texte: >-
+    Ton épargne totale, ta dette restante et ton patrimoine net dans 3, 6 et 12 mois. Rien de
+    plus motivant que de voir ta dette baisser et ton épargne monter.
+
+- id: soldes-reels
+  ordre: 13
+  formule: complete
+  icone: banque
+  visuel: soldes
+  titre: "Soldes réels : le détecteur d'oublis"
+  texte: >-
+    Chaque fin de mois, tu notes le vrai solde de ton compte. L'écart avec l'estimation te
+    révèle ce que tu as oublié de saisir. Ton suivi devient fiable à l'euro près.
+
+- id: guide-30-jours
+  ordre: 14
+  formule: complete
+  icone: livre
+  visuel: guide
+  titre: Le guide PDF « 30 jours »
+  texte: >-
+    30 jours d'étapes courtes et concrètes, une par jour, pour comprendre, nettoyer, organiser
+    et construire ton système financier. À la fin du mois : un budget clair, des habitudes
+    installées et un outil rempli et à jour.

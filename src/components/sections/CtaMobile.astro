@@ -1,0 +1,85 @@
+---
+/**
+ * Barre d'achat collante sur mobile : apparaît quand le bouton du hero sort de l'écran,
+ * disparaît quand la section des formules est visible.
+ */
+import Bouton from '../ui/Bouton.astro';
+import { prix } from '../../lib/format';
+
+interface Props {
+  nom: string;
+  prixMin: number;
+  bouton: string;
+}
+const { nom, prixMin, bouton } = Astro.props;
+---
+
+<div class="cta-mobile" data-cta-mobile aria-hidden="true">
+  <p>
+    <strong>{nom}</strong>
+    <span>Dès {prix(prixMin)}, paiement unique</span>
+  </p>
+  <Bouton href="#formules" tabindex="-1">{bouton}</Bouton>
+</div>
+
+<script>
+  const barre = document.querySelector<HTMLElement>('[data-cta-mobile]');
+  const hero = document.querySelector('[data-cta-hero]');
+  const formules = document.getElementById('formules');
+  if (barre && hero && formules && 'IntersectionObserver' in window) {
+    let heroVisible = true;
+    let formulesVisibles = false;
+    const maj = () => {
+      const montrer = !heroVisible && !formulesVisibles;
+      barre.classList.toggle('cta-mobile--visible', montrer);
+      barre.setAttribute('aria-hidden', String(!montrer));
+      barre.querySelector('a')?.setAttribute('tabindex', montrer ? '0' : '-1');
+    };
+    new IntersectionObserver(([e]) => {
+      heroVisible = e.isIntersecting || e.boundingClientRect.top > 0;
+      maj();
+    }).observe(hero);
+    new IntersectionObserver(([e]) => {
+      formulesVisibles = e.isIntersecting;
+      maj();
+    }).observe(formules);
+  }
+</script>
+
+<style>
+  .cta-mobile {
+    position: fixed;
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: calc(0.75rem + env(safe-area-inset-bottom));
+    z-index: 40;
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.6rem 0.6rem 0.6rem 1rem;
+    border-radius: 999px;
+    background: var(--blanc);
+    border: 1px solid var(--trait);
+    box-shadow: var(--ombre-forte);
+    transform: translateY(150%);
+    transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .cta-mobile p {
+    display: grid;
+    line-height: 1.2;
+    font-size: 0.85rem;
+  }
+  .cta-mobile span {
+    color: var(--texte-doux);
+    font-size: 0.78rem;
+  }
+  .cta-mobile--visible {
+    transform: none;
+  }
+  @media (max-width: 52rem) {
+    .cta-mobile {
+      display: flex;
+    }
+  }
+</style>

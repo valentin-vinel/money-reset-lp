@@ -1,0 +1,95 @@
+---
+import Bouton from '../ui/Bouton.astro';
+import { navigation, site } from '../../config/site';
+import { url } from '../../lib/format';
+
+interface Props {
+  cta: string;
+  ctaHref: string;
+}
+const { cta, ctaHref } = Astro.props;
+---
+
+<header class="entete" data-entete>
+  <div class="conteneur entete__barre">
+    <a class="entete__marque" href={url()} aria-label={`${site.nom}, accueil`}>
+      <img src={url('logo.jpg')} alt="" width="36" height="36" />
+      <span>{site.nom}</span>
+    </a>
+    <nav class="entete__nav" aria-label="Navigation principale">
+      {navigation.map((l) => <a href={`#${l.ancre}`}>{l.libelle}</a>)}
+    </nav>
+    <Bouton href={ctaHref} class="entete__cta">{cta}</Bouton>
+  </div>
+</header>
+
+<script>
+  // Ombre légère sous l'en-tête dès qu'on fait défiler.
+  const entete = document.querySelector<HTMLElement>('[data-entete]');
+  if (entete) {
+    const maj = () => entete.classList.toggle('entete--defile', window.scrollY > 8);
+    maj();
+    window.addEventListener('scroll', maj, { passive: true });
+  }
+</script>
+
+<style>
+  .entete {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgb(255 255 255 / 0.86);
+    backdrop-filter: saturate(1.4) blur(12px);
+    -webkit-backdrop-filter: saturate(1.4) blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+  .entete--defile {
+    border-bottom-color: var(--trait);
+  }
+  .entete__barre {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    min-height: 4.25rem;
+  }
+  .entete__marque {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-decoration: none;
+    font-family: var(--f-titre);
+    font-size: 1.3rem;
+    white-space: nowrap;
+  }
+  .entete__marque img {
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+  }
+  .entete__nav {
+    display: flex;
+    gap: 2rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+  .entete__nav a {
+    text-decoration: none;
+    color: var(--texte-doux);
+    transition: color 0.15s;
+  }
+  .entete__nav a:hover {
+    color: var(--bordeaux);
+  }
+  @media (max-width: 56rem) {
+    .entete__nav {
+      display: none;
+    }
+  }
+  @media (max-width: 22rem) {
+    .entete__marque span {
+      display: none;
+    }
+  }
+</style>

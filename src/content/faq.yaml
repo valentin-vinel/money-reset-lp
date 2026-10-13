@@ -1,0 +1,79 @@
+# ─────────────────────────────────────────────────────────────
+#  FAQ
+#  • pages: liste des pages où la question apparaît
+#    (google-sheets = landing actuelle ; accompagnement = future page)
+#  • brouillon: true → la question est masquée
+#  • **texte** → texte en gras
+# ─────────────────────────────────────────────────────────────
+
+- id: savoir-google-sheets
+  ordre: 1
+  pages: [google-sheets, accompagnement]
+  question: Faut-il savoir utiliser Google Sheets ?
+  reponse: >-
+    Non. Il suffit d'avoir un compte Google gratuit. Un code couleur simple te guide : les
+    cases jaunes sont à remplir, les blanches sont libres pour tes notes, et les gris-bleu se
+    calculent toutes seules. Elles sont verrouillées, donc impossible de casser une formule.
+
+- id: classer-depenses
+  ordre: 2
+  pages: [google-sheets]
+  question: Est-ce que je dois classer mes dépenses moi-même ?
+  reponse: >-
+    Non. Tu saisis le libellé tel qu'il apparaît sur ton relevé, et l'outil devine la
+    catégorie. Tu peux la corriger en un clic, et ajouter tes propres mots-clés dans l'onglet
+    Personnaliser.
+
+- id: telephone
+  ordre: 3
+  pages: [google-sheets]
+  question: Puis-je utiliser l'outil sur téléphone ?
+  reponse: Oui, via l'application Google Sheets.
+
+- id: reception
+  ordre: 4
+  pages: [google-sheets]
+  question: Comment je reçois l'outil ?
+  reponse: >-
+    Par e-mail, immédiatement après l'achat, avec un lien pour en faire une copie dans ton
+    Google Drive.
+
+- id: securite
+  ordre: 5
+  pages: [google-sheets, accompagnement]
+  question: Mes données sont-elles en sécurité ?
+  reponse: >-
+    Tes chiffres restent dans ton propre Google Drive. Je n'y ai pas accès, sauf si tu
+    choisis de me partager ton fichier dans le cadre d'un accompagnement.
+
+- id: passer-complete
+  ordre: 6
+  pages: [google-sheets]
+  question: Puis-je commencer par l'Essentielle et passer à la Complète ensuite ?
+  reponse: Oui. **Le prix de l'Essentielle est déduit si tu passes à une formule supérieure.**
+
+- id: couple
+  ordre: 7
+  pages: [accompagnement]
+  question: Est-ce que l'accompagnement convient à un couple ?
+  reponse: >-
+    Oui, les séances peuvent se faire à deux. C'est même souvent l'occasion de parler budget
+    plus sereinement.
+
+- id: apres-premium
+  ordre: 8
+  pages: [accompagnement]
+  question: Que se passe-t-il après les 3 mois de Premium ?
+  reponse: >-
+    Tu es autonome avec ton outil. Si tu le souhaites, des séances de suivi ponctuelles sont
+    possibles à **60 €** la séance.
+
+- id: remboursement
+  ordre: 9
+  pages: [google-sheets, accompagnement]
+  brouillon: true
+  question: Puis-je être remboursé(e) ?
+  # À définir. Pour les produits numériques, le droit de rétractation de 14 jours ne s'applique
+  # pas si le client y renonce expressément au moment de l'achat : prévoir une case à cocher
+  # sur la page de paiement.
+  reponse: À définir.

@@ -1,0 +1,157 @@
+---
+import EnteteSection from '../ui/EnteteSection.astro';
+import Icone from '../ui/Icone.astro';
+import { fr } from '../../lib/format';
+
+interface Props {
+  titre: string;
+  liste: { titre: string; texte: string }[];
+  codeCouleur: { couleur: 'jaune' | 'blanc' | 'bleu'; libelle: string }[];
+}
+const { titre, liste, codeCouleur } = Astro.props;
+---
+
+<section class="section etapes" id="comment-ca-marche" aria-labelledby="etapes-titre">
+  <div class="conteneur">
+    <EnteteSection id="etapes-titre" titre={titre} align="centre" />
+
+    <ol class="etapes__liste">
+      {
+        liste.map((e, i) => (
+          <li>
+            <span class="etapes__numero" aria-hidden="true">{i + 1}</span>
+            <h3>{fr(e.titre)}</h3>
+            <p>{fr(e.texte)}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="code">
+      <p class="code__titre">Dans l’outil, un code couleur te guide</p>
+      <ul>
+        {
+          codeCouleur.map((c) => (
+            <li>
+              <span class:list={['code__case', `code__case--${c.couleur}`]} aria-hidden="true">
+                {c.couleur === 'bleu' && <Icone nom="cadenas" taille={14} />}
+              </span>
+              {fr(c.libelle)}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .etapes__liste {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.5rem, 4vw, 3rem);
+    position: relative;
+  }
+  .etapes__liste::before {
+    content: '';
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    right: calc(33.33% - 1.5rem);
+    border-top: 2px dashed var(--trait-fort);
+  }
+  .etapes__liste li {
+    position: relative;
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+  }
+  .etapes__numero {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: var(--bordeaux);
+    color: var(--creme);
+    font-family: var(--f-titre);
+    font-size: 1.4rem;
+    box-shadow: 0 0 0 8px var(--blanc);
+    margin-bottom: 0.5rem;
+  }
+  .etapes__liste h3 {
+    font-size: 1.5rem;
+  }
+  .etapes__liste p {
+    color: var(--texte-doux);
+    max-width: 22em;
+  }
+
+  .code {
+    margin-top: clamp(3rem, 6vw, 4rem);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    padding: 1.25rem 1.5rem;
+    border-radius: var(--r-l);
+    border: 1px solid var(--trait);
+  }
+  .code__titre {
+    font-weight: 700;
+  }
+  .code ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.75rem;
+  }
+  .code li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.95rem;
+  }
+  .code__case {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 1.6rem;
+    border-radius: 5px;
+    border: 1px solid var(--trait-fort);
+    color: var(--texte-doux);
+  }
+  .code__case--jaune {
+    background: var(--creme);
+  }
+  .code__case--blanc {
+    background: var(--blanc);
+  }
+  .code__case--bleu {
+    background: var(--bleu-pale);
+  }
+
+  @media (max-width: 52rem) {
+    .etapes__liste {
+      grid-template-columns: 1fr;
+    }
+    .etapes__liste::before {
+      top: 1.5rem;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      right: auto;
+      border-top: 0;
+      border-left: 2px dashed var(--trait-fort);
+    }
+    .etapes__liste li {
+      grid-template-columns: 3rem 1fr;
+      column-gap: 1.25rem;
+    }
+    .etapes__numero {
+      grid-row: span 2;
+      margin: 0;
+    }
+  }
+</style>

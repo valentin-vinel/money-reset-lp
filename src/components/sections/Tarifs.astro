@@ -1,0 +1,250 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import EnteteSection from '../ui/EnteteSection.astro';
+import Bouton from '../ui/Bouton.astro';
+import Icone from '../ui/Icone.astro';
+import { fr, prix } from '../../lib/format';
+
+interface Props {
+  titre: string;
+  intro: string;
+  garantie: string;
+  conseil: string;
+  offres: CollectionEntry<'offres'>[];
+}
+const { titre, intro, garantie, conseil, offres } = Astro.props;
+---
+
+<section class="section tarifs" id="formules" aria-labelledby="tarifs-titre">
+  <div class="conteneur">
+    <EnteteSection id="tarifs-titre" titre={titre} intro={intro} align="centre" />
+
+    <div class="tarifs__grille">
+      {
+        offres.map(({ id, data: o }) => {
+          const phare = Boolean(o.etiquette);
+          return (
+            <article class:list={['offre', { 'offre--phare': phare }]} aria-labelledby={`offre-${id}`}>
+              {phare && <span class="offre__rayures" aria-hidden="true" />}
+              <header class="offre__tete">
+                <div class="offre__noms">
+                  <h3 id={`offre-${id}`}>{o.nom}</h3>
+                  {o.etiquette && <span class="offre__etiquette">{fr(o.etiquette)}</span>}
+                </div>
+                <p class="offre__titre">{fr(o.titre)}</p>
+              </header>
+
+              <p class="offre__prix">
+                <span class="offre__montant">{prix(o.prix)}</span>
+                <span class="offre__modalite">{fr(o.prixDetail ?? o.modalite)}</span>
+              </p>
+
+              <Bouton href={o.lien} variante={phare ? 'clair' : 'primaire'} taille="l" pleineLargeur>
+                {fr(o.bouton)}
+              </Bouton>
+
+              <div class="offre__bloc">
+                <p class="offre__sous-titre">{o.inclusIntro ? fr(o.inclusIntro) : 'Ce que tu reçois'}</p>
+                <ul class="offre__liste">
+                  {o.inclus.map((item) => (
+                    <li>
+                      <Icone nom={o.inclusIntro ? 'plus' : 'coche'} taille={16} />
+                      <span>{fr(item)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div class="offre__bloc offre__bloc--pour-qui">
+                <p class="offre__sous-titre">Pour toi si…</p>
+                <ul class="offre__pour-qui">
+                  {o.pourQui.map((p) => (
+                    <li>{fr(p)}</li>
+                  ))}
+                </ul>
+              </div>
+            </article>
+          );
+        })
+      }
+    </div>
+
+    <div class="tarifs__pied">
+      <p class="tarifs__garantie">
+        <Icone nom="bouclier" taille={22} />
+        {fr(garantie)}
+      </p>
+      <p class="tarifs__conseil">{fr(conseil)}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .tarifs {
+    background:
+      radial-gradient(56rem 30rem at 50% 45%, var(--bleu-pale), transparent 70%),
+      var(--blanc);
+  }
+  .tarifs__grille {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 27rem));
+    justify-content: center;
+    gap: 1.25rem;
+    align-items: stretch;
+  }
+  .offre {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: clamp(1.5rem, 3.5vw, 2.25rem);
+    border-radius: var(--r-l);
+    background: var(--blanc);
+    border: 1px solid var(--trait-fort);
+    box-shadow: var(--ombre);
+    overflow: hidden;
+  }
+  .offre--phare {
+    background: var(--bordeaux);
+    color: var(--creme);
+    border-color: var(--bordeaux);
+    box-shadow: var(--ombre-forte);
+  }
+  .offre__rayures {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 0.6rem;
+    background: var(--rayures);
+    background-size: 24px 100%;
+    background-image: repeating-linear-gradient(90deg, var(--bleu) 0 12px, var(--creme) 12px 24px);
+  }
+  .offre__tete {
+    display: grid;
+    gap: 0.4rem;
+  }
+  .offre__noms {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .offre h3 {
+    font-size: 2rem;
+  }
+  .offre__etiquette {
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    background: var(--creme);
+    color: var(--bordeaux);
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .offre__titre {
+    color: var(--texte-doux);
+  }
+  .offre--phare .offre__titre,
+  .offre--phare .offre__modalite,
+  .offre--phare .offre__pour-qui {
+    color: rgb(255 242 172 / 0.8);
+  }
+  .offre__prix {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .offre__montant {
+    font-family: var(--f-titre);
+    font-size: clamp(3.5rem, 7vw, 4.5rem);
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+  }
+  .offre__modalite {
+    font-size: 0.95rem;
+    color: var(--texte-doux);
+  }
+  .offre__bloc {
+    display: grid;
+    gap: 0.85rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--trait);
+  }
+  .offre--phare .offre__bloc {
+    border-top-color: rgb(255 242 172 / 0.2);
+  }
+  .offre__bloc--pour-qui {
+    margin-top: auto;
+  }
+  .offre__sous-titre {
+    font-weight: 700;
+  }
+  .offre__liste {
+    list-style: none;
+    display: grid;
+    gap: 0.55rem;
+    font-size: 0.975rem;
+  }
+  .offre__liste li {
+    display: grid;
+    grid-template-columns: 1.4rem 1fr;
+    gap: 0.6rem;
+  }
+  .offre__liste :global(svg) {
+    width: 1.4rem;
+    height: 1.4rem;
+    padding: 0.2rem;
+    border-radius: 50%;
+    background: var(--bleu-pale);
+    color: var(--bordeaux);
+  }
+  .offre--phare .offre__liste :global(svg) {
+    background: var(--creme);
+  }
+  .offre__pour-qui {
+    display: grid;
+    gap: 0.5rem;
+    padding-left: 1.1rem;
+    font-size: 0.925rem;
+    color: var(--texte-doux);
+  }
+
+  .tarifs__pied {
+    max-width: 55rem;
+    margin: clamp(2.5rem, 5vw, 3.5rem) auto 0;
+    display: grid;
+    gap: 1.25rem;
+    justify-items: center;
+    text-align: center;
+  }
+  .tarifs__garantie {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.7rem 1.2rem;
+    border-radius: 999px;
+    background: var(--creme);
+    font-weight: 700;
+  }
+  .tarifs__garantie :global(svg) {
+    flex: none;
+  }
+  .tarifs__conseil {
+    color: var(--texte-doux);
+    max-width: 40em;
+  }
+
+  @media (max-width: 52rem) {
+    .tarifs__grille {
+      grid-template-columns: minmax(0, 32rem);
+    }
+    /* La formule mise en avant passe en premier sur mobile */
+    .offre--phare {
+      order: -1;
+    }
+    .tarifs__garantie {
+      border-radius: var(--r-m);
+      text-align: left;
+    }
+  }
+</style>

@@ -1,0 +1,255 @@
+---
+/**
+ * Maquette du tableau de bord affichée dans le hero.
+ * Données d'exemple : modifie-les ici, ou remplace tout le composant
+ * par une vraie capture d'écran (<img src="/capture-tableau-de-bord.png" …>).
+ */
+import FenetreSheet from './FenetreSheet.astro';
+
+const kpis = [
+  { libelle: 'Revenus', valeur: '2 450 €' },
+  { libelle: 'Dépenses', valeur: '1 812 €' },
+  { libelle: 'Épargne du mois', valeur: '380 €' },
+  { libelle: 'Taux d’épargne', valeur: '15,5 %' },
+];
+const postes = [
+  { nom: 'Logement', montant: 720 },
+  { nom: 'Alimentation', montant: 410 },
+  { nom: 'Autres', montant: 246 },
+  { nom: 'Transport', montant: 190 },
+  { nom: 'Loisirs', montant: 150 },
+  { nom: 'Abonnements', montant: 96 },
+];
+const max = Math.max(...postes.map((p) => p.montant));
+const score = 72;
+const circonference = 2 * Math.PI * 42;
+const onglets = ['Démarrage', 'Dépenses', 'Revenus', 'Abonnements', 'Dettes', 'Épargne', 'Objectifs', 'Tableau de bord', 'Bilan'];
+---
+
+<FenetreSheet
+  fichier="Money Reset"
+  formule="=SOMME.SI(Dépenses!C:C; B2; Dépenses!D:D)"
+  onglets={onglets}
+  ongletActif="Tableau de bord"
+>
+  <div class="tdb">
+    <div class="tdb__haut">
+      <p class="tdb__titre">Tableau de bord</p>
+      <p class="tdb__mois">
+        <span>Mois</span>
+        <span class="cellule cellule--jaune">Octobre 2026</span>
+      </p>
+    </div>
+
+    <dl class="tdb__kpis">
+      {
+        kpis.map((k) => (
+          <div class="cellule cellule--bleue">
+            <dt>{k.libelle}</dt>
+            <dd>{k.valeur}</dd>
+          </div>
+        ))
+      }
+    </dl>
+
+    <div class="tdb__bas">
+      <div class="tdb__postes">
+        <p class="tdb__sous-titre">Répartition par poste</p>
+        <ul>
+          {
+            postes.map((p) => (
+              <li>
+                <span>{p.nom}</span>
+                <span class="barre">
+                  <i style={`width:${(p.montant / max) * 100}%`} />
+                </span>
+                <span class="montant">{p.montant} €</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="tdb__score">
+        <p class="tdb__sous-titre">Money Reset Score</p>
+        <div class="anneau">
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <circle cx="50" cy="50" r="42" class="anneau__fond"></circle>
+            <circle
+              cx="50"
+              cy="50"
+              r="42"
+              class="anneau__valeur"
+              stroke-dasharray={`${(score / 100) * circonference} ${circonference}`}></circle>
+          </svg>
+          <p><strong>{score}</strong><span>/100</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</FenetreSheet>
+
+<style>
+  .tdb {
+    display: grid;
+    gap: 1rem;
+  }
+  .tdb__haut {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .tdb__titre {
+    font-family: var(--f-titre);
+    font-size: 1.6rem;
+    line-height: 1;
+  }
+  .tdb__mois {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--texte-doux);
+    font-size: 0.8rem;
+  }
+  .cellule {
+    border-radius: 6px;
+    padding: 0.4rem 0.7rem;
+  }
+  .cellule--jaune {
+    background: var(--creme);
+    color: var(--bordeaux);
+    font-weight: 700;
+    border: 1px solid rgb(87 21 52 / 0.15);
+  }
+  .cellule--bleue {
+    background: var(--bleu-pale);
+  }
+  .tdb__kpis {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.6rem;
+    margin: 0;
+  }
+  .tdb__kpis div {
+    padding: 0.75rem 0.85rem;
+  }
+  .tdb__kpis dt {
+    font-size: 0.75rem;
+    color: var(--texte-doux);
+  }
+  .tdb__kpis dd {
+    margin: 0.15rem 0 0;
+    font-family: var(--f-titre);
+    font-size: clamp(1.15rem, 2vw, 1.55rem);
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+  .tdb__bas {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 0.6rem;
+  }
+  .tdb__postes,
+  .tdb__score {
+    border: 1px solid var(--trait);
+    border-radius: 10px;
+    padding: 0.9rem 1rem;
+    background: var(--blanc);
+  }
+  .tdb__sous-titre {
+    font-weight: 700;
+    font-size: 0.8rem;
+    margin-bottom: 0.6rem;
+  }
+  .tdb__postes ul {
+    list-style: none;
+    display: grid;
+    gap: 0.4rem;
+  }
+  .tdb__postes li {
+    display: grid;
+    grid-template-columns: 6.5rem 1fr 3.5rem;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.78rem;
+  }
+  .barre {
+    height: 0.55rem;
+    border-radius: 999px;
+    background: var(--bleu-voile);
+    overflow: hidden;
+  }
+  .barre i {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--bleu);
+  }
+  .tdb__postes li:first-child .barre i {
+    background: var(--bordeaux);
+  }
+  .montant {
+    text-align: right;
+    color: var(--texte-doux);
+    font-variant-numeric: tabular-nums;
+  }
+  .tdb__score {
+    display: flex;
+    flex-direction: column;
+  }
+  .anneau {
+    position: relative;
+    width: min(8.5rem, 100%);
+    margin: auto;
+    aspect-ratio: 1;
+  }
+  .anneau svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+  .anneau circle {
+    fill: none;
+    stroke-width: 9;
+  }
+  .anneau__fond {
+    stroke: var(--bleu-pale);
+  }
+  .anneau__valeur {
+    stroke: var(--bordeaux);
+    stroke-linecap: round;
+  }
+  .anneau p {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    text-align: center;
+    line-height: 1;
+  }
+  .anneau strong {
+    font-family: var(--f-titre);
+    font-weight: 400;
+    font-size: 2.2rem;
+  }
+  .anneau span {
+    font-size: 0.75rem;
+    color: var(--texte-doux);
+  }
+
+  @media (max-width: 40rem) {
+    .tdb__kpis {
+      grid-template-columns: 1fr 1fr;
+    }
+    .tdb__bas {
+      grid-template-columns: 1fr;
+    }
+    .tdb__score {
+      display: none;
+    }
+    .tdb__postes li {
+      grid-template-columns: 5.5rem 1fr 3rem;
+    }
+  }
+</style>

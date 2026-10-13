@@ -1,0 +1,63 @@
+---
+/** Titre + introduction d'une section. */
+import { fr } from '../../lib/format';
+
+interface Props {
+  titre: string;
+  intro?: string;
+  etiquette?: string;
+  align?: 'gauche' | 'centre';
+  id?: string;
+  /** Niveau du titre (h2 par défaut). */
+  niveau?: 2 | 3;
+}
+const { titre, intro, etiquette, align = 'gauche', id, niveau = 2 } = Astro.props;
+const Titre = `h${niveau}` as 'h2' | 'h3';
+---
+
+<header class:list={['entete-section', `entete-section--${align}`]}>
+  {etiquette && <p class="entete-section__etiquette">{fr(etiquette)}</p>}
+  <Titre id={id}>{fr(titre)}</Titre>
+  {intro && <p class="entete-section__intro">{fr(intro)}</p>}
+</header>
+
+<style>
+  .entete-section {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: clamp(2.5rem, 5vw, 3.75rem);
+    max-width: 44rem;
+  }
+  .entete-section--centre {
+    margin-inline: auto;
+    text-align: center;
+    justify-items: center;
+  }
+  .entete-section__etiquette {
+    display: inline-flex;
+    justify-self: start;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.85rem 0.3rem 0.4rem;
+    border-radius: 999px;
+    background: var(--creme);
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+  .entete-section--centre .entete-section__etiquette {
+    justify-self: center;
+  }
+  .entete-section__etiquette::before {
+    content: '';
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    background: var(--rayures);
+    background-size: 20px 100%;
+  }
+  .entete-section__intro {
+    font-size: clamp(1.075rem, 1.6vw, 1.2rem);
+    color: var(--texte-doux);
+    max-width: 36em;
+  }
+</style>

@@ -1,0 +1,228 @@
+/* ─────────────────────────────────────────────────────────────
+   Money Reset — design tokens
+   Palette reprise du logo « Sheep ton orga ».
+   ───────────────────────────────────────────────────────────── */
+:root {
+  /* Couleurs de marque */
+  --bordeaux: #571534;
+  --bordeaux-fonce: #3f0f26;
+  --bleu: #74a4d0;
+  --creme: #fff2ac;
+
+  /* Déclinaisons claires (fonds) */
+  --bleu-pale: #eaf2fa;
+  --bleu-voile: #f5f9fd;
+  --creme-pale: #fff8d6;
+  --blanc: #ffffff;
+
+  /* Texte */
+  --texte: var(--bordeaux);
+  --texte-doux: #7b5566;
+  --trait: rgb(87 21 52 / 0.12);
+  --trait-fort: rgb(87 21 52 / 0.22);
+
+  /* Voyants (Money Audit) */
+  --vert: #3f9a6b;
+  --orange: #e39a3b;
+  --rouge: #d0574f;
+
+  /* Typographie */
+  --f-titre: 'Gloock', Georgia, serif;
+  --f-script: 'Parisienne', cursive;
+  --f-texte: 'Figtree', system-ui, sans-serif;
+
+  /* Espacements & formes */
+  --largeur: 74rem;
+  --gouttiere: clamp(1rem, 4vw, 2rem);
+  --section: clamp(4.5rem, 10vw, 8rem);
+  --r-s: 0.625rem;
+  --r-m: 1rem;
+  --r-l: 1.75rem;
+  --ombre: 0 1px 2px rgb(87 21 52 / 0.06), 0 12px 32px -12px rgb(87 21 52 / 0.18);
+  --ombre-forte: 0 2px 4px rgb(87 21 52 / 0.06), 0 30px 60px -20px rgb(87 21 52 / 0.3);
+
+  /* Bandes du logo */
+  --rayures: repeating-linear-gradient(90deg, var(--bleu) 0 10px, var(--bordeaux) 10px 20px);
+}
+
+/* ───────── Base ───────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--blanc);
+  color: var(--texte);
+  font-family: var(--f-texte);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-family: var(--f-titre);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+h2 {
+  font-size: clamp(2.1rem, 4.6vw, 3.4rem);
+}
+
+h3 {
+  font-size: clamp(1.4rem, 2.4vw, 1.75rem);
+}
+
+p {
+  margin: 0;
+  text-wrap: pretty;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+}
+
+strong {
+  font-weight: 700;
+}
+
+:focus-visible {
+  outline: 3px solid var(--bleu);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* ───────── Utilitaires de mise en page ───────── */
+.conteneur {
+  width: 100%;
+  max-width: var(--largeur);
+  margin-inline: auto;
+  padding-inline: var(--gouttiere);
+}
+
+.section {
+  padding-block: var(--section);
+}
+
+.texte-doux {
+  color: var(--texte-doux);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.lien-evitement {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 100;
+  background: var(--bordeaux);
+  color: var(--creme);
+  padding: 0.6rem 1rem;
+  border-radius: var(--r-s);
+}
+.lien-evitement:focus {
+  top: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ───────── Visuels illustrés (maquettes de l'outil) ───────── */
+.visuel {
+  background: var(--blanc);
+  color: var(--bordeaux);
+  border: 1px solid var(--trait);
+  border-radius: var(--r-m);
+  box-shadow: var(--ombre);
+  padding: 1.25rem;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  text-align: left;
+  width: 100%;
+}
+@media (max-width: 30rem) {
+  .visuel {
+    padding: 0.9rem 0.75rem;
+  }
+}
+.visuel__entete {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.9rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+.visuel__entete span {
+  font-weight: 400;
+  color: var(--texte-doux);
+}
+/* Code couleur de l'outil : jaune = à remplir, bleu = calculé */
+.c-jaune {
+  background: var(--creme);
+}
+.c-bleu {
+  background: var(--bleu-pale);
+}
+.puce {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.nombre {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}

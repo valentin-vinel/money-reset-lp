@@ -1,0 +1,105 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Icone from '../ui/Icone.astro';
+import { fr, frHtml } from '../../lib/format';
+
+interface Props {
+  titre: string;
+  questions: CollectionEntry<'faq'>[];
+}
+const { titre, questions } = Astro.props;
+
+// Données structurées pour Google (FAQ enrichie dans les résultats de recherche).
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: questions.map(({ data }) => ({
+    '@type': 'Question',
+    name: data.question,
+    acceptedAnswer: { '@type': 'Answer', text: data.reponse.replace(/\*\*/g, '') },
+  })),
+};
+---
+
+<section class="section faq" id="faq" aria-labelledby="faq-titre">
+  <div class="conteneur faq__grille">
+    <h2 id="faq-titre">{fr(titre)}</h2>
+    <div class="faq__liste">
+      {
+        questions.map(({ data }) => (
+          <details>
+            <summary>
+              <span>{fr(data.question)}</span>
+              <Icone nom="plus" taille={20} />
+            </summary>
+            <p set:html={frHtml(data.reponse)} />
+          </details>
+        ))
+      }
+    </div>
+  </div>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+</section>
+
+<style>
+  .faq {
+    background: var(--bleu-voile);
+    border-top: 1px solid var(--trait);
+  }
+  .faq__grille {
+    display: grid;
+    grid-template-columns: 1fr 1.8fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+  h2 {
+    position: sticky;
+    top: 6rem;
+  }
+  .faq__liste {
+    display: grid;
+    gap: 0.6rem;
+  }
+  details {
+    background: var(--blanc);
+    border: 1px solid var(--trait);
+    border-radius: var(--r-m);
+  }
+  summary {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.1rem 1.35rem;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary :global(svg) {
+    flex: none;
+    transition: transform 0.25s ease;
+  }
+  details[open] summary :global(svg) {
+    transform: rotate(45deg);
+  }
+  details p {
+    padding: 0 1.35rem 1.25rem;
+    color: var(--texte-doux);
+    max-width: 40em;
+  }
+  details p :global(strong) {
+    color: var(--bordeaux);
+  }
+  @media (max-width: 52rem) {
+    .faq__grille {
+      grid-template-columns: 1fr;
+    }
+    h2 {
+      position: static;
+    }
+  }
+</style>

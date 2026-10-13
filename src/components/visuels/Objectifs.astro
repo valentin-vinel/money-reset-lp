@@ -1,0 +1,78 @@
+---
+/** Onglet Objectifs : date d’atteinte et versement conseillé (données d'exemple). */
+const objectifs = [
+  { nom: 'Fonds d’urgence', actuel: 2400, cible: 4500, atteint: 'août 2027', delai: 'mars 2027', mensuel: 420 },
+  { nom: 'Vacances', actuel: 1360, cible: 2000, atteint: 'juin 2027', delai: 'avril 2027', mensuel: 110 },
+  { nom: 'Voiture', actuel: 800, cible: 6000, atteint: 'mai 2029', delai: 'mars 2028', mensuel: 305 },
+];
+const euros = (n: number) => `${new Intl.NumberFormat('fr-FR').format(n)} €`;
+---
+
+<div class="visuel" aria-hidden="true">
+  <p class="visuel__entete">Objectifs <span>Versement actuel → date d’atteinte</span></p>
+  <ul>
+    {
+      objectifs.map((o) => (
+        <li>
+          <div class="ligne">
+            <strong>{o.nom}</strong>
+            <span class="nombre">
+              {euros(o.actuel)} <span class="doux">/ {euros(o.cible)}</span>
+            </span>
+          </div>
+          <span class="barre">
+            <i style={`width:${Math.round((o.actuel / o.cible) * 100)}%`} />
+          </span>
+          <div class="ligne petite">
+            <span class="c-bleu cellule">Atteint en {o.atteint}</span>
+            <span class="c-bleu cellule">
+              Pour {o.delai} : <strong class="nombre">{euros(o.mensuel)}/mois</strong>
+            </span>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  ul {
+    list-style: none;
+    display: grid;
+    gap: 1.1rem;
+  }
+  li {
+    display: grid;
+    gap: 0.45rem;
+  }
+  .ligne {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .doux {
+    color: var(--texte-doux);
+  }
+  .barre {
+    height: 0.55rem;
+    border-radius: 999px;
+    background: var(--bleu-pale);
+    overflow: hidden;
+  }
+  .barre i {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--bordeaux);
+  }
+  .petite {
+    font-size: 0.75rem;
+    justify-content: flex-start;
+  }
+  .cellule {
+    padding: 0.25rem 0.55rem;
+    border-radius: 4px;
+  }
+</style>
