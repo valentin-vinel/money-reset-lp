@@ -39,7 +39,7 @@ const { titre, intro, garantie, conseil, offres } = Astro.props;
                 <span class="offre__modalite">{fr(o.prixDetail ?? o.modalite)}</span>
               </p>
 
-              <Bouton href={o.lien} variante={phare ? 'clair' : 'primaire'} taille="l" pleineLargeur>
+              <Bouton href={o.lien} taille="l" pleineLargeur>
                 {fr(o.bouton)}
               </Bouton>
 
@@ -104,19 +104,16 @@ const { titre, intro, garantie, conseil, offres } = Astro.props;
     box-shadow: var(--ombre);
     overflow: hidden;
   }
+  /* Bordure bordeaux de 2px : le second trait passe par l'ombre pour ne pas décaler le contenu */
   .offre--phare {
-    background: var(--bordeaux);
-    color: var(--creme);
     border-color: var(--bordeaux);
-    box-shadow: var(--ombre-forte);
+    box-shadow: 0 0 0 1px var(--bordeaux), var(--ombre-forte);
   }
   .offre__rayures {
     position: absolute;
     inset: 0 0 auto;
     height: 0.6rem;
     background: var(--rayures);
-    background-size: 24px 100%;
-    background-image: repeating-linear-gradient(90deg, var(--bleu) 0 12px, var(--creme) 12px 24px);
   }
   .offre__tete {
     display: grid;
@@ -135,18 +132,13 @@ const { titre, intro, garantie, conseil, offres } = Astro.props;
   .offre__etiquette {
     padding: 0.3rem 0.8rem;
     border-radius: 999px;
-    background: var(--creme);
-    color: var(--bordeaux);
+    background: var(--bordeaux);
+    color: var(--creme);
     font-size: 0.8rem;
     font-weight: 700;
   }
   .offre__titre {
     color: var(--texte-doux);
-  }
-  .offre--phare .offre__titre,
-  .offre--phare .offre__modalite,
-  .offre--phare .offre__pour-qui {
-    color: rgb(255 242 172 / 0.8);
   }
   .offre__prix {
     display: flex;
@@ -169,9 +161,6 @@ const { titre, intro, garantie, conseil, offres } = Astro.props;
     gap: 0.85rem;
     padding-top: 1.5rem;
     border-top: 1px solid var(--trait);
-  }
-  .offre--phare .offre__bloc {
-    border-top-color: rgb(255 242 172 / 0.2);
   }
   .offre__bloc--pour-qui {
     margin-top: auto;
@@ -197,9 +186,6 @@ const { titre, intro, garantie, conseil, offres } = Astro.props;
     border-radius: 50%;
     background: var(--bleu-pale);
     color: var(--bordeaux);
-  }
-  .offre--phare .offre__liste :global(svg) {
-    background: var(--creme);
   }
   .offre__pour-qui {
     display: grid;
