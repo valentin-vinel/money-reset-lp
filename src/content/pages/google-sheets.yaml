@@ -42,6 +42,7 @@ probleme:
 essentiels:
   titre: Tout ton budget au même endroit
   intro: Inclus dans les deux formules. Tu saisis, il calcule.
+  bouton: Je choisis ma formule
 
 complete:
   etiquette: Formule Complète
@@ -62,18 +63,10 @@ etapes:
       texte: >-
         Tu suis les 6 étapes de démarrage, et l'outil calcule tout pour toi : impossible de
         casser une formule.
-  codeCouleur:
-    - couleur: jaune
-      libelle: Cases à remplir
-    - couleur: blanc
-      libelle: Libres pour tes notes
-    - couleur: bleu
-      libelle: Se calculent toutes seules
 
 tarifs:
   titre: Choisis la formule qui te ressemble
   intro: Un paiement unique, sans abonnement. Ton outil arrive par e-mail juste après l'achat.
-  garantie: Le prix de l'Essentielle est déduit si tu passes à une formule supérieure.
   conseil: >-
     Tu hésites ? Si tu es plutôt autonome et que tu veux simplement voir où va ton argent,
     l'Essentielle suffit. Si tu as déjà essayé de tenir un budget sans tenir sur la durée, la

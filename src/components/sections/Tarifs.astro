@@ -8,16 +8,15 @@ import { fr, prix } from '../../lib/format';
 interface Props {
   titre: string;
   intro: string;
-  garantie: string;
   conseil: string;
   offres: CollectionEntry<'offres'>[];
 }
-const { titre, intro, garantie, conseil, offres } = Astro.props;
+const { titre, intro, conseil, offres } = Astro.props;
 ---
 
 <section class="section tarifs" id="formules" aria-labelledby="tarifs-titre">
   <div class="conteneur">
-    <EnteteSection id="tarifs-titre" titre={titre} intro={intro} align="centre" />
+    <EnteteSection id="tarifs-titre" titre={titre} intro={intro} align="centre" uneLigne />
 
     <div class="tarifs__grille">
       {
@@ -70,20 +69,19 @@ const { titre, intro, garantie, conseil, offres } = Astro.props;
     </div>
 
     <div class="tarifs__pied">
-      <p class="tarifs__garantie">
-        <Icone nom="bouclier" taille={22} />
-        {fr(garantie)}
-      </p>
       <p class="tarifs__conseil">{fr(conseil)}</p>
     </div>
   </div>
 </section>
 
 <style>
+  /* Haut teinté (bleu pâle) qui se fond vers le blanc : marque la rupture avec
+     la section Étapes, blanche, au-dessus. Le halo radial reste derrière les cartes. */
   .tarifs {
+    border-top: 1px solid var(--trait);
     background:
       radial-gradient(56rem 30rem at 50% 45%, var(--bleu-pale), transparent 70%),
-      var(--blanc);
+      linear-gradient(180deg, var(--bleu-pale) 0%, var(--bleu-voile) 30%, var(--blanc) 75%);
   }
   .tarifs__grille {
     display: grid;
@@ -203,18 +201,6 @@ const { titre, intro, garantie, conseil, offres } = Astro.props;
     justify-items: center;
     text-align: center;
   }
-  .tarifs__garantie {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.7rem 1.2rem;
-    border-radius: 999px;
-    background: var(--creme);
-    font-weight: 700;
-  }
-  .tarifs__garantie :global(svg) {
-    flex: none;
-  }
   .tarifs__conseil {
     color: var(--texte-doux);
     max-width: 40em;
@@ -227,10 +213,6 @@ const { titre, intro, garantie, conseil, offres } = Astro.props;
     /* La formule mise en avant passe en premier sur mobile */
     .offre--phare {
       order: -1;
-    }
-    .tarifs__garantie {
-      border-radius: var(--r-m);
-      text-align: left;
     }
   }
 </style>

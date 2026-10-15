@@ -38,7 +38,7 @@ const prixMin = Math.min(...offres.map((o) => o.data.prix));
 
   <Hero {...p.hero} />
   <Probleme titre={p.probleme.titre} texte={p.probleme.texte} chiffres={p.chiffres} />
-  <Essentiels titre={p.essentiels.titre} intro={p.essentiels.intro} fonctionnalites={essentielles} />
+  <Essentiels {...p.essentiels} fonctionnalites={essentielles} />
   <Complete {...p.complete} fonctionnalites={plusComplete} offre={offreComplete} offreBase={offreBase} />
   <Etapes {...p.etapes} />
   <Tarifs {...p.tarifs} offres={offres} />

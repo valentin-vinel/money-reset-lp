@@ -28,7 +28,6 @@ const difference = offre && offreBase ? offre.data.prix - offreBase.data.prix : 
       {
         fonctionnalites.map((f) => (
           <li class="carte">
-            <div class="carte__visuel">{f.data.visuel && <Visuel nom={f.data.visuel} />}</div>
             <div class="carte__texte">
               <h3>
                 <Icone nom={f.data.icone} taille={20} />
@@ -36,6 +35,7 @@ const difference = offre && offreBase ? offre.data.prix - offreBase.data.prix : 
               </h3>
               <p>{fr(f.data.texte)}</p>
             </div>
+            <div class="carte__visuel">{f.data.visuel && <Visuel nom={f.data.visuel} />}</div>
           </li>
         ))
       }
@@ -73,6 +73,8 @@ const difference = offre && offreBase ? offre.data.prix - offreBase.data.prix : 
     grid-template-columns: repeat(2, 1fr);
     gap: 1.25rem;
   }
+  /* Texte en haut, visuel dessous : il prend la hauteur restante pour que
+     les cartes d'une même ligne restent alignées. */
   .carte {
     display: grid;
     grid-template-rows: auto 1fr;

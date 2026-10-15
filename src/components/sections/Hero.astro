@@ -46,14 +46,14 @@ const { badge, titre, sousTitre, boutonPrincipal, boutonSecondaire, rassurance }
       <!-- Cartes flottantes : données d'exemple -->
       <div class="flottante flottante--gauche" aria-hidden="true">
         <p class="flottante__label">Nouvelle dépense</p>
-        <div class="flottante__ligne">
-          <span class="flottante__libelle">CARREFOUR MARKET</span>
-          <span class="flottante__montant">−54,20&nbsp;€</span>
-        </div>
         <p class="flottante__auto">
           <span class="puce-categorie">Alimentation</span>
           <span>catégorie devinée</span>
         </p>
+        <div class="flottante__ligne">
+          <span class="flottante__libelle">CARREFOUR MARKET</span>
+          <span class="flottante__montant">−54,20&nbsp;€</span>
+        </div>
       </div>
 
       <div class="flottante flottante--droite" aria-hidden="true">
@@ -166,35 +166,75 @@ const { badge, titre, sousTitre, boutonPrincipal, boutonSecondaire, rassurance }
   }
 
   .flottante {
+    --pointe: 1rem;
+    --bordure: 3px;
     position: absolute;
     z-index: 2;
     background: var(--blanc);
-    border: 1px solid var(--trait);
+    border: var(--bordure) solid var(--jaune);
     border-radius: var(--r-m);
     box-shadow: var(--ombre-forte);
     padding: 0.9rem 1rem;
     font-size: 0.85rem;
     display: grid;
     gap: 0.45rem;
-    animation: flotte 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    /* Entrée (transform) puis oscillation continue (translate) : deux propriétés
+       distinctes, pour que les animations ne s'écrasent pas. Inclinaison via rotate. */
+    animation:
+      flotte 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both,
+      oscille 5s ease-in-out infinite;
   }
   .flottante--gauche {
-    left: -9rem;
+    left: -11rem;
     top: 30%;
     width: 15.5rem;
-    animation-delay: 0.45s;
+    rotate: -3deg;
+    animation-delay: 0.45s, -1s;
   }
   .flottante--droite {
-    right: -8.5rem;
+    right: -10.5rem;
     top: 46%;
     width: 13.5rem;
-    animation-delay: 0.6s;
+    rotate: 2.5deg;
+    animation-duration: 0.8s, 6s;
+    animation-delay: 0.6s, -3s;
   }
   .flottante--bas {
     right: 7%;
-    bottom: -1.75rem;
-    animation-delay: 0.75s;
+    bottom: -2.5rem;
+    rotate: -1.5deg;
+    animation-duration: 0.8s, 5.5s;
+    animation-delay: 0.75s, -4.5s;
   }
+
+  /* Pointe de bulle : carré tourné dont seuls deux côtés portent la bordure,
+     orienté vers le tableau de bord. */
+  .flottante::after {
+    content: '';
+    position: absolute;
+    width: var(--pointe);
+    height: var(--pointe);
+    background: var(--blanc);
+    border: solid var(--jaune);
+    border-width: 0 var(--bordure) var(--bordure) 0;
+    border-bottom-right-radius: 3px;
+  }
+  .flottante--gauche::after {
+    top: 50%;
+    right: calc(var(--pointe) / -2 - var(--bordure) / 2);
+    transform: translateY(-50%) rotate(-45deg);
+  }
+  .flottante--droite::after {
+    top: 50%;
+    left: calc(var(--pointe) / -2 - var(--bordure) / 2);
+    transform: translateY(-50%) rotate(135deg);
+  }
+  .flottante--bas::after {
+    left: 50%;
+    top: calc(var(--pointe) / -2 - var(--bordure) / 2);
+    transform: translateX(-50%) rotate(-135deg);
+  }
+
   .flottante__label {
     display: flex;
     align-items: center;
@@ -292,13 +332,19 @@ const { badge, titre, sousTitre, boutonPrincipal, boutonSecondaire, rassurance }
       transform: translateY(1rem) scale(0.96);
     }
   }
+  @keyframes oscille {
+    50% {
+      translate: 0 -0.5rem;
+    }
+  }
 
-  @media (max-width: 72rem) {
+  /* Sous 80rem, les bulles latérales sortiraient de l'écran : on les rapproche. */
+  @media (max-width: 80rem) {
     .flottante--gauche {
-      left: -1.5rem;
+      left: -2.5rem;
     }
     .flottante--droite {
-      right: -1.5rem;
+      right: -2.5rem;
     }
   }
   @media (max-width: 52rem) {

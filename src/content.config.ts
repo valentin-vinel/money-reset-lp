@@ -119,19 +119,15 @@ const pages = defineCollection({
     }),
     chiffres: z.array(z.object({ valeur: z.string(), libelle: z.string() })),
     probleme: z.object({ titre: z.string(), texte: z.string() }),
-    essentiels: z.object({ titre: z.string(), intro: z.string() }),
+    essentiels: z.object({ titre: z.string(), intro: z.string(), bouton: z.string() }),
     complete: z.object({ etiquette: z.string(), titre: z.string(), intro: z.string() }),
     etapes: z.object({
       titre: z.string(),
       liste: z.array(z.object({ titre: z.string(), texte: z.string() })),
-      codeCouleur: z.array(
-        z.object({ couleur: z.enum(['jaune', 'blanc', 'bleu']), libelle: z.string() }),
-      ),
     }),
     tarifs: z.object({
       titre: z.string(),
       intro: z.string(),
-      garantie: z.string(),
       conseil: z.string(),
     }),
     temoignages: z.object({ titre: z.string() }),

@@ -53,6 +53,7 @@ une page `src/pages/accompagnement.astro` qui réutilise les sections, et `offre
 | `--bordeaux` | `#571534` | Texte, boutons, panneaux forts |
 | `--bleu` | `#74A4D0` | Accents, graphiques |
 | `--creme` | `#FFF2AC` | Badges, mises en avant |
+| `--jaune` | `#F5CF3D` | Bordures des bulles du hero |
 | `--bleu-pale`, `--bleu-voile`, `--creme-pale` | dérivées | Fonds de sections |
 
 Dans les maquettes, le jaune crème = cases à remplir et le bleu pâle = cases calculées, comme dans l'outil.

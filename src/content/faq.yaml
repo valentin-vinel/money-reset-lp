@@ -46,12 +46,6 @@
     Tes chiffres restent dans ton propre Google Drive. Je n'y ai pas accès, sauf si tu
     choisis de me partager ton fichier dans le cadre d'un accompagnement.
 
-- id: passer-complete
-  ordre: 6
-  pages: [google-sheets]
-  question: Puis-je commencer par l'Essentielle et passer à la Complète ensuite ?
-  reponse: Oui. **Le prix de l'Essentielle est déduit si tu passes à une formule supérieure.**
-
 - id: couple
   ordre: 7
   pages: [accompagnement]

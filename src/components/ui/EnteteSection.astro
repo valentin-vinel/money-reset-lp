@@ -10,12 +10,14 @@ interface Props {
   id?: string;
   /** Niveau du titre (h2 par défaut). */
   niveau?: 2 | 3;
+  /** Titre sur une seule ligne sur desktop (la largeur max de l'en-tête est levée). */
+  uneLigne?: boolean;
 }
-const { titre, intro, etiquette, align = 'gauche', id, niveau = 2 } = Astro.props;
+const { titre, intro, etiquette, align = 'gauche', id, niveau = 2, uneLigne = false } = Astro.props;
 const Titre = `h${niveau}` as 'h2' | 'h3';
 ---
 
-<header class:list={['entete-section', `entete-section--${align}`]}>
+<header class:list={['entete-section', `entete-section--${align}`, { 'entete-section--une-ligne': uneLigne }]}>
   {etiquette && <p class="entete-section__etiquette">{fr(etiquette)}</p>}
   <Titre id={id}>{fr(titre)}</Titre>
   {intro && <p class="entete-section__intro">{fr(intro)}</p>}
@@ -54,6 +56,14 @@ const Titre = `h${niveau}` as 'h2' | 'h3';
     border-radius: 50%;
     background: var(--rayures);
     background-size: 20px 100%;
+  }
+  @media (min-width: 64rem) {
+    .entete-section--une-ligne {
+      max-width: none;
+    }
+    .entete-section--une-ligne > :is(h2, h3) {
+      white-space: nowrap;
+    }
   }
   .entete-section__intro {
     font-size: clamp(1.075rem, 1.6vw, 1.2rem);

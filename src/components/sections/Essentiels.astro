@@ -1,10 +1,11 @@
 ---
 /**
  * Fonctionnalités incluses dans les deux formules :
- * celles qui ont un `visuel` sont présentées en grands panneaux alternés,
+ * celles qui ont un `visuel` sont présentées en panneaux carrés (grille de 2 sur desktop),
  * les autres dans une grille compacte en dessous.
  */
 import type { CollectionEntry } from 'astro:content';
+import Bouton from '../ui/Bouton.astro';
 import EnteteSection from '../ui/EnteteSection.astro';
 import Icone from '../ui/Icone.astro';
 import Visuel from '../visuels/Visuel.astro';
@@ -13,9 +14,10 @@ import { fr } from '../../lib/format';
 interface Props {
   titre: string;
   intro: string;
+  bouton: string;
   fonctionnalites: CollectionEntry<'fonctionnalites'>[];
 }
-const { titre, intro, fonctionnalites } = Astro.props;
+const { titre, intro, bouton, fonctionnalites } = Astro.props;
 const vedettes = fonctionnalites.filter((f) => f.data.visuel);
 const autres = fonctionnalites.filter((f) => !f.data.visuel);
 const tons = ['bleu-pale', 'bordeaux', 'creme', 'bleu'] as const;
@@ -23,16 +25,13 @@ const tons = ['bleu-pale', 'bordeaux', 'creme', 'bleu'] as const;
 
 <section class="section essentiels" id="fonctionnalites" aria-labelledby="essentiels-titre">
   <div class="conteneur">
-    <EnteteSection id="essentiels-titre" titre={titre} intro={intro} align="centre" />
+    <EnteteSection id="essentiels-titre" titre={titre} intro={intro} align="centre" uneLigne />
 
     <div class="panneaux">
       {
         vedettes.map((f, i) => (
-          <article class:list={['panneau', `panneau--${tons[i % tons.length]}`, { 'panneau--inverse': i % 2 === 1 }]}>
+          <article class:list={['panneau', `panneau--${tons[i % tons.length]}`]}>
             <div class="panneau__texte">
-              <span class="panneau__icone">
-                <Icone nom={f.data.icone} taille={22} />
-              </span>
               <h3>{fr(f.data.titre)}</h3>
               <p>{fr(f.data.texte)}</p>
               {f.data.points && (
@@ -72,25 +71,26 @@ const tons = ['bleu-pale', 'bordeaux', 'creme', 'bleu'] as const;
         </>
       )
     }
+
+    <div class="essentiels__cta">
+      <Bouton href="#formules" taille="l">{fr(bouton)}</Bouton>
+    </div>
   </div>
 </section>
 
 <style>
   .panneaux {
     display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.25rem;
   }
+  /* Texte en haut, visuel calé en bas : les panneaux d'une même ligne ont la même hauteur. */
   .panneau {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
-    align-items: center;
-    gap: clamp(1.5rem, 4vw, 3.5rem);
-    padding: clamp(1.5rem, 4vw, 3.5rem);
+    grid-template-rows: auto 1fr;
+    gap: 1.75rem;
+    padding: clamp(1.5rem, 3vw, 2.5rem);
     border-radius: var(--r-l);
-    overflow: hidden;
-  }
-  .panneau--inverse .panneau__texte {
-    order: 2;
   }
   .panneau--bleu-pale {
     background: var(--bleu-pale);
@@ -108,34 +108,22 @@ const tons = ['bleu-pale', 'bordeaux', 'creme', 'bleu'] as const;
 
   .panneau__texte {
     display: grid;
-    gap: 1rem;
-    align-content: center;
-  }
-  .panneau__icone {
-    display: grid;
-    place-items: center;
-    width: 2.75rem;
-    height: 2.75rem;
-    border-radius: 0.8rem;
-    background: var(--blanc);
-    color: var(--bordeaux);
-  }
-  .panneau--bordeaux .panneau__icone {
-    background: var(--creme);
+    gap: 0.8rem;
+    align-content: start;
   }
   .panneau h3 {
-    font-size: clamp(1.75rem, 3.2vw, 2.4rem);
+    font-size: clamp(1.5rem, 2.4vw, 1.9rem);
   }
   .panneau p {
-    font-size: 1.075rem;
-    max-width: 30em;
+    font-size: 1rem;
+    max-width: 32em;
   }
   .panneau__points {
     list-style: none;
     display: grid;
-    gap: 0.5rem;
-    margin-top: 0.25rem;
-    font-size: 0.975rem;
+    gap: 0.4rem;
+    margin-top: 0.15rem;
+    font-size: 0.925rem;
   }
   .panneau__points li {
     display: grid;
@@ -149,6 +137,7 @@ const tons = ['bleu-pale', 'bordeaux', 'creme', 'bleu'] as const;
     min-width: 0;
     display: flex;
     justify-content: center;
+    align-items: flex-end;
   }
   .panneau__visuel > :global(.visuel) {
     max-width: 30rem;
@@ -194,13 +183,18 @@ const tons = ['bleu-pale', 'bordeaux', 'creme', 'bleu'] as const;
     color: var(--texte-doux);
   }
 
+  .essentiels__cta {
+    display: flex;
+    justify-content: center;
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
   @media (max-width: 56rem) {
-    .panneau {
+    .panneaux {
       grid-template-columns: minmax(0, 1fr);
-      padding: 1.5rem 1rem;
     }
-    .panneau--inverse .panneau__texte {
-      order: 0;
+    .panneau {
+      padding: 1.5rem 1rem;
     }
     .autres {
       grid-template-columns: 1fr 1fr;
