@@ -1,0 +1,44 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Projet
+
+Landing page statique (Astro 7, TypeScript strict) qui vend les outils Google Sheets « Money Reset » (formules Essentielle et Complète). Tout le projet est en français : contenu, noms de composants, props, variables CSS, commentaires et messages de commit. Garder cette convention.
+
+## Commandes
+
+```bash
+npm run dev      # http://localhost:4321
+npm run build    # génère dist/ ; valide aussi tout le contenu YAML via les schémas
+npm run preview  # sert dist/
+```
+
+Il n'y a ni tests ni linter. `npm run build` sert de vérification : il échoue si un YAML ne respecte pas `src/content.config.ts`, si une icône est inconnue, etc.
+
+## Architecture
+
+**Le contenu est séparé du code.** Les textes vivent dans `src/content/*.yaml` (collections Astro chargées avec `file()`/`glob()`, schémas Zod dans `src/content.config.ts`). Une modification de texte se fait dans le YAML, pas dans les composants.
+
+- `pages/<id>.yaml` contient les textes propres à une page (hero, sections, SEO). `src/pages/index.astro` charge `page('google-sheets')` et transmet chaque bloc à son composant de section (souvent en `{...p.hero}`). Ajouter un champ demande donc de modifier à la fois le schéma `pages`, le YAML et les props du composant.
+- Les collections partagées (`offres`, `fonctionnalites`, `faq`, `temoignages`) se lisent **uniquement** via `src/lib/contenu.ts`, qui applique le tri par `ordre` et les filtres : `publie`, `brouillon`, `type` (`outil`/`service`), `formule`, et `pages` pour la FAQ. Ne pas appeler `getCollection` directement dans les pages.
+- Les offres de type `service` (Audit, Premium) sont saisies mais masquées (`publie: false`). La landing actuelle n'affiche que `offresPubliees('outil')`. Une future page, par exemple accompagnement, ajouterait un `pages/accompagnement.yaml` et un `src/pages/accompagnement.astro` qui réutilise les sections.
+- La section Témoignages ne s'affiche que s'il existe au moins un témoignage publié.
+
+**Typographie française** : les textes issus du contenu passent par `fr()` ou `frHtml()` (`src/lib/format.ts`). Ces fonctions ajoutent les espaces insécables avant `? ! ; : » € %` et transforment les apostrophes en apostrophes typographiques. `frHtml` gère en plus le gras Markdown `**…**`. Ne jamais saisir ces espaces à la main dans le YAML. Utiliser `prix()` pour les montants et `url()` pour les chemins internes (ce helper respecte `BASE_URL`).
+
+**Listes fermées synchronisées à deux endroits** :
+- Icônes : ajouter le tracé SVG dans `traces` de `src/components/ui/Icone.astro`, puis le nom dans `icones` de `content.config.ts` si l'icône doit être utilisable depuis le YAML.
+- Visuels (maquettes de l'outil dans `src/components/visuels/`) : créer le composant, l'enregistrer dans `Visuel.astro`, puis ajouter son nom à `visuels` dans `content.config.ts`. Une fonctionnalité avec `visuel:` s'affiche en grand. Les maquettes s'appuient sur `FenetreSheet.astro`, le cadre tableur. Leur code couleur suit celui de l'outil : jaune crème pour les cases à remplir, bleu pâle pour les cases calculées.
+
+**Styles** : les design tokens (couleurs du logo `--bordeaux`, `--bleu`, `--creme` et leurs dérivées, polices Gloock / Parisienne / Figtree via @fontsource, espacements, rayons, ombres) sont dans `src/styles/global.css`. Chaque composant porte son CSS scopé et ses classes suivent un style BEM (`entete-section__intro`). Réutiliser les variables plutôt que des valeurs en dur.
+
+Les réglages généraux (nom, marque, autrice, e-mail, réseaux, menu d'ancres) sont dans `src/config/site.ts`. Le domaine (`site`) est dans `astro.config.mjs` ; il sert à construire l'URL canonique et l'image OG dans `Base.astro`.
+
+## À compléter avant la mise en ligne (repris du README)
+
+- Liens de paiement : champ `lien` des offres dans `offres.yaml` (actuellement `#`)
+- Domaine final : `site` dans `astro.config.mjs`
+- Réponse FAQ « Puis-je être remboursé(e) ? » (passer ensuite `brouillon: false`)
+- Prix Premium à trancher : 247 € ou 249 €
+- Mentions légales / CGV
