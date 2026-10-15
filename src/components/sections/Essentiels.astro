@@ -20,7 +20,7 @@ interface Props {
 const { titre, intro, bouton, fonctionnalites } = Astro.props;
 const vedettes = fonctionnalites.filter((f) => f.data.visuel);
 const autres = fonctionnalites.filter((f) => !f.data.visuel);
-const tons = ['bleu-pale', 'bordeaux', 'creme', 'bleu'] as const;
+const tons = ['bleu-pale', 'bordeaux', 'creme', 'bleu-pale'] as const;
 ---
 
 <section class="section essentiels" id="fonctionnalites" aria-labelledby="essentiels-titre">
@@ -101,9 +101,6 @@ const tons = ['bleu-pale', 'bordeaux', 'creme', 'bleu'] as const;
   }
   .panneau--creme {
     background: var(--creme-pale);
-  }
-  .panneau--bleu {
-    background: var(--bleu);
   }
 
   .panneau__texte {

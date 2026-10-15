@@ -67,6 +67,24 @@ const difference = offre && offreBase ? offre.data.prix - offreBase.data.prix : 
     background: var(--bleu-voile);
     border-block: 1px solid var(--trait);
   }
+  /* Étiquette « Formule Complète » dans la DA de la carte Complète des tarifs :
+     fond jaune clair, bande de rayures en haut, pastille mi-bleue mi-bordeaux. */
+  .complete :global(.entete-section__etiquette) {
+    gap: 0.65rem;
+    padding: calc(0.5rem + 5px) 1.1rem 0.5rem 0.9rem;
+    border-radius: var(--r-s);
+    background:
+      var(--rayures) top / 100% 5px no-repeat,
+      var(--creme);
+    font-size: 1rem;
+    box-shadow: var(--ombre);
+  }
+  .complete :global(.entete-section__etiquette::before) {
+    width: 1.25rem;
+    height: 1.25rem;
+    background: linear-gradient(90deg, var(--bleu) 50%, var(--bordeaux) 50%);
+  }
+
   .cartes {
     list-style: none;
     display: grid;

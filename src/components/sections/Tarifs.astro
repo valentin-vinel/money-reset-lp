@@ -160,8 +160,16 @@ const { titre, intro, conseil, offres } = Astro.props;
     padding-top: 1.5rem;
     border-top: 1px solid var(--trait);
   }
+  /* « Pour toi si… » en encadré : bleu clair, jaune clair pour la formule mise en avant. */
   .offre__bloc--pour-qui {
     margin-top: auto;
+    padding: 1.25rem 1.25rem 1.35rem;
+    border-top: 0;
+    border-radius: var(--r-m);
+    background: var(--bleu-pale);
+  }
+  .offre--phare .offre__bloc--pour-qui {
+    background: var(--creme-pale);
   }
   .offre__sous-titre {
     font-weight: 700;
