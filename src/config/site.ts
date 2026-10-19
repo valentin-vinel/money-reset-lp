@@ -17,5 +17,6 @@ export const navigation = [
   { libelle: 'Fonctionnalités', ancre: 'fonctionnalites' },
   { libelle: 'Comment ça marche', ancre: 'comment-ca-marche' },
   { libelle: 'Formules', ancre: 'formules' },
+  { libelle: 'Accompagnement', ancre: 'accompagnement' },
   { libelle: 'FAQ', ancre: 'faq' },
 ] as const;

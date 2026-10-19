@@ -1,0 +1,58 @@
+# ─────────────────────────────────────────────────────────────
+#  PAGE /accompagnement/prise-en-main/
+#  • Prix, bouton, lien, « Ce que tu as à la fin » (inclus) et « Pour toi si… » (pourQui)
+#    se modifient dans offres.yaml (offre prise-en-main).
+#  • Les questions de la FAQ sont dans faq.yaml (pages: [prise-en-main]).
+# ─────────────────────────────────────────────────────────────
+
+offre: prise-en-main
+seo:
+  titre: Prise en main + audit de départ — Money Reset
+  description: >-
+    1h30 en visio pour installer ta version Complète de Money Reset avec tes vrais chiffres et
+    faire le point sur ta situation. 94 €, outil inclus.
+hero:
+  etiquette: Accompagnement individuel
+  titre: Ton Money Reset, on le démarre ensemble
+  texte: >-
+    En 1h30 d'appel en visio, on installe ta version Complète de Money Reset avec tes vrais
+    chiffres et on fait le point sur ta situation. Tu repars avec un budget prêt à vivre et tes
+    3 priorités pour les mois à venir.
+pourquoi:
+  titre: Tu veux reprendre ton budget en main, mais pas toute seule ?
+  texte: >-
+    Remplir son budget pour la première fois, c'est souvent là qu'on bloque : quels chiffres
+    mettre, quelle catégorie choisir, comment savoir si sa situation est « normale ». Avec cette
+    offre, tu reçois l'outil complet et on le démarre ensemble, pas à pas, jusqu'à ce qu'il
+    tourne tout seul.
+deroule:
+  titre: Comment se passe l'appel ?
+  etapes:
+    - titre: Avant l'appel
+      texte: >-
+        Tu réserves ton créneau et tu reçois immédiatement ta version Complète de Money Reset par
+        e-mail, avec le guide « 30 jours ». Tu en fais une copie dans ton Google Drive, tu remplis
+        un court questionnaire pour préparer l'échange, puis tu me partages ton fichier en
+        lecture. Tu peux aussi préparer tes 2 ou 3 derniers relevés de compte.
+    - titre: La prise en main
+      duree: environ 45 min
+      texte: >-
+        On remplit ensemble ton démarrage guidé : tes revenus, tes charges fixes, tes abonnements,
+        tes dettes et tes enveloppes d'épargne. On personnalise tes catégories et tes mots-clés
+        pour que l'outil reconnaisse tes dépenses à toi. À la fin, tu sais exactement quoi
+        saisir, et quand.
+    - titre: L'audit de départ
+      duree: environ 45 min
+      texte: >-
+        On analyse ta situation avec ton Money Audit et ton Money Reset Score : poids de tes
+        charges fixes, fonds d'urgence, abonnements résiliables, dettes, taux d'épargne. On
+        identifie ensemble tes 3 priorités et on chiffre tes premiers objectifs.
+    - titre: Après l'appel
+      texte: >-
+        Tu reçois sous 48 h un récapitulatif écrit : ton point de départ, tes 3 priorités et tes
+        premières actions concrètes.
+resultats:
+  titre: Ce que tu as à la fin   # la liste = `inclus` de l'offre dans offres.yaml
+ctaFinal:
+  titre: Et si tu démarrais du bon pied ?
+  texte: 1h30 pour passer de « je ne sais pas par où commencer » à « mon budget tourne tout seul ».

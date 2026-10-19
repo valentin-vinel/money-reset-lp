@@ -1,7 +1,8 @@
 ---
 /**
- * Landing page « Google Sheets » : présente uniquement les offres de type `outil`
- * (Essentielle et Complète). Textes : src/content/pages/google-sheets.yaml
+ * Landing page « Google Sheets » : centrée sur les offres de type `outil` (Essentielle et
+ * Complète) ; les offres `service` n'apparaissent que dans la section Accompagnement.
+ * Textes : src/content/pages/google-sheets.yaml
  */
 import Base from '../layouts/Base.astro';
 import Entete from '../components/sections/Entete.astro';
@@ -13,6 +14,7 @@ import Etapes from '../components/sections/Etapes.astro';
 import Tarifs from '../components/sections/Tarifs.astro';
 import Temoignages from '../components/sections/Temoignages.astro';
 import APropos from '../components/sections/APropos.astro';
+import Accompagnement from '../components/sections/Accompagnement.astro';
 import Faq from '../components/sections/Faq.astro';
 import CtaFinal from '../components/sections/CtaFinal.astro';
 import PiedDePage from '../components/sections/PiedDePage.astro';
@@ -23,6 +25,7 @@ import { offresPubliees, fonctionnalites, faqPour, temoignagesPublies, page } fr
 const ID_PAGE = 'google-sheets';
 const p = await page(ID_PAGE);
 const offres = await offresPubliees('outil');
+const services = await offresPubliees('service');
 const essentielles = await fonctionnalites('essentielle');
 const plusComplete = await fonctionnalites('complete');
 const questions = await faqPour(ID_PAGE);
@@ -42,8 +45,9 @@ const prixMin = Math.min(...offres.map((o) => o.data.prix));
   <Complete {...p.complete} fonctionnalites={plusComplete} offre={offreComplete} offreBase={offreBase} />
   <Etapes {...p.etapes} />
   <Tarifs {...p.tarifs} offres={offres} />
-  <Temoignages titre={p.temoignages.titre} temoignages={temoignages} />
   <APropos {...p.apropos} />
+  <Accompagnement {...p.accompagnement} offres={services} />
+  <Temoignages titre={p.temoignages.titre} temoignages={temoignages} />
   <Faq titre={p.faq.titre} questions={questions} />
   <CtaFinal {...p.ctaFinal} offres={offres} />
 

@@ -1,0 +1,59 @@
+---
+/**
+ * Section « Accompagnement » : l'étape au-dessus de l'outil, avec Amandine.
+ * Cartes compactes (CarteOffre, type service) qui renvoient vers les pages dédiées.
+ */
+import type { CollectionEntry } from 'astro:content';
+import EnteteSection from '../ui/EnteteSection.astro';
+import CarteOffre from '../ui/CarteOffre.astro';
+import { fr } from '../../lib/format';
+
+interface Props {
+  etiquette: string;
+  titre: string;
+  intro: string;
+  mention: string;
+  offres: CollectionEntry<'offres'>[];
+}
+const { etiquette, titre, intro, mention, offres } = Astro.props;
+---
+
+<section class="section accompagnement" id="accompagnement" aria-labelledby="accompagnement-titre">
+  <div class="conteneur">
+    <EnteteSection id="accompagnement-titre" etiquette={etiquette} titre={titre} intro={intro} align="centre" />
+
+    <div class="accompagnement__grille">
+      {offres.map((offre) => <CarteOffre offre={offre} />)}
+    </div>
+
+    <p class="accompagnement__mention">{fr(mention)}</p>
+  </div>
+</section>
+
+<style>
+  /* Fond crème pâle : on passe de « l'outil » (Tarifs, bleu) à « un service avec Amandine ». */
+  .accompagnement {
+    background: var(--creme-pale);
+    border-block: 1px solid var(--trait);
+  }
+  .accompagnement__grille {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 27rem));
+    justify-content: center;
+    gap: 1.25rem;
+    align-items: stretch;
+  }
+  .accompagnement__mention {
+    max-width: 40em;
+    margin: clamp(2rem, 4vw, 3rem) auto 0;
+    text-align: center;
+    font-size: 0.925rem;
+    color: var(--texte-doux);
+  }
+
+  @media (max-width: 52rem) {
+    .accompagnement__grille {
+      grid-template-columns: minmax(0, 32rem);
+    }
+  }
+</style>

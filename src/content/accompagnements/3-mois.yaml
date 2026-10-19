@@ -1,0 +1,63 @@
+# ─────────────────────────────────────────────────────────────
+#  PAGE /accompagnement/3-mois/
+#  • Prix, bouton, lien, « Ce que tu as à la fin » (inclus) et « Pour toi si… » (pourQui)
+#    se modifient dans offres.yaml (offre accompagnement-3-mois).
+#  • Les questions de la FAQ sont dans faq.yaml (pages: [3-mois]).
+# ─────────────────────────────────────────────────────────────
+
+offre: accompagnement-3-mois
+seo:
+  titre: Accompagnement 3 mois — Money Reset
+  description: >-
+    3 appels de 1h30, un accès WhatsApp et la version Complète de Money Reset pour reprendre ton
+    budget en main durablement. 249 € ou 3 × 83 € sans frais.
+hero:
+  etiquette: Accompagnement 3 mois
+  titre: 3 mois pour reprendre ton budget en main, durablement
+  texte: >-
+    L'outil Money Reset Complète, trois appels de 1h30 (un par mois) et un accès direct à moi sur
+    WhatsApp pendant tout l'accompagnement. Au bout de 3 mois, ton suivi est une habitude et tu
+    sais piloter ton argent en autonomie.
+pourquoi:
+  titre: Pourquoi 3 mois ?
+  texte: >-
+    Démarrer un budget, c'est une chose. Le tenir, c'en est une autre. La plupart des gens
+    lâchent au bout de quelques semaines : un imprévu, un mois chargé, des chiffres qui
+    découragent. Trois mois, c'est le temps qu'il faut pour traverser ces moments-là, ajuster ton
+    système à ta vraie vie et en faire une habitude.
+deroule:
+  titre: Comment se déroulent les 3 mois ?
+  etapes:
+    - titre: Mois 1 — On pose les bases
+      texte: >-
+        On installe ton outil avec tes vrais chiffres : revenus, charges fixes, abonnements,
+        dettes et enveloppes d'épargne. On personnalise tes catégories, puis on réalise ton audit
+        de départ avec ton Money Audit et ton Money Reset Score. Tu repars avec tes 3 priorités
+        et tes objectifs chiffrés.
+    - titre: Mois 2 — On ajuste
+      texte: >-
+        On fait ensemble ton premier vrai bilan mensuel. On compare tes chiffres à tes soldes
+        réels pour vérifier que ton suivi est fiable, et on regarde ce qui a marché et ce qui a
+        coincé. On ajuste ton budget et tes objectifs à ta réalité, pas à un idéal.
+    - titre: Mois 3 — On consolide
+      texte: >-
+        On mesure ton évolution : ton score, ton épargne, tes dettes, ta Projection 12 mois. On
+        fixe tes objectifs pour les mois suivants et on s'assure que tu sais faire ton bilan
+        seule. Tu repars autonome, avec un système qui tient.
+  blocs:
+    - titre: Après chaque appel
+      texte: >-
+        Tu reçois sous 48 h un récapitulatif écrit : où tu en es, tes priorités et tes actions
+        pour le mois.
+    - titre: Entre les appels
+      texte: >-
+        Une question sur une catégorie, un imprévu qui chamboule ton mois, un doute sur un
+        chiffre ? Tu m'écris sur WhatsApp pendant toute la durée de l'accompagnement. Tu n'as pas
+        à attendre le prochain appel pour avancer.
+resultats:
+  titre: Ce que tu as à la fin
+ctaFinal:
+  titre: Et si dans 3 mois, ton budget tenait tout seul ?
+  texte: >-
+    Trois rendez-vous pour passer de « j'essaie encore une fois » à « je sais où va mon argent,
+    et je le pilote ».

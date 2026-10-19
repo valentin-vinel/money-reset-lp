@@ -1,14 +1,15 @@
 # ─────────────────────────────────────────────────────────────
 #  FAQ
 #  • pages: liste des pages où la question apparaît
-#    (google-sheets = landing actuelle ; accompagnement = future page)
+#    (google-sheets = landing ; prise-en-main et 3-mois = pages des accompagnements)
+#  • une question commune à plusieurs pages se saisit une seule fois : pages: [prise-en-main, 3-mois]
 #  • brouillon: true → la question est masquée
 #  • **texte** → texte en gras
 # ─────────────────────────────────────────────────────────────
 
 - id: savoir-google-sheets
   ordre: 1
-  pages: [google-sheets, accompagnement]
+  pages: [google-sheets]
   question: Faut-il savoir utiliser Google Sheets ?
   reponse: >-
     Non. Il suffit d'avoir un compte Google gratuit. Un code couleur simple te guide : les
@@ -40,34 +41,116 @@
 
 - id: securite
   ordre: 5
-  pages: [google-sheets, accompagnement]
+  pages: [google-sheets]
   question: Mes données sont-elles en sécurité ?
   reponse: >-
     Tes chiffres restent dans ton propre Google Drive. Je n'y ai pas accès, sauf si tu
     choisis de me partager ton fichier dans le cadre d'un accompagnement.
 
-- id: couple
-  ordre: 7
-  pages: [accompagnement]
-  question: Est-ce que l'accompagnement convient à un couple ?
+- id: accompagnee
+  ordre: 6
+  pages: [google-sheets]
+  question: Puis-je être accompagnée pour démarrer ?
   reponse: >-
-    Oui, les séances peuvent se faire à deux. C'est même souvent l'occasion de parler budget
-    plus sereinement.
-
-- id: apres-premium
-  ordre: 8
-  pages: [accompagnement]
-  question: Que se passe-t-il après les 3 mois de Premium ?
-  reponse: >-
-    Tu es autonome avec ton outil. Si tu le souhaites, des séances de suivi ponctuelles sont
-    possibles à **60 €** la séance.
+    Oui. La Prise en main (94 €) et l'Accompagnement 3 mois (249 €) incluent la version
+    Complète, plus des appels en visio pour l'installer avec tes vrais chiffres.
 
 - id: remboursement
   ordre: 9
-  pages: [google-sheets, accompagnement]
+  pages: [google-sheets]
   brouillon: true
   question: Puis-je être remboursé(e) ?
   # À définir. Pour les produits numériques, le droit de rétractation de 14 jours ne s'applique
   # pas si le client y renonce expressément au moment de l'achat : prévoir une case à cocher
   # sur la page de paiement.
   reponse: À définir.
+
+# ── Page Prise en main + audit de départ ──
+
+- id: pem-outil-inclus
+  ordre: 10
+  pages: [prise-en-main]
+  question: L'outil est-il inclus ?
+  reponse: >-
+    Oui, la version Complète de Money Reset est comprise dans l'offre (valeur 34 €). Tu la
+    reçois dès ta réservation et elle est à toi, à vie.
+
+- id: pem-deja-achete
+  ordre: 11
+  pages: [prise-en-main]
+  question: J'ai déjà acheté Money Reset, est-ce que je paie l'outil deux fois ?
+  reponse: Non. Écris-moi avant de réserver et je t'envoie un lien pour l'appel seul.
+
+- id: pem-appel
+  ordre: 12
+  pages: [prise-en-main]
+  question: Comment se passe l'appel ?
+  reponse: >-
+    En visio, avec partage d'écran. Tu n'as rien à installer en dehors d'un lien de connexion.
+
+- id: pem-annuler
+  ordre: 13
+  pages: [prise-en-main]
+  question: Et si je dois annuler ?
+  reponse: Tu peux déplacer ton rendez-vous gratuitement jusqu'à 48 h avant l'appel.
+
+# ── Page Accompagnement 3 mois ──
+
+- id: 3m-outil-inclus
+  ordre: 20
+  pages: [3-mois]
+  question: L'outil est-il inclus ?
+  reponse: >-
+    Oui, la version Complète de Money Reset est comprise dans l'offre. Tu la reçois dès ton
+    inscription et elle est à toi, à vie.
+
+- id: 3m-appels
+  ordre: 21
+  pages: [3-mois]
+  question: Comment se passent les appels ?
+  reponse: >-
+    En visio, avec partage d'écran, à environ un mois d'intervalle. Tu réserves chaque créneau
+    selon tes disponibilités. Les 3 appels ont lieu dans les 3 mois qui suivent ton inscription.
+
+- id: 3m-whatsapp
+  ordre: 22
+  pages: [3-mois]
+  question: Comment fonctionne l'accès WhatsApp ?
+  reponse: >-
+    Dès ton inscription, tu reçois mon numéro dédié à l'accompagnement. Tu peux m'écrire pendant
+    toute la durée de l'accompagnement pour une question, un blocage ou un imprévu. Je te
+    réponds sous 48 h ouvrées.
+
+- id: 3m-plusieurs-fois
+  ordre: 23
+  pages: [3-mois]
+  question: Puis-je payer en plusieurs fois ?
+  reponse: >-
+    Oui, tu peux régler en 3 fois sans frais : 83 € par mois pendant 3 mois, au rythme de ton
+    accompagnement.
+
+- id: 3m-decaler
+  ordre: 24
+  pages: [3-mois]
+  question: Et si je dois décaler un appel ?
+  reponse: Tu peux déplacer un rendez-vous gratuitement jusqu'à 48 h avant.
+
+# ── Communes aux deux accompagnements ──
+
+- id: confidentialite
+  ordre: 30
+  pages: [prise-en-main, 3-mois]
+  question: Mes données restent-elles confidentielles ?
+  # Les deux versions d'origine différaient d'un mot (« pour la durée de l'accompagnement » /
+  # « pendant l'accompagnement ») : une seule est conservée, à valider par Amandine.
+  reponse: >-
+    Oui. Tu me partages ton fichier uniquement pendant l'accompagnement, et tu peux retirer
+    l'accès à tout moment. Tes chiffres ne sont jamais transmis à qui que ce soit.
+
+- id: placements
+  ordre: 31
+  pages: [prise-en-main, 3-mois]
+  question: Est-ce que tu me conseilles sur des placements ?
+  reponse: >-
+    Non. L'accompagnement porte sur l'organisation de ton budget, ton suivi et tes objectifs
+    d'épargne. Je ne donne pas de conseil en placement ou en investissement.

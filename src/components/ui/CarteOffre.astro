@@ -1,0 +1,224 @@
+---
+/**
+ * Carte d'une offre, utilisée par les sections Tarifs (outils) et Accompagnement (services).
+ * - outil : bouton sous le prix, liste `inclus` complète et encadré « Pour toi si… ».
+ * - service : liste courte `inclusCourt`, puis le bouton et le lien « Voir le détail »
+ *   vers la page dédiée (le détail et « Pour toi si… » vivent sur cette page).
+ * phare : bordure bordeaux et rayures. Réservé à la Complète.
+ */
+import type { CollectionEntry } from 'astro:content';
+import Bouton from './Bouton.astro';
+import Icone from './Icone.astro';
+import { fr, prix, url } from '../../lib/format';
+
+interface Props {
+  offre: CollectionEntry<'offres'>;
+  phare?: boolean;
+}
+const { offre, phare = false } = Astro.props;
+const { id, data: o } = offre;
+
+const service = o.type === 'service';
+const inclus = service ? (o.inclusCourt ?? o.inclus) : o.inclus;
+const lienDetail = o.lienDetail ?? (o.slugPage ? url(`accompagnement/${o.slugPage}/`) : undefined);
+// Sur les services, l'étiquette (« Accompagnement 3 mois ») peut répéter le nom : on ne l'affiche pas deux fois.
+const etiquette = o.etiquette && o.etiquette !== o.nom ? o.etiquette : undefined;
+---
+
+<article class:list={['offre', { 'offre--phare': phare, 'offre--service': service }]} aria-labelledby={`offre-${id}`}>
+  {phare && <span class="offre__rayures" aria-hidden="true" />}
+  <header class="offre__tete">
+    <div class="offre__noms">
+      <h3 id={`offre-${id}`}>{o.nom}</h3>
+      {etiquette && <span class="offre__etiquette">{fr(etiquette)}</span>}
+    </div>
+    <p class="offre__titre">{fr(o.titre)}</p>
+  </header>
+
+  <p class="offre__prix">
+    <span class="offre__montant">{prix(o.prix)}</span>
+    <span class="offre__modalite">{fr(o.prixDetail ?? o.modalite)}</span>
+  </p>
+
+  {
+    !service && (
+      <Bouton href={o.lien} taille="l" pleineLargeur>
+        {fr(o.bouton)}
+      </Bouton>
+    )
+  }
+
+  <div class="offre__bloc">
+    <p class="offre__sous-titre">{o.inclusIntro ? fr(o.inclusIntro) : 'Ce que tu reçois'}</p>
+    <ul class="offre__liste">
+      {
+        inclus.map((item) => (
+          <li>
+            <Icone nom={o.inclusIntro ? 'plus' : 'coche'} taille={16} />
+            <span>{fr(item)}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  {
+    service ? (
+      <div class="offre__actions">
+        <Bouton href={o.lien} taille="l" pleineLargeur>
+          {fr(o.bouton)}
+        </Bouton>
+        {lienDetail && (
+          <Bouton href={lienDetail} variante="fantome">
+            Voir le détail<span class="sr-only"> de l’offre {fr(o.nom)}</span>
+          </Bouton>
+        )}
+      </div>
+    ) : (
+      <div class="offre__bloc offre__bloc--pour-qui">
+        <p class="offre__sous-titre">Pour toi si…</p>
+        <ul class="offre__pour-qui">
+          {o.pourQui.map((p) => (
+            <li>{fr(p)}</li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+</article>
+
+<style>
+  .offre {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: clamp(1.5rem, 3.5vw, 2.25rem);
+    border-radius: var(--r-l);
+    background: var(--blanc);
+    border: 1px solid var(--trait-fort);
+    box-shadow: var(--ombre);
+    overflow: hidden;
+  }
+  /* Bordure bordeaux de 2px : le second trait passe par l'ombre pour ne pas décaler le contenu */
+  .offre--phare {
+    border-color: var(--bordeaux);
+    box-shadow: 0 0 0 1px var(--bordeaux), var(--ombre-forte);
+  }
+  .offre__rayures {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 0.6rem;
+    background: var(--rayures);
+  }
+  .offre__tete {
+    display: grid;
+    gap: 0.4rem;
+  }
+  .offre__noms {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .offre h3 {
+    font-size: 2rem;
+  }
+  /* Noms de services plus longs (« Accompagnement ») : le titre se réduit sur petit écran. */
+  .offre--service h3 {
+    font-size: clamp(1.6rem, 7.5vw, 2rem);
+  }
+  .offre__etiquette {
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    background: var(--bordeaux);
+    color: var(--creme);
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  /* Hors formule phare, l'étiquette reste discrète : le bordeaux plein est réservé à la Complète. */
+  .offre:not(.offre--phare) .offre__etiquette {
+    background: var(--bleu-pale);
+    color: var(--bordeaux);
+  }
+  .offre__titre {
+    color: var(--texte-doux);
+  }
+  .offre__prix {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .offre__montant {
+    font-family: var(--f-titre);
+    font-size: clamp(3.5rem, 7vw, 4.5rem);
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+  }
+  .offre__modalite {
+    font-size: 0.95rem;
+    color: var(--texte-doux);
+  }
+  .offre__bloc {
+    display: grid;
+    gap: 0.85rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--trait);
+  }
+  /* « Pour toi si… » en encadré : bleu clair, jaune clair pour la formule mise en avant. */
+  .offre__bloc--pour-qui {
+    margin-top: auto;
+    padding: 1.25rem 1.25rem 1.35rem;
+    border-top: 0;
+    border-radius: var(--r-m);
+    background: var(--bleu-pale);
+  }
+  .offre--phare .offre__bloc--pour-qui {
+    background: var(--creme-pale);
+  }
+  .offre__sous-titre {
+    font-weight: 700;
+  }
+  .offre__liste {
+    list-style: none;
+    display: grid;
+    gap: 0.55rem;
+    font-size: 0.975rem;
+  }
+  .offre__liste li {
+    display: grid;
+    grid-template-columns: 1.4rem 1fr;
+    gap: 0.6rem;
+  }
+  .offre__liste :global(svg) {
+    width: 1.4rem;
+    height: 1.4rem;
+    padding: 0.2rem;
+    border-radius: 50%;
+    background: var(--bleu-pale);
+    color: var(--bordeaux);
+  }
+  .offre__pour-qui {
+    display: grid;
+    gap: 0.5rem;
+    padding-left: 1.1rem;
+    font-size: 0.925rem;
+    color: var(--texte-doux);
+  }
+  /* Actions des services calées en bas : les boutons s'alignent d'une carte à l'autre. */
+  .offre__actions {
+    margin-top: auto;
+    display: grid;
+    gap: 0.5rem;
+    justify-items: center;
+  }
+
+  @media (max-width: 52rem) {
+    /* La formule mise en avant passe en premier sur mobile */
+    .offre--phare {
+      order: -1;
+    }
+  }
+</style>

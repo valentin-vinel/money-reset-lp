@@ -3,7 +3,7 @@
  * Les textes se modifient dans src/content/*.yaml ; si un champ manque ou est mal
  * rempli, `npm run build` s'arrête avec un message clair indiquant lequel.
  */
-import { defineCollection, z } from 'astro:content';
+import { defineCollection, reference, z } from 'astro:content';
 import { file, glob } from 'astro/loaders';
 
 /** Noms des icônes disponibles (voir src/components/ui/Icone.astro). */
@@ -56,10 +56,37 @@ const offres = defineCollection({
     /** Mention de base (« Tout ce que contient l'Essentielle ») avant la liste. */
     inclusIntro: z.string().optional(),
     inclus: z.array(z.string()),
+    /** 3-4 puces courtes : cartes de la landing et hero de la page dédiée. */
+    inclusCourt: z.array(z.string()).optional(),
     change: z.string(),
     bouton: z.string(),
     /** Lien de paiement (Stripe, Gumroad, Lemon Squeezy…). */
     lien: z.string(),
+    /** Slug de la page dédiée (/accompagnement/<slugPage>/), même nom que le fichier de src/content/accompagnements/. */
+    slugPage: z.string().optional(),
+    /** Lien « Voir le détail » ; calculé à partir de `slugPage` si absent. */
+    lienDetail: z.string().optional(),
+  }),
+});
+
+/** Contenu long des pages dédiées aux offres d'accompagnement (un fichier par offre). */
+const accompagnements = defineCollection({
+  loader: glob({ pattern: '*.yaml', base: './src/content/accompagnements' }),
+  schema: z.object({
+    /** Id de l'offre dans offres.yaml : prix, bouton, lien, `inclus` et `pourQui` viennent de là. */
+    offre: reference('offres'),
+    seo: z.object({ titre: z.string(), description: z.string() }),
+    hero: z.object({ etiquette: z.string(), titre: z.string(), texte: z.string() }),
+    pourquoi: z.object({ titre: z.string(), texte: z.string() }),
+    deroule: z.object({
+      titre: z.string(),
+      etapes: z.array(z.object({ titre: z.string(), duree: z.string().optional(), texte: z.string() })),
+      /** Blocs affichés après les étapes (« Après chaque appel », « Entre les appels »). */
+      blocs: z.array(z.object({ titre: z.string(), texte: z.string() })).optional(),
+    }),
+    /** La liste vient de `inclus` dans offres.yaml. */
+    resultats: z.object({ titre: z.string() }),
+    ctaFinal: z.object({ titre: z.string(), texte: z.string() }),
   }),
 });
 
@@ -132,9 +159,10 @@ const pages = defineCollection({
     }),
     temoignages: z.object({ titre: z.string() }),
     apropos: z.object({ signature: z.string(), texte: z.string() }),
+    accompagnement: z.object({ etiquette: z.string(), titre: z.string(), intro: z.string(), mention: z.string() }),
     faq: z.object({ titre: z.string() }),
     ctaFinal: z.object({ titre: z.string(), texte: z.string(), bouton: z.string() }),
   }),
 });
 
-export const collections = { offres, fonctionnalites, faq, temoignages, pages };
+export const collections = { offres, accompagnements, fonctionnalites, faq, temoignages, pages };

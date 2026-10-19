@@ -68,9 +68,8 @@ tarifs:
   titre: Choisis la formule qui te ressemble
   intro: Un paiement unique, sans abonnement. Ton outil arrive par e-mail juste après l'achat.
   conseil: >-
-    Tu hésites ? Si tu es plutôt autonome et que tu veux simplement voir où va ton argent,
-    l'Essentielle suffit. Si tu as déjà essayé de tenir un budget sans tenir sur la durée, la
-    Complète et son guide jour par jour feront la différence.
+    Tu hésites ? Si tu es plutôt autonome, l'Essentielle ou la Complète suffisent. Si tu
+    préfères être guidée au démarrage, regarde l'accompagnement juste en dessous.
 
 temoignages:
   titre: Elles et ils ont repris la main
@@ -80,6 +79,16 @@ apropos:
   texte: >-
     Je m'appelle Amandine. J'ai créé Money Reset parce que je ne trouvais aucun outil à la fois
     simple, complet et adapté à la vraie vie d'un foyer. Aujourd'hui, je le partage avec toi.
+
+accompagnement:
+  etiquette: Avec moi
+  titre: Tu préfères ne pas démarrer seule ?
+  intro: >-
+    L'outil, plus un accompagnement en visio pour l'installer avec tes vrais chiffres et tenir
+    sur la durée. La version Complète est incluse dans les deux formules.
+  mention: >-
+    L'accompagnement porte sur l'organisation de ton budget, ton suivi et tes objectifs
+    d'épargne. Je ne donne pas de conseil en placement ou en investissement.
 
 faq:
   titre: Questions fréquentes
