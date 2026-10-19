@@ -17,9 +17,9 @@
     Tout le système Money Reset pour suivre tes revenus, tes dépenses, tes abonnements,
     tes dettes, ton épargne et tes objectifs, avec ton tableau de bord et ton score.
   pourQui:
-    - Tu veux commencer à suivre ton budget mais tu ne sais pas par où commencer.
+    - Tu veux commencer à suivre ton budget, simplement, à ton rythme.
     - Tu cherches un outil clair, sans application payante ni abonnement.
-    - Tu es plutôt autonome et tu veux avancer à ton rythme.
+    - Tu es plutôt autonome et tu n'as pas besoin qu'on te guide.
   inclus:
     - Démarrage guidé en 6 étapes
     - Dépenses avec catégories automatiques
@@ -51,10 +51,10 @@
     Tout Money Reset, 3 onglets avancés pour analyser et anticiper, et un guide jour par jour
     pour passer de « je subis mon budget » à « je le pilote ».
   pourQui:
-    - Tu as déjà essayé de tenir un budget, mais tu abandonnes au bout de quelques semaines.
+    - Tu as déjà essayé de tenir un budget seule, mais tu abandonnes au bout de quelques semaines.
     - Tu veux non seulement suivre tes dépenses, mais aussi savoir quoi faire concrètement pour améliorer ta situation.
     - Tu veux voir où tu en seras dans un an si tu continues comme ça.
-    - Tu aimes être guidé(e) étape par étape, tout en restant autonome.
+    - Tu aimes être guidée étape par étape, tout en restant autonome.
   inclusIntro: Tout ce que contient l'Essentielle, plus
   inclus:
     - "Money Audit : ton diagnostic financier automatique"
@@ -69,59 +69,60 @@
 
 # ── Offres d'accompagnement : prêtes pour la future page complète ──
 
-- id: audit-budget
+- id: prise-en-main
   ordre: 3
-  publie: false
+  publie: true
   type: service
-  nom: Audit budget
-  prix: 89
-  modalite: Séance unique
-  titre: Fais le point sur ton budget avec un regard extérieur
+  nom: Prise en main + audit de départ
+  prix: 94
+  modalite: Un appel de 1h30 en visio
+  titre: Ton Money Reset, on le démarre ensemble
   resume: >-
-    La version Complète + une séance d'audit d'1h30 en visio. On analyse ensemble ta situation
-    et tu repars avec un plan clair.
+    En 1h30 d'appel en visio, on installe ta version Complète de Money Reset avec tes vrais chiffres
+    et on fait le point sur ta situation. Tu repars avec un budget prêt à vivre et tes 3 priorités
+    pour les mois à venir.
   pourQui:
-    - Tu te sens perdu(e) face à tes comptes et tu ne sais pas par où commencer.
-    - Tu as l'impression de bien gagner ta vie, mais l'argent file sans que tu saches où.
-    - Tu veux un avis personnalisé, sans t'engager sur un accompagnement long.
+    - Tu ne sais pas quels chiffres mettre ni par où commencer, et tu préfères ne pas démarrer seule.
+    - Tu as besoin d'un regard extérieur pour comprendre ta situation.
+    - Tu veux un outil rempli avec tes vrais chiffres, prêt dès le premier jour.
+    - "Un seul rendez-vous te suffit : ensuite, tu avances par toi-même."
   inclus:
-    - Un questionnaire préparatoire
-    - L'outil Money Reset version Complète
-    - Une séance d'audit d'1h30 en visio
-    - Une synthèse écrite avec tes 3 actions prioritaires
+    - La version Complète de Money Reset incluse (valeur 34 €)
+    - Un appel de 1h30 en visio
+    - Un récapitulatif écrit après l'appel
   change: >-
-    Tu repars avec une vision claire de ta situation, les fuites d'argent identifiées et des
-    actions concrètes à mettre en place dès le lendemain.
-  bouton: Je réserve mon audit
+    Tu as un outil rempli et personnalisé, prêt à être utilisé au quotidien, une vision claire de
+    ta situation, tes objectifs chiffrés avec une date d'atteinte réaliste et un plan d'action simple
+    pour tes premières semaines.
+  bouton: Je réserve mon appel
   lien: "#"
 
-- id: accompagnement-premium
+- id: accompagnement-3-mois
   ordre: 4
-  publie: false
+  publie: true
   type: service
-  nom: Accompagnement Premium
-  # ⚠️ Le document indique 247 € (accueil, tableau) et 249 € (page offre). 3 × 83 € = 249 €.
+  nom: Accompagnement 3 mois
   prix: 249
   prixDetail: ou 3 × 83 € sans frais
   modalite: Paiement en une ou trois fois
-  titre: 3 mois pour transformer durablement ton rapport à l'argent
+  titre: 3 mois à tes côtés, jusqu'à ce que ton budget tienne tout seul
   resume: >-
-    Tout inclus + 3 mois de suivi en visio. Un plan d'ajustement sur mesure et un point chaque
-    mois pour installer de nouvelles habitudes.
+    L'outil Money Reset Complète, trois appels de 1h30 (un par mois) et un accès direct à moi sur
+    WhatsApp pendant tout l'accompagnement. Au bout de 3 mois, ton suivi est une habitude et tu sais
+    piloter ton argent en autonomie.
   pourQui:
-    - Le budget est une source de stress chaque mois, et tu as besoin de quelqu'un à tes côtés.
-    - Tu as déjà essayé seul(e), mais les bonnes résolutions ne tiennent pas dans le temps.
-    - Tu as un projet et tu veux un plan concret pour l'atteindre.
-    - Tu veux gérer le budget du foyer à deux et tu as besoin d'un cadre neutre pour en parler.
+    - Même avec un bon outil, ton budget ne tient jamais plus de quelques semaines.
+    - Tu as besoin de rendez-vous réguliers pour rester motivée.
+    - Tu traverses un changement (déménagement, naissance, nouveau travail, séparation, remboursement de dettes) et tu veux reprendre le contrôle.
+    - Tu veux être accompagnée jusqu'à ce que ton budget tienne tout seul.
   inclus:
-    - L'audit de départ complet
-    - Un plan d'ajustement personnalisé
-    - 3 points mensuels de 45 minutes en visio
-    - L'outil Money Reset version Complète
-    - Le guide « 1 mois pour reprendre son budget en main »
-    - Un accès par message entre les séances
+    - La version Complète de Money Reset incluse (valeur 34 €)
+    - 3 appels de 1h30 en visio, un par mois
+    - Un accès WhatsApp pendant les 3 mois
+    - Un récapitulatif écrit après chaque appel
   change: >-
-    Au bout de 3 mois, tu as un budget clair, des habitudes installées, un score qui progresse
-    et la confiance de gérer seul(e).
-  bouton: Je réserve mon appel découverte
+    Au bout de 3 mois, ton budget est installé, personnalisé et testé sur 3 mois réels. Tu vois tes
+    progrès mois après mois, tu as des objectifs chiffrés et réalistes pour la suite, l'habitude du
+    suivi et l'autonomie pour continuer seule.
+  bouton: Je commence mon accompagnement
   lien: "#"

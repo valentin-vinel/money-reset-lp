@@ -1,7 +1,7 @@
 # Money Reset — landing page Google Sheets (Astro)
 
 Landing page de conversion pour les deux outils Google Sheets (Essentielle et Complète).
-Les offres d'accompagnement (Audit, Premium) sont déjà saisies dans le contenu, mais masquées (`publie: false`).
+Les offres d'accompagnement (Prise en main, Accompagnement 3 mois) s'affichent dans la grille des tarifs, à côté des outils.
 
 ## Lancer le site
 
@@ -62,8 +62,7 @@ Dans les maquettes, le jaune crème = cases à remplir et le bleu pâle = cases 
 
 - [ ] Liens de paiement : champ `lien` de chaque offre dans `offres.yaml` (actuellement `#`)
 - [ ] Adresse du site : `site` dans `astro.config.mjs`
-- [ ] Réponse « Puis-je être remboursé(e) ? » dans `faq.yaml` (puis `brouillon: false`)
-- [ ] Prix Premium : 247 € ou 249 € ? (le document indique les deux)
+- [ ] Réponse « Puis-je être remboursée ? » dans `faq.yaml` (puis `brouillon: false`)
 - [ ] Optionnel : remplacer les maquettes par de vraies captures de l'outil (`src/components/visuels/`)
 - [ ] Optionnel : ajouter de vrais témoignages dans `temoignages.yaml`
 - [ ] Mentions légales / CGV (obligatoires pour vendre en ligne)

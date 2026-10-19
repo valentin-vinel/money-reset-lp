@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Projet
 
-Landing page statique (Astro 7, TypeScript strict) qui vend les outils Google Sheets « Money Reset » (formules Essentielle et Complète). Tout le projet est en français : contenu, noms de composants, props, variables CSS, commentaires et messages de commit. Garder cette convention.
+Landing page statique (Astro 7, TypeScript strict) qui vend les outils Google Sheets « Money Reset » (formules Essentielle et Complète). Tout le projet est en français : contenu, noms de composants, props, variables CSS, commentaires et messages de commit. Garder cette convention. Les textes s'adressent à la lectrice au féminin (« accompagnée », « seule »), sans écriture inclusive « (e) ».
 
 ## Commandes
 
@@ -22,7 +22,7 @@ Il n'y a ni tests ni linter. `npm run build` sert de vérification : il échoue 
 
 - `pages/<id>.yaml` contient les textes propres à une page (hero, sections, SEO). `src/pages/index.astro` charge `page('google-sheets')` et transmet chaque bloc à son composant de section (souvent en `{...p.hero}`). Ajouter un champ demande donc de modifier à la fois le schéma `pages`, le YAML et les props du composant.
 - Les collections partagées (`offres`, `fonctionnalites`, `faq`, `temoignages`) se lisent **uniquement** via `src/lib/contenu.ts`, qui applique le tri par `ordre` et les filtres : `publie`, `brouillon`, `type` (`outil`/`service`), `formule`, et `pages` pour la FAQ. Ne pas appeler `getCollection` directement dans les pages.
-- Les offres de type `service` (Audit, Premium) sont saisies mais masquées (`publie: false`). La landing actuelle n'affiche que `offresPubliees('outil')`. Une future page, par exemple accompagnement, ajouterait un `pages/accompagnement.yaml` et un `src/pages/accompagnement.astro` qui réutilise les sections.
+- Les offres de type `service` (Prise en main, Accompagnement 3 mois) s'affichent sur la landing uniquement dans la grille des tarifs, à côté des outils (`offresPubliees()` sans filtre). Le reste de la page (prix minimum, CTA final, section Complète) ne travaille qu'avec `offresPubliees('outil')`. La grille Tarifs crée une colonne par offre en desktop, passe en 2 × 2 sous 80rem et en carrousel horizontal sous 52rem.
 - La section Témoignages ne s'affiche que s'il existe au moins un témoignage publié.
 
 **Typographie française** : les textes issus du contenu passent par `fr()` ou `frHtml()` (`src/lib/format.ts`). Ces fonctions ajoutent les espaces insécables avant `? ! ; : » € %` et transforment les apostrophes en apostrophes typographiques. `frHtml` gère en plus le gras Markdown `**…**`. Ne jamais saisir ces espaces à la main dans le YAML. Utiliser `prix()` pour les montants et `url()` pour les chemins internes (ce helper respecte `BASE_URL`).
@@ -39,6 +39,5 @@ Les réglages généraux (nom, marque, autrice, e-mail, réseaux, menu d'ancres)
 
 - Liens de paiement : champ `lien` des offres dans `offres.yaml` (actuellement `#`)
 - Domaine final : `site` dans `astro.config.mjs`
-- Réponse FAQ « Puis-je être remboursé(e) ? » (passer ensuite `brouillon: false`)
-- Prix Premium à trancher : 247 € ou 249 €
+- Réponse FAQ « Puis-je être remboursée ? » (passer ensuite `brouillon: false`)
 - Mentions légales / CGV

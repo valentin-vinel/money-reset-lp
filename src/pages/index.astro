@@ -1,7 +1,8 @@
 ---
 /**
- * Landing page « Google Sheets » : présente uniquement les offres de type `outil`
- * (Essentielle et Complète). Textes : src/content/pages/google-sheets.yaml
+ * Landing page « Google Sheets » : présente les offres de type `outil` (Essentielle et Complète).
+ * Les offres `service` publiées s'ajoutent seulement dans la grille des tarifs.
+ * Textes : src/content/pages/google-sheets.yaml
  */
 import Base from '../layouts/Base.astro';
 import Entete from '../components/sections/Entete.astro';
@@ -23,6 +24,7 @@ import { offresPubliees, fonctionnalites, faqPour, temoignagesPublies, page } fr
 const ID_PAGE = 'google-sheets';
 const p = await page(ID_PAGE);
 const offres = await offresPubliees('outil');
+const offresTarifs = await offresPubliees();
 const essentielles = await fonctionnalites('essentielle');
 const plusComplete = await fonctionnalites('complete');
 const questions = await faqPour(ID_PAGE);
@@ -41,7 +43,7 @@ const prixMin = Math.min(...offres.map((o) => o.data.prix));
   <Essentiels {...p.essentiels} fonctionnalites={essentielles} />
   <Complete {...p.complete} fonctionnalites={plusComplete} offre={offreComplete} offreBase={offreBase} />
   <Etapes {...p.etapes} />
-  <Tarifs {...p.tarifs} offres={offres} />
+  <Tarifs {...p.tarifs} offres={offresTarifs} />
   <Temoignages titre={p.temoignages.titre} temoignages={temoignages} />
   <APropos {...p.apropos} />
   <Faq titre={p.faq.titre} questions={questions} />

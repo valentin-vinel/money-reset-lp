@@ -15,10 +15,10 @@ const { titre, intro, conseil, offres } = Astro.props;
 ---
 
 <section class="section tarifs" id="formules" aria-labelledby="tarifs-titre">
-  <div class="conteneur">
+  <div class="conteneur tarifs__conteneur">
     <EnteteSection id="tarifs-titre" titre={titre} intro={intro} align="centre" uneLigne />
 
-    <div class="tarifs__grille">
+    <div class="tarifs__grille" style={`--colonnes: ${offres.length}`}>
       {
         offres.map(({ id, data: o }) => {
           const phare = Boolean(o.etiquette);
@@ -83,9 +83,13 @@ const { titre, intro, conseil, offres } = Astro.props;
       radial-gradient(56rem 30rem at 50% 45%, var(--bleu-pale), transparent 70%),
       linear-gradient(180deg, var(--bleu-pale) 0%, var(--bleu-voile) 30%, var(--blanc) 75%);
   }
+  /* Pleine largeur pour aligner toutes les cartes sur une ligne en grand écran */
+  .tarifs__conteneur {
+    max-width: none;
+  }
   .tarifs__grille {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 27rem));
+    grid-template-columns: repeat(var(--colonnes), minmax(0, 27rem));
     justify-content: center;
     gap: 1.25rem;
     align-items: stretch;
@@ -214,13 +218,34 @@ const { titre, intro, conseil, offres } = Astro.props;
     max-width: 40em;
   }
 
+  /* En dessous, 4 cartes côte à côte deviennent trop étroites : on passe à 2 par ligne */
+  @media (max-width: 80rem) {
+    .tarifs__grille {
+      grid-template-columns: repeat(2, minmax(0, 27rem));
+    }
+  }
+  /* Mobile : carrousel horizontal. La grille déborde jusqu'aux bords de l'écran et
+     la carte suivante dépasse à droite pour inviter à faire défiler. */
   @media (max-width: 52rem) {
     .tarifs__grille {
-      grid-template-columns: minmax(0, 32rem);
+      grid-template-columns: none;
+      grid-auto-flow: column;
+      grid-auto-columns: min(85%, 24rem);
+      justify-content: start;
+      gap: 1rem;
+      margin-inline: calc(-1 * var(--gouttiere));
+      padding: 0.5rem var(--gouttiere) 1.5rem;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: var(--gouttiere);
+      scrollbar-width: none;
     }
-    /* La formule mise en avant passe en premier sur mobile */
-    .offre--phare {
-      order: -1;
+    .tarifs__grille::-webkit-scrollbar {
+      display: none;
+    }
+    .offre {
+      scroll-snap-align: start;
     }
   }
 </style>

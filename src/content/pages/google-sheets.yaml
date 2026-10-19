@@ -41,7 +41,7 @@ probleme:
 
 essentiels:
   titre: Tout ton budget au même endroit
-  intro: Inclus dans les deux formules. Tu saisis, il calcule.
+  intro: Inclus dans toutes les formules. Tu saisis, il calcule.
   bouton: Je choisis ma formule
 
 complete:
@@ -66,14 +66,18 @@ etapes:
 
 tarifs:
   titre: Choisis la formule qui te ressemble
-  intro: Un paiement unique, sans abonnement. Ton outil arrive par e-mail juste après l'achat.
+  intro: >-
+    Des outils à payer une seule fois, sans abonnement, et des accompagnements pour être guidée pas à pas.
+    Tu reçois ton outil par e-mail dès ton achat ou ta réservation.
   conseil: >-
-    Tu hésites ? Si tu es plutôt autonome et que tu veux simplement voir où va ton argent,
-    l'Essentielle suffit. Si tu as déjà essayé de tenir un budget sans tenir sur la durée, la
-    Complète et son guide jour par jour feront la différence.
+    Tu hésites ? Tu débutes et tu es plutôt autonome : l'Essentielle suffit. Tu as déjà essayé
+    seule sans tenir sur la durée : la Complète et son guide jour par jour feront la différence.
+    Tu préfères ne pas démarrer seule : la Prise en main installe ton outil avec toi en un appel.
+    Tu as besoin d'un suivi pour tenir : l'Accompagnement 3 mois reste à tes côtés jusqu'à ce que
+    ton budget tienne tout seul.
 
 temoignages:
-  titre: Elles et ils ont repris la main
+  titre: Elles ont repris la main
 
 apropos:
   signature: Amandine
