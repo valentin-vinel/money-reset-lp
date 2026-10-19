@@ -31,6 +31,11 @@ export function prix(montant: number): string {
   return `${new Intl.NumberFormat('fr-FR').format(montant)}${NBSP}€`;
 }
 
+/** Lien vers une ancre de l'accueil : `#ancre` sur l'accueil, `/#ancre` depuis les autres pages. */
+export function lienAncre(ancre: string, cheminCourant: string): string {
+  return cheminCourant === url() ? `#${ancre}` : `${url()}#${ancre}`;
+}
+
 /** Préfixe un chemin interne avec la base du site (utile si le site est dans un sous-dossier). */
 export function url(chemin = ''): string {
   const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');

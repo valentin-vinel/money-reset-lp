@@ -1,0 +1,136 @@
+---
+/**
+ * Déroulé d'un accompagnement : étapes numérotées (vraie séquence), durée optionnelle,
+ * puis blocs complémentaires (« Après chaque appel », « Entre les appels »).
+ */
+import EnteteSection from '../ui/EnteteSection.astro';
+import { fr } from '../../lib/format';
+
+interface Props {
+  titre: string;
+  etapes: { titre: string; duree?: string; texte: string }[];
+  blocs?: { titre: string; texte: string }[];
+}
+const { titre, etapes, blocs = [] } = Astro.props;
+---
+
+<section class="section deroule" id="deroule" aria-labelledby="deroule-titre">
+  <div class="conteneur deroule__conteneur">
+    <EnteteSection id="deroule-titre" titre={titre} />
+
+    <ol class="deroule__etapes">
+      {
+        etapes.map((e, i) => (
+          <li>
+            <span class="deroule__numero" aria-hidden="true">{i + 1}</span>
+            <div class="deroule__texte">
+              <h3>{fr(e.titre)}</h3>
+              {e.duree && <p class="deroule__duree">{fr(e.duree)}</p>}
+              <p>{fr(e.texte)}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+
+    {
+      blocs.length > 0 && (
+        <div class="deroule__blocs">
+          {blocs.map((b) => (
+            <div class="deroule__bloc">
+              <h3>{fr(b.titre)}</h3>
+              <p>{fr(b.texte)}</p>
+            </div>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .deroule {
+    background: var(--bleu-voile);
+    border-block: 1px solid var(--trait);
+  }
+  .deroule__conteneur {
+    max-width: 52rem;
+  }
+  .deroule__etapes {
+    list-style: none;
+    display: grid;
+    gap: clamp(1.75rem, 4vw, 2.5rem);
+    position: relative;
+  }
+  /* Fil pointillé qui relie les numéros, comme la section « Comment ça marche ». */
+  .deroule__etapes::before {
+    content: '';
+    position: absolute;
+    top: 1.5rem;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    border-left: 2px dashed var(--trait-fort);
+  }
+  .deroule__etapes li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 1fr);
+    gap: 1.25rem;
+  }
+  .deroule__numero {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: var(--bordeaux);
+    color: var(--creme);
+    font-family: var(--f-titre);
+    font-size: 1.4rem;
+    box-shadow: 0 0 0 8px var(--bleu-voile);
+  }
+  .deroule__texte {
+    display: grid;
+    gap: 0.6rem;
+    align-content: start;
+    padding-top: 0.55rem;
+  }
+  .deroule__texte h3 {
+    font-size: 1.5rem;
+  }
+  .deroule__texte p {
+    color: var(--texte-doux);
+    max-width: 38em;
+  }
+  .deroule__texte .deroule__duree {
+    justify-self: start;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    background: var(--bleu-pale);
+    color: var(--bordeaux);
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+  .deroule__blocs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: 1.25rem;
+    margin-top: clamp(2.5rem, 5vw, 3.5rem);
+  }
+  .deroule__bloc {
+    display: grid;
+    gap: 0.6rem;
+    align-content: start;
+    padding: clamp(1.25rem, 3vw, 1.75rem);
+    border-radius: var(--r-m);
+    background: var(--blanc);
+    border: 1px solid var(--trait);
+    box-shadow: var(--ombre);
+  }
+  .deroule__bloc h3 {
+    font-size: 1.35rem;
+  }
+  .deroule__bloc p {
+    color: var(--texte-doux);
+  }
+</style>

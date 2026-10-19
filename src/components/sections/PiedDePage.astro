@@ -1,6 +1,6 @@
 ---
 import { navigation, site } from '../../config/site';
-import { url } from '../../lib/format';
+import { lienAncre, url } from '../../lib/format';
 const annee = new Date().getFullYear();
 ---
 
@@ -14,7 +14,7 @@ const annee = new Date().getFullYear();
       </span>
     </a>
     <nav aria-label="Pied de page">
-      {navigation.map((l) => <a href={`#${l.ancre}`}>{l.libelle}</a>)}
+      {navigation.map((l) => <a href={lienAncre(l.ancre, Astro.url.pathname)}>{l.libelle}</a>)}
       {site.email && <a href={`mailto:${site.email}`}>Contact</a>}
       {site.instagram && <a href={site.instagram} rel="noopener">Instagram</a>}
     </nav>

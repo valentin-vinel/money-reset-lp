@@ -20,6 +20,7 @@ import CtaFinal from '../components/sections/CtaFinal.astro';
 import PiedDePage from '../components/sections/PiedDePage.astro';
 import CtaMobile from '../components/sections/CtaMobile.astro';
 import { site } from '../config/site';
+import { prix } from '../lib/format';
 import { offresPubliees, fonctionnalites, faqPour, temoignagesPublies, page } from '../lib/contenu';
 
 const ID_PAGE = 'google-sheets';
@@ -34,6 +35,7 @@ const temoignages = await temoignagesPublies();
 const offreBase = offres.find((o) => o.id === 'essentielle');
 const offreComplete = offres.find((o) => o.id === 'complete');
 const prixMin = Math.min(...offres.map((o) => o.data.prix));
+const mentionPrix = `Dès ${prix(prixMin)}, paiement unique`;
 ---
 
 <Base titre={p.seo.titre} description={p.seo.description}>
@@ -49,8 +51,8 @@ const prixMin = Math.min(...offres.map((o) => o.data.prix));
   <Accompagnement {...p.accompagnement} offres={services} />
   <Temoignages titre={p.temoignages.titre} temoignages={temoignages} />
   <Faq titre={p.faq.titre} questions={questions} />
-  <CtaFinal {...p.ctaFinal} offres={offres} />
+  <CtaFinal {...p.ctaFinal} href="#formules" mention={mentionPrix} />
 
   <PiedDePage slot="pied" />
-  <CtaMobile slot="pied" nom={site.nom} prixMin={prixMin} bouton="Choisir" />
+  <CtaMobile slot="pied" nom={site.nom} mention={mentionPrix} bouton="Choisir" href="#formules" masqueeSur="formules" />
 </Base>

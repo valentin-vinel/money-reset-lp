@@ -1,31 +1,35 @@
 ---
 /**
- * Barre d'achat collante sur mobile : apparaît quand le bouton du hero sort de l'écran,
- * disparaît quand la section des formules est visible.
+ * Barre d'achat collante sur mobile : apparaît quand le bouton du hero (`data-cta-hero`)
+ * sort de l'écran, disparaît quand la section `masqueeSur` est visible.
  */
 import Bouton from '../ui/Bouton.astro';
-import { prix } from '../../lib/format';
+import { fr } from '../../lib/format';
 
 interface Props {
   nom: string;
-  prixMin: number;
+  /** Ligne de prix sous le nom (« Dès 19 €, paiement unique »). */
+  mention: string;
   bouton: string;
+  href: string;
+  /** Id de la section où la barre se masque (celle qui contient déjà les boutons d'achat). */
+  masqueeSur: string;
 }
-const { nom, prixMin, bouton } = Astro.props;
+const { nom, mention, bouton, href, masqueeSur } = Astro.props;
 ---
 
-<div class="cta-mobile" data-cta-mobile aria-hidden="true">
+<div class="cta-mobile" data-cta-mobile data-masquee-sur={masqueeSur} aria-hidden="true">
   <p>
-    <strong>{nom}</strong>
-    <span>Dès {prix(prixMin)}, paiement unique</span>
+    <strong>{fr(nom)}</strong>
+    <span>{fr(mention)}</span>
   </p>
-  <Bouton href="#formules" tabindex="-1">{bouton}</Bouton>
+  <Bouton href={href} tabindex="-1">{fr(bouton)}</Bouton>
 </div>
 
 <script>
   const barre = document.querySelector<HTMLElement>('[data-cta-mobile]');
   const hero = document.querySelector('[data-cta-hero]');
-  const formules = document.getElementById('formules');
+  const formules = barre && document.getElementById(barre.dataset.masqueeSur ?? '');
   if (barre && hero && formules && 'IntersectionObserver' in window) {
     let heroVisible = true;
     let formulesVisibles = false;

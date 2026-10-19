@@ -1,0 +1,60 @@
+---
+/**
+ * Pages dédiées aux offres d'accompagnement (/accompagnement/prise-en-main/, /accompagnement/3-mois/).
+ * Une page par fichier de src/content/accompagnements/ ; prix, bouton, lien et listes
+ * viennent de l'offre liée dans offres.yaml, la FAQ de faq.yaml (pages: [<slug>]).
+ */
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import Entete from '../../components/sections/Entete.astro';
+import HeroOffre from '../../components/sections/HeroOffre.astro';
+import DerouleOffre from '../../components/sections/DerouleOffre.astro';
+import ListesOffre from '../../components/sections/ListesOffre.astro';
+import Faq from '../../components/sections/Faq.astro';
+import CtaFinal from '../../components/sections/CtaFinal.astro';
+import PiedDePage from '../../components/sections/PiedDePage.astro';
+import CtaMobile from '../../components/sections/CtaMobile.astro';
+import EnteteSection from '../../components/ui/EnteteSection.astro';
+import { accompagnements, faqPour } from '../../lib/contenu';
+import { prix } from '../../lib/format';
+
+export const getStaticPaths = (async () => {
+  const pages = await accompagnements();
+  return pages.map(({ slug, page, offre }) => ({ params: { slug }, props: { page, offre } }));
+}) satisfies GetStaticPaths;
+
+const { page: p, offre } = Astro.props;
+const o = offre.data;
+const questions = await faqPour(Astro.params.slug);
+const mentionPrix = o.prixDetail ? `${prix(o.prix)} ${o.prixDetail}` : `${prix(o.prix)} · ${o.modalite}`;
+---
+
+<Base titre={p.seo.titre} description={p.seo.description}>
+  <Entete slot="entete" cta="Je commence" ctaHref="#reserver" />
+
+  <HeroOffre {...p.hero} offre={offre} />
+
+  <section class="section pourquoi" aria-labelledby="pourquoi-titre">
+    <div class="conteneur">
+      <EnteteSection id="pourquoi-titre" titre={p.pourquoi.titre} intro={p.pourquoi.texte} align="centre" />
+    </div>
+  </section>
+
+  <DerouleOffre {...p.deroule} />
+  <ListesOffre titreResultats={p.resultats.titre} resultats={o.inclus} pourQui={o.pourQui} />
+  {questions.length > 0 && <Faq titre={p.faq.titre} questions={questions} />}
+  <CtaFinal {...p.ctaFinal} bouton={o.bouton} href={o.lien} mention={mentionPrix} id="cta-final" />
+
+  <PiedDePage slot="pied" />
+  <CtaMobile slot="pied" nom={o.nom} mention={mentionPrix} bouton="Je commence" href={o.lien} masqueeSur="cta-final" />
+</Base>
+
+<style>
+  .pourquoi :global(.entete-section) {
+    margin-bottom: 0;
+    max-width: 48rem;
+  }
+  .pourquoi :global(.entete-section__intro) {
+    max-width: 40em;
+  }
+</style>

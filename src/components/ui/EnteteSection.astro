@@ -8,13 +8,13 @@ interface Props {
   etiquette?: string;
   align?: 'gauche' | 'centre';
   id?: string;
-  /** Niveau du titre (h2 par défaut). */
-  niveau?: 2 | 3;
+  /** Niveau du titre (h2 par défaut, h1 pour le hero d'une page). */
+  niveau?: 1 | 2 | 3;
   /** Titre sur une seule ligne sur desktop (la largeur max de l'en-tête est levée). */
   uneLigne?: boolean;
 }
 const { titre, intro, etiquette, align = 'gauche', id, niveau = 2, uneLigne = false } = Astro.props;
-const Titre = `h${niveau}` as 'h2' | 'h3';
+const Titre = `h${niveau}` as 'h1' | 'h2' | 'h3';
 ---
 
 <header class:list={['entete-section', `entete-section--${align}`, { 'entete-section--une-ligne': uneLigne }]}>
@@ -61,7 +61,7 @@ const Titre = `h${niveau}` as 'h2' | 'h3';
     .entete-section--une-ligne {
       max-width: none;
     }
-    .entete-section--une-ligne > :is(h2, h3) {
+    .entete-section--une-ligne > :is(h1, h2, h3) {
       white-space: nowrap;
     }
   }

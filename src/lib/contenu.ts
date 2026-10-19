@@ -28,6 +28,26 @@ export async function temoignagesPublies() {
   return tous.sort(parOrdre);
 }
 
+/**
+ * Pages dédiées aux accompagnements, avec leur offre (prix, bouton, lien, listes).
+ * Une page dont l'offre n'est pas publiée n'est pas générée.
+ */
+export async function accompagnements() {
+  const pages = await getCollection('accompagnements');
+  const resultats = await Promise.all(
+    pages.map(async (p) => {
+      const offre = await getEntry(p.data.offre);
+      if (!offre) throw new Error(`Offre « ${p.data.offre.id} » introuvable (src/content/accompagnements/${p.id}.yaml)`);
+      // Le lien « Voir le détail » des cartes est calculé à partir de slugPage : il doit mener ici.
+      if (offre.data.slugPage !== p.id) {
+        throw new Error(`L'offre « ${offre.id} » doit avoir slugPage: ${p.id} (fichier src/content/accompagnements/${p.id}.yaml)`);
+      }
+      return { slug: p.id, page: p.data, offre };
+    }),
+  );
+  return resultats.filter((r) => r.offre.data.publie);
+}
+
 export async function page(id: string) {
   const entree = await getEntry('pages', id);
   if (!entree) throw new Error(`Page « ${id} » introuvable dans src/content/pages/`);

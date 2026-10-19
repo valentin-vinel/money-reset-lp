@@ -1,0 +1,140 @@
+---
+/**
+ * Hero d'une page d'accompagnement : texte à gauche, encadré de réservation à droite
+ * (prix, bouton, liste courte « inclus »). Le bouton porte l'id `reserver`, cible du
+ * bouton de l'en-tête, et `data-cta-hero` pour la barre mobile.
+ */
+import type { CollectionEntry } from 'astro:content';
+import EnteteSection from '../ui/EnteteSection.astro';
+import Bouton from '../ui/Bouton.astro';
+import Icone from '../ui/Icone.astro';
+import { fr, prix } from '../../lib/format';
+
+interface Props {
+  etiquette: string;
+  titre: string;
+  texte: string;
+  offre: CollectionEntry<'offres'>;
+}
+const { etiquette, titre, texte, offre } = Astro.props;
+const o = offre.data;
+---
+
+<section class="hero-offre" aria-labelledby="hero-titre">
+  <div class="conteneur hero-offre__grille">
+    <EnteteSection id="hero-titre" niveau={1} etiquette={etiquette} titre={titre} intro={texte} />
+
+    <div class="hero-offre__panneau">
+      <span class="hero-offre__rayures" aria-hidden="true"></span>
+      <p class="hero-offre__prix">
+        <span class="hero-offre__montant">{prix(o.prix)}</span>
+        <span class="hero-offre__modalite">{fr(o.prixDetail ?? o.modalite)}</span>
+      </p>
+      <Bouton href={o.lien} taille="l" pleineLargeur id="reserver" data-cta-hero>
+        {fr(o.bouton)}
+      </Bouton>
+      {
+        o.inclusCourt && (
+          <div class="hero-offre__inclus">
+            <p class="hero-offre__sous-titre">Ce que tu reçois</p>
+            <ul>
+              {o.inclusCourt.map((item) => (
+                <li>
+                  <Icone nom="coche" taille={16} />
+                  <span>{fr(item)}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Crème pâle, comme la section Accompagnement de la landing : on est côté « service ». */
+  .hero-offre {
+    padding-block: clamp(3rem, 8vw, 6rem);
+    background: linear-gradient(180deg, var(--creme-pale) 0%, var(--blanc) 100%);
+  }
+  .hero-offre__grille {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(2rem, 5vw, 4.5rem);
+  }
+  .hero-offre__grille :global(.entete-section) {
+    margin-bottom: 0;
+  }
+  .hero-offre__grille :global(h1) {
+    font-size: clamp(2.4rem, 5.5vw, 4rem);
+  }
+  .hero-offre__panneau {
+    position: relative;
+    display: grid;
+    gap: 1.5rem;
+    padding: clamp(1.75rem, 3.5vw, 2.25rem);
+    border-radius: var(--r-l);
+    background: var(--blanc);
+    border: 1px solid var(--trait-fort);
+    box-shadow: var(--ombre-forte);
+    overflow: hidden;
+  }
+  .hero-offre__rayures {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 0.6rem;
+    background: var(--rayures);
+  }
+  .hero-offre__prix {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .hero-offre__montant {
+    font-family: var(--f-titre);
+    font-size: clamp(3.5rem, 7vw, 4.5rem);
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+  }
+  .hero-offre__modalite {
+    font-size: 0.95rem;
+    color: var(--texte-doux);
+  }
+  .hero-offre__inclus {
+    display: grid;
+    gap: 0.85rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--trait);
+  }
+  .hero-offre__sous-titre {
+    font-weight: 700;
+  }
+  .hero-offre__inclus ul {
+    list-style: none;
+    display: grid;
+    gap: 0.55rem;
+    font-size: 0.975rem;
+  }
+  .hero-offre__inclus li {
+    display: grid;
+    grid-template-columns: 1.4rem 1fr;
+    gap: 0.6rem;
+  }
+  .hero-offre__inclus :global(svg) {
+    width: 1.4rem;
+    height: 1.4rem;
+    padding: 0.2rem;
+    border-radius: 50%;
+    background: var(--bleu-pale);
+    color: var(--bordeaux);
+  }
+
+  @media (max-width: 52rem) {
+    .hero-offre__grille {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

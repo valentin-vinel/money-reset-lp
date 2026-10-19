@@ -87,6 +87,7 @@ const accompagnements = defineCollection({
     /** La liste vient de `inclus` dans offres.yaml. */
     resultats: z.object({ titre: z.string() }),
     ctaFinal: z.object({ titre: z.string(), texte: z.string() }),
+    faq: z.object({ titre: z.string() }).default({ titre: 'Questions fréquentes' }),
   }),
 });
 

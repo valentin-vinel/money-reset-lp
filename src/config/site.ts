@@ -12,7 +12,7 @@ export const site = {
   instagram: '',
 } as const;
 
-/** Liens du menu (ancres de la page d'accueil). */
+/** Liens du menu (ancres de la page d'accueil, voir `lienAncre`). */
 export const navigation = [
   { libelle: 'Fonctionnalités', ancre: 'fonctionnalites' },
   { libelle: 'Comment ça marche', ancre: 'comment-ca-marche' },
