@@ -38,7 +38,7 @@ Les réglages généraux (nom, marque, autrice, e-mail, réseaux, menu d'ancres)
 
 ## À compléter avant la mise en ligne (repris du README)
 
-- Liens de paiement : champ `lien` des offres dans `offres.yaml` (actuellement `#`)
+- Liens des accompagnements (Calendly envisagé) : champ `lien` dans `offres.yaml`, encore `#` ; les outils ont leur lien Stripe
 - Domaine final : `site` dans `astro.config.mjs`
 - Réponse FAQ « Puis-je être remboursée ? » (passer ensuite `brouillon: false`)
 - Mentions légales / CGV

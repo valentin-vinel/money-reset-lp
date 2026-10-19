@@ -36,7 +36,7 @@
     En quelques minutes par jour, tu sais combien tu as dépensé, où, et ce qu'il te reste.
     Ton score te montre tes progrès mois après mois, et tes projets ont enfin une date.
   bouton: Je commence avec l'Essentielle
-  lien: "#"
+  lien: https://buy.stripe.com/3cI7sMbQofnL7435lU2Nq00
 
 - id: complete
   ordre: 2
@@ -65,7 +65,7 @@
     En 30 jours, tu passes d'un budget flou et stressant à un budget organisé. Tu sais ce que tu
     peux dépenser, ce que tu mets de côté, où tu en seras dans un an, et tu as repris confiance.
   bouton: Je reprends mon budget en main
-  lien: "#"
+  lien: https://buy.stripe.com/3cI4gA8Ec3F30FFbKi2Nq01
 
 # ── Offres d'accompagnement : prêtes pour la future page complète ──
 
