@@ -1,0 +1,20 @@
+---
+/**
+ * Page /score : test « Money Reset Score » en 10 questions.
+ * Textes et barème : src/content/score.yaml
+ */
+import Base from '../layouts/Base.astro';
+import Entete from '../components/sections/Entete.astro';
+import TestScore from '../components/sections/TestScore.astro';
+import PiedDePage from '../components/sections/PiedDePage.astro';
+import { testScore } from '../lib/contenu';
+import { url } from '../lib/format';
+
+const donnees = await testScore();
+---
+
+<Base titre={donnees.seo.titre} description={donnees.seo.description}>
+  <Entete slot="entete" cta="Voir les formules" ctaHref={url('#formules')} />
+  <TestScore donnees={donnees} />
+  <PiedDePage slot="pied" />
+</Base>

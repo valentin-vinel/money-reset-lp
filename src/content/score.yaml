@@ -1,0 +1,197 @@
+# ─────────────────────────────────────────────────────────────
+#  TEST « MONEY RESET SCORE » (page /score)
+#  • piliers : l'ordre est celui du ticket ; `max` = points du pilier.
+#  • questions : `pilier` doit reprendre l'id d'un pilier. Pour chaque pilier,
+#    la somme des meilleures réponses doit égaler son `max`, et le total des
+#    `max` doit faire 100 : `npm run build` le vérifie.
+#  • niveaux : du plus haut au plus bas ; `min` = score minimum du niveau.
+#  • Les espaces insécables (avant ? ! : € %…) sont ajoutés automatiquement.
+# ─────────────────────────────────────────────────────────────
+
+money-reset-score:
+  seo:
+    titre: Calcule ton Money Reset Score — Money Reset
+    description: >-
+      10 questions pour savoir où tu en es vraiment avec ton argent, et par quoi commencer. Ton
+      score sur 100, pilier par pilier, en 2 minutes.
+
+  intro:
+    titre: Calcule ton
+    titreSouligne: Money Reset Score
+    texte: 10 questions pour savoir où tu en es vraiment avec ton argent, et par quoi commencer.
+    faits:
+      - 2 minutes
+      - Aucun chiffre exact à donner
+      - Résultat immédiat
+    bouton: Commencer le test
+    legende: >-
+      Ton score sur 100 évalue 5 piliers : ton épargne, ton fonds d'urgence, tes dettes, tes
+      objectifs et le suivi de tes dépenses. Tes réponses restent sur ton écran, rien n'est
+      enregistré.
+
+  quiz:
+    precedente: Question précédente
+    compteur: Question {n} sur {total}
+
+  piliers:
+    - id: epargne
+      nom: Taux d'épargne
+      max: 25
+      conseil:
+        titre: Épargne en premier, pas en dernier
+        texte: >-
+          Programme un virement automatique le jour de ta paie, même de 20 €. On épargne beaucoup
+          plus facilement ce qu'on ne voit pas passer.
+    - id: urgence
+      nom: Fonds d'urgence
+      max: 25
+      conseil:
+        titre: Construis ton matelas de sécurité
+        texte: >-
+          Vise d'abord un mois de charges fixes mis de côté, puis trois. C'est lui qui transforme
+          un imprévu en simple contrariété.
+    - id: dettes
+      nom: Dettes
+      max: 20
+      conseil:
+        titre: Fais la lumière sur tes crédits
+        texte: >-
+          Liste chaque crédit avec sa mensualité, son taux et sa date de fin. Et évite le paiement
+          en plusieurs fois pour le quotidien : c'est un crédit qui ne dit pas son nom.
+    - id: objectifs
+      nom: Objectifs
+      max: 15
+      conseil:
+        titre: Donne une date à tes projets
+        texte: >-
+          Chiffre chaque projet et fixe une échéance. Un objectif chiffré devient un versement
+          mensuel, et un versement mensuel devient une habitude.
+    - id: suivi
+      nom: Suivi des dépenses
+      max: 15
+      conseil:
+        titre: Regarde tes chiffres en face
+        texte: >-
+          Note tes dépenses quelques minutes par jour pendant un mois. Tu ne peux pas améliorer ce
+          que tu ne mesures pas, et c'est souvent moins angoissant que de ne pas savoir.
+
+  questions:
+    - pilier: epargne
+      question: Chaque mois, combien arrives-tu à mettre de côté ?
+      reponses:
+        - { texte: "Rien, ou presque jamais", points: 0 }
+        - { texte: Moins de 50 €, points: 4 }
+        - { texte: Entre 50 et 150 €, points: 8 }
+        - { texte: Entre 150 et 300 €, points: 12 }
+        - { texte: Plus de 300 €, points: 15 }
+    - pilier: epargne
+      question: En fin de mois, ton compte courant est plutôt…
+      reponses:
+        - { texte: Souvent à découvert, points: 0 }
+        - { texte: Tout juste à zéro, points: 3 }
+        - { texte: Avec un petit reste, points: 7 }
+        - { texte: "Confortable, sans stress", points: 10 }
+    - pilier: urgence
+      question: >-
+        Si tu ne touchais plus aucun revenu, ton épargne disponible couvrirait tes charges
+        pendant…
+      reponses:
+        - { texte: Je n'ai pas d'épargne, points: 0 }
+        - { texte: Moins d'un mois, points: 4 }
+        - { texte: 1 à 3 mois, points: 9 }
+        - { texte: 3 à 6 mois, points: 13 }
+        - { texte: Plus de 6 mois, points: 15 }
+    - pilier: urgence
+      question: Une dépense imprévue de 500 € tombe demain. Comment tu la paies ?
+      reponses:
+        - { texte: Je devrais emprunter ou utiliser un crédit, points: 0 }
+        - { texte: Avec mon découvert, points: 3 }
+        - { texte: "Avec mon épargne, mais ça ferait mal", points: 7 }
+        - { texte: Sans problème, points: 10 }
+    - pilier: dettes
+      question: Hors crédit immobilier, combien rembourses-tu de crédits chaque mois ?
+      reponses:
+        - { texte: Je n'ai aucun crédit, points: 10 }
+        - { texte: Moins de 100 € par mois, points: 8 }
+        - { texte: Entre 100 et 300 € par mois, points: 4 }
+        - { texte: Plus de 300 € par mois, points: 0 }
+    - pilier: dettes
+      question: >-
+        Utilises-tu le paiement en plusieurs fois ou un crédit renouvelable pour tes achats
+        courants ?
+      reponses:
+        - { texte: Jamais, points: 10 }
+        - { texte: De temps en temps, points: 5 }
+        - { texte: Souvent, points: 0 }
+    - pilier: objectifs
+      question: As-tu des projets d'épargne avec un montant et une date ?
+      reponses:
+        - { texte: "Non, aucun", points: 0 }
+        - { texte: "Quelques envies, mais rien de chiffré", points: 2 }
+        - { texte: "Oui, chiffrés et datés", points: 5 }
+        - { texte: "Oui, avec un versement mensuel prévu pour chacun", points: 8 }
+    - pilier: objectifs
+      question: Ton épargne part-elle automatiquement chaque mois ?
+      reponses:
+        - { texte: "Non, j'épargne ce qu'il reste… quand il reste quelque chose", points: 0 }
+        - { texte: "Parfois, quand j'y pense", points: 3 }
+        - { texte: "Oui, par un virement programmé", points: 7 }
+    - pilier: suivi
+      question: Sais-tu combien tu as dépensé le mois dernier ?
+      reponses:
+        - { texte: Aucune idée, points: 0 }
+        - { texte: À peu près, points: 4 }
+        - { texte: "Oui, à 50 € près", points: 8 }
+    - pilier: suivi
+      question: À quelle fréquence regardes-tu tes dépenses ?
+      reponses:
+        - { texte: "Jamais, ça m'angoisse", points: 0 }
+        - { texte: Quand il y a un problème, points: 2 }
+        - { texte: Chaque semaine, points: 5 }
+        - { texte: Je suis mes dépenses au quotidien, points: 7 }
+
+  niveaux:
+    - min: 80
+      nom: En pleine maîtrise
+      texte: >-
+        Bravo, ton argent travaille pour toi. Continue de suivre tes chiffres pour garder le cap
+        et viser plus grand.
+    - min: 60
+      nom: Sur la bonne voie
+      texte: >-
+        Tu as déjà de bons réflexes. Il te manque surtout de la régularité et de la visibilité
+        pour passer un cap.
+    - min: 40
+      nom: En reconstruction
+      texte: >-
+        Les bases sont là, mais un imprévu peut encore tout faire basculer. Quelques ajustements
+        ciblés vont faire une vraie différence.
+    - min: 0
+      nom: Zone rouge
+      texte: >-
+        Ton budget te mène la vie dure en ce moment. C'est le meilleur moment pour faire un
+        reset : chaque petit pas va compter.
+
+  resultat:
+    titre: Voici ton ticket
+    sousTitre: Ton score, pilier par pilier.
+    ticket:
+      marque: Sheep ton orga
+      titre: Money Reset Score
+      date: Bilan express du {date}
+      total: Total
+      merci: Merci d'avoir pris ce temps pour toi ✨
+    priorites:
+      titre: Tes 2 priorités
+      texte: Les piliers où tu peux gagner le plus de points, et une première action pour chacun.
+    cta:
+      titre: Passe à l'action avec Money Reset
+      texte: >-
+        L'outil Google Sheets qui calcule ton score chaque mois, devine tes catégories de
+        dépenses et te montre où tu en seras dans un an.
+      bouton: Découvrir les formules
+    modifier: Modifier mes réponses
+    recommencer: Refaire le test
+    avertissement: >-
+      Ce score est indicatif. Il t'aide à repérer tes priorités et ne constitue pas un conseil
+      financier personnalisé.

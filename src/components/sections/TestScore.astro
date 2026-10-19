@@ -1,0 +1,597 @@
+---
+/**
+ * Test « Money Reset Score » : intro, 10 questions puis ticket de résultat.
+ * Tout se passe dans le navigateur, rien n'est enregistré.
+ * Textes et barème : src/content/score.yaml
+ */
+import Bouton from '../ui/Bouton.astro';
+import { fr, url } from '../../lib/format';
+import type { testScore } from '../../lib/contenu';
+
+type Donnees = Awaited<ReturnType<typeof testScore>>;
+interface Props {
+  donnees: Donnees;
+}
+const { intro, quiz, piliers, questions, niveaux, resultat } = Astro.props.donnees;
+
+// Textes déjà passés par fr() : le script n'a plus qu'à les insérer.
+const pourLeScript = {
+  compteur: fr(quiz.compteur),
+  date: fr(resultat.ticket.date),
+  piliers: piliers.map((p) => ({
+    id: p.id,
+    nom: fr(p.nom),
+    max: p.max,
+    conseil: { titre: fr(p.conseil.titre), texte: fr(p.conseil.texte) },
+  })),
+  questions: questions.map((q) => ({
+    pilier: q.pilier,
+    question: fr(q.question),
+    reponses: q.reponses.map((r) => ({ texte: fr(r.texte), points: r.points })),
+  })),
+  niveaux: niveaux.map((n) => ({ min: n.min, nom: fr(n.nom), texte: fr(n.texte) })),
+};
+const json = JSON.stringify(pourLeScript).replace(/</g, '\\u003c');
+---
+
+<section class="test-score" data-score aria-labelledby="score-titre">
+  <div class="conteneur test-score__conteneur">
+    <!-- Intro -->
+    <div class="intro" data-etape="intro">
+      <h1 id="score-titre">
+        {fr(intro.titre)} <span class="intro__surligne">{fr(intro.titreSouligne)}</span>
+      </h1>
+      <p class="intro__texte">{fr(intro.texte)}</p>
+      <ul class="intro__faits">
+        {intro.faits.map((f) => <li>{fr(f)}</li>)}
+      </ul>
+      <Bouton taille="l" data-commencer>{fr(intro.bouton)}</Bouton>
+      <p class="intro__legende">{fr(intro.legende)}</p>
+    </div>
+
+    <!-- Questions -->
+    <div class="quiz" data-etape="quiz" hidden>
+      <div class="quiz__progression" aria-hidden="true">
+        {questions.map(() => <span />)}
+      </div>
+      <p class="quiz__compteur" data-compteur></p>
+      <span class="quiz__pilier" data-pilier></span>
+      <h2 class="quiz__question" id="quiz-question" data-question tabindex="-1"></h2>
+      <div class="quiz__reponses" role="group" aria-labelledby="quiz-question" data-reponses></div>
+      <div class="quiz__navigation">
+        <Bouton variante="contour" data-retour>← {fr(quiz.precedente)}</Bouton>
+      </div>
+    </div>
+
+    <!-- Résultat -->
+    <div class="resultat" data-etape="resultat" hidden>
+      <h2 class="resultat__titre" data-resultat-titre tabindex="-1">{fr(resultat.titre)}</h2>
+      <p class="resultat__sous-titre">{fr(resultat.sousTitre)}</p>
+
+      <div class="ticket__fente" aria-hidden="true"></div>
+      <div class="ticket__cadre">
+        <div class="ticket" data-ticket>
+          <div class="ticket__entete">
+            <p class="ticket__marque">{fr(resultat.ticket.marque)}</p>
+            <p class="ticket__titre">{fr(resultat.ticket.titre)}</p>
+            <p class="ticket__discret" data-date></p>
+          </div>
+          <hr />
+          <ul class="ticket__lignes" data-lignes></ul>
+          <hr />
+          <p class="ticket__total">
+            <span>{fr(resultat.ticket.total)}</span>
+            <span class="ticket__score"><span data-total></span><small> / 100</small></span>
+          </p>
+          <p class="ticket__niveau" data-niveau></p>
+          <p class="ticket__discret" data-niveau-texte></p>
+          <hr />
+          <p class="ticket__merci ticket__discret">{fr(resultat.ticket.merci)}</p>
+        </div>
+      </div>
+
+      <div class="priorites">
+        <h3>{fr(resultat.priorites.titre)}</h3>
+        <p class="priorites__texte">{fr(resultat.priorites.texte)}</p>
+        <div class="priorites__liste" data-conseils></div>
+      </div>
+
+      <div class="score-cta">
+        <span class="score-cta__rayures" aria-hidden="true"></span>
+        <h3>{fr(resultat.cta.titre)}</h3>
+        <p>{fr(resultat.cta.texte)}</p>
+        <Bouton href={url('#formules')} variante="clair" taille="l">{fr(resultat.cta.bouton)}</Bouton>
+      </div>
+
+      <div class="resultat__actions">
+        <Bouton variante="contour" data-modifier>← {fr(resultat.modifier)}</Bouton>
+        <Bouton variante="contour" data-recommencer>{fr(resultat.recommencer)}</Bouton>
+      </div>
+      <p class="resultat__avertissement">{fr(resultat.avertissement)}</p>
+    </div>
+  </div>
+
+  <template data-modele-ligne>
+    <li class="ticket__ligne">
+      <span class="voyant" aria-hidden="true"></span>
+      <span data-nom></span>
+      <span class="nombre" data-points></span>
+    </li>
+  </template>
+  <template data-modele-conseil>
+    <div class="conseil">
+      <strong></strong>
+      <p></p>
+    </div>
+  </template>
+
+  <script type="application/json" data-score-donnees set:html={json} />
+</section>
+
+<script>
+  type Pilier = { id: string; nom: string; max: number; conseil: { titre: string; texte: string } };
+  type Question = { pilier: string; question: string; reponses: { texte: string; points: number }[] };
+  type Niveau = { min: number; nom: string; texte: string };
+  type Donnees = { compteur: string; date: string; piliers: Pilier[]; questions: Question[]; niveaux: Niveau[] };
+
+  const racine = document.querySelector<HTMLElement>('[data-score]');
+  if (racine) {
+    const d: Donnees = JSON.parse(racine.querySelector('[data-score-donnees]')!.textContent!);
+    const el = <T extends HTMLElement = HTMLElement>(nom: string) => racine.querySelector<T>(`[data-${nom}]`)!;
+
+    const reponses: (number | null)[] = d.questions.map(() => null);
+    let courante = 0;
+    let enTransition = false;
+
+    function afficher(etape: 'intro' | 'quiz' | 'resultat') {
+      racine!.querySelectorAll<HTMLElement>('[data-etape]').forEach((e) => (e.hidden = e.dataset.etape !== etape));
+      racine!.scrollIntoView({ block: 'start' });
+    }
+
+    function afficherQuestion() {
+      const q = d.questions[courante];
+      racine!.querySelectorAll('.quiz__progression span').forEach((s, i) => {
+        s.classList.toggle('fait', i < courante);
+        s.classList.toggle('courant', i === courante);
+      });
+      el('compteur').textContent = d.compteur
+        .replace('{n}', String(courante + 1))
+        .replace('{total}', String(d.questions.length));
+      el<HTMLButtonElement>('retour').disabled = courante === 0;
+      el('pilier').textContent = d.piliers.find((p) => p.id === q.pilier)!.nom;
+      el('question').textContent = q.question;
+
+      const boite = el('reponses');
+      boite.replaceChildren(
+        ...q.reponses.map((r, i) => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'reponse';
+          b.textContent = r.texte;
+          b.setAttribute('aria-pressed', String(reponses[courante] === i));
+          b.addEventListener('click', () => choisir(i));
+          return b;
+        }),
+      );
+      el('question').focus({ preventScroll: true });
+    }
+
+    function choisir(i: number) {
+      if (enTransition) return;
+      reponses[courante] = i;
+      el('reponses')
+        .querySelectorAll('button')
+        .forEach((b, k) => b.setAttribute('aria-pressed', String(k === i)));
+      // Court délai pour voir la réponse sélectionnée avant de passer à la suite
+      enTransition = true;
+      setTimeout(() => {
+        enTransition = false;
+        if (courante < d.questions.length - 1) {
+          courante++;
+          afficherQuestion();
+        } else {
+          afficherResultat();
+        }
+      }, 280);
+    }
+
+    function afficherResultat() {
+      const points: Record<string, number> = Object.fromEntries(d.piliers.map((p) => [p.id, 0]));
+      d.questions.forEach((q, i) => {
+        const r = reponses[i];
+        if (r !== null) points[q.pilier] += q.reponses[r].points;
+      });
+      const total = Object.values(points).reduce((a, b) => a + b, 0);
+      const niveau = d.niveaux.find((n) => total >= n.min)!;
+
+      const date = new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+      el('date').textContent = d.date.replace('{date}', date);
+
+      const modeleLigne = el<HTMLTemplateElement>('modele-ligne');
+      el('lignes').replaceChildren(
+        ...d.piliers.map((p) => {
+          const ligne = modeleLigne.content.cloneNode(true) as DocumentFragment;
+          const ratio = points[p.id] / p.max;
+          const voyant = ratio >= 0.7 ? 'vert' : ratio >= 0.4 ? 'orange' : 'rouge';
+          ligne.querySelector('.voyant')!.classList.add(`voyant--${voyant}`);
+          ligne.querySelector('[data-nom]')!.textContent = p.nom;
+          ligne.querySelector('[data-points]')!.textContent = `${points[p.id]} / ${p.max}`;
+          return ligne;
+        }),
+      );
+      el('total').textContent = String(total);
+      el('niveau').textContent = niveau.nom;
+      el('niveau-texte').textContent = niveau.texte;
+
+      // Les 2 piliers où il y a le plus à gagner : ratio le plus faible, puis le plus de points manquants
+      const modeleConseil = el<HTMLTemplateElement>('modele-conseil');
+      const priorites = [...d.piliers]
+        .sort((a, b) => points[a.id] / a.max - points[b.id] / b.max || b.max - points[b.id] - (a.max - points[a.id]))
+        .slice(0, 2);
+      el('conseils').replaceChildren(
+        ...priorites.map((p) => {
+          const conseil = modeleConseil.content.cloneNode(true) as DocumentFragment;
+          conseil.querySelector('strong')!.textContent = `${p.nom} : ${p.conseil.titre}`;
+          conseil.querySelector('p')!.textContent = p.conseil.texte;
+          return conseil;
+        }),
+      );
+
+      afficher('resultat');
+      el('resultat-titre').focus({ preventScroll: true });
+      // Relance l'animation d'impression du ticket
+      const ticket = el('ticket');
+      ticket.classList.remove('ticket--imprime');
+      void ticket.offsetWidth;
+      ticket.classList.add('ticket--imprime');
+    }
+
+    el('commencer').addEventListener('click', () => {
+      courante = 0;
+      afficher('quiz');
+      afficherQuestion();
+    });
+    el('retour').addEventListener('click', () => {
+      if (courante > 0) {
+        courante--;
+        afficherQuestion();
+      }
+    });
+    el('modifier').addEventListener('click', () => {
+      courante = d.questions.length - 1;
+      afficher('quiz');
+      afficherQuestion();
+    });
+    el('recommencer').addEventListener('click', () => {
+      reponses.fill(null);
+      courante = 0;
+      afficher('intro');
+    });
+  }
+</script>
+
+<style>
+  .test-score {
+    padding-block: clamp(2.5rem, 7vw, 4.5rem) var(--section);
+    background: linear-gradient(180deg, var(--bleu-pale) 0%, var(--bleu-voile) 35%, var(--blanc) 80%);
+    scroll-margin-top: 5rem;
+  }
+  .test-score__conteneur {
+    max-width: 42rem;
+  }
+  [hidden] {
+    display: none !important;
+  }
+  h3 {
+    font-size: clamp(1.5rem, 3.5vw, 1.9rem);
+  }
+
+  /* ───────── Intro ───────── */
+  .intro {
+    display: grid;
+    justify-items: start;
+    gap: 1.5rem;
+  }
+  .intro h1 {
+    font-size: clamp(2.8rem, 9vw, 4.75rem);
+    line-height: 0.98;
+  }
+  .intro__surligne {
+    background: linear-gradient(transparent 60%, rgb(116 164 208 / 0.45) 60% 92%, transparent 92%);
+    padding-inline: 0.05em;
+  }
+  .intro__texte {
+    font-size: clamp(1.1rem, 2.2vw, 1.25rem);
+    color: var(--texte-doux);
+    max-width: 34ch;
+  }
+  .intro__faits {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.4rem;
+    font-size: 0.95rem;
+    color: var(--texte-doux);
+  }
+  .intro__faits li::before {
+    content: '';
+    display: inline-block;
+    width: 0.55rem;
+    height: 0.55rem;
+    margin-right: 0.5rem;
+    border-radius: 50%;
+    background: var(--bleu);
+  }
+  .intro__legende {
+    margin-top: 1rem;
+    max-width: 46ch;
+    font-size: 0.9rem;
+    color: var(--texte-doux);
+  }
+
+  /* ───────── Questions ───────── */
+  .quiz__progression {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    gap: 0.3rem;
+    margin-bottom: 0.75rem;
+  }
+  .quiz__progression span {
+    height: 0.375rem;
+    border-radius: 999px;
+    background: var(--trait);
+    transition: background-color 0.25s ease;
+  }
+  .quiz__progression span.fait {
+    background: var(--bordeaux);
+  }
+  .quiz__progression span.courant {
+    background: var(--bleu);
+  }
+  .quiz__compteur {
+    margin-bottom: 2rem;
+    font-size: 0.875rem;
+    color: var(--texte-doux);
+  }
+  .quiz__navigation {
+    margin-top: 1.6rem;
+  }
+  /* Pas de question précédente à la première : le bouton disparaît sans décaler la page */
+  .quiz__navigation :global(button:disabled) {
+    visibility: hidden;
+  }
+  .quiz__pilier {
+    display: inline-block;
+    margin-bottom: 0.9rem;
+    padding: 0.25rem 0.7rem;
+    border-radius: var(--r-s);
+    background: var(--bleu-pale);
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+  .quiz__question {
+    margin-bottom: 1.75rem;
+    font-size: clamp(1.6rem, 4.5vw, 2.1rem);
+    line-height: 1.15;
+  }
+  .quiz__question:focus {
+    outline: none;
+  }
+  .quiz__reponses {
+    display: grid;
+    gap: 0.6rem;
+  }
+  .quiz__reponses :global(.reponse) {
+    display: block;
+    width: 100%;
+    padding: 1rem 1.15rem;
+    border: 1.5px solid var(--trait-fort);
+    border-radius: var(--r-m);
+    background: var(--blanc);
+    font: inherit;
+    line-height: 1.35;
+    color: var(--bordeaux);
+    text-align: left;
+    cursor: pointer;
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease;
+  }
+  .quiz__reponses :global(.reponse:hover) {
+    border-color: var(--bleu);
+  }
+  /* Réponse choisie : jaune crème, comme les cases à remplir de l'outil */
+  .quiz__reponses :global(.reponse[aria-pressed='true']) {
+    background: var(--creme);
+    border-color: var(--creme);
+    box-shadow: inset 4px 0 0 var(--bleu);
+  }
+
+  /* ───────── Résultat ───────── */
+  .resultat__titre {
+    font-size: clamp(2.2rem, 6vw, 3rem);
+  }
+  .resultat__titre:focus {
+    outline: none;
+  }
+  .resultat__sous-titre {
+    margin: 0.4rem 0 1.75rem;
+    color: var(--texte-doux);
+  }
+
+  /* Ticket de caisse qui sort de la fente */
+  .ticket__fente {
+    position: relative;
+    z-index: 1;
+    height: 0.625rem;
+    margin-inline: 0.4rem;
+    border-radius: 999px;
+    background: var(--bordeaux);
+  }
+  .ticket__cadre {
+    overflow: hidden;
+    margin: -0.25rem 1rem 0;
+  }
+  .ticket {
+    padding: 1.6rem 1.4rem 2.1rem;
+    background: var(--blanc);
+    box-shadow: inset 0 0 0 1px var(--trait);
+    font-size: 0.9rem;
+    font-variant-numeric: tabular-nums;
+    transform: translateY(-100%);
+    /* Bord inférieur en dents de scie */
+    -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 14px 100%;
+    mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 14px 100%;
+  }
+  .ticket--imprime {
+    animation: impression 1.6s cubic-bezier(0.3, 0.7, 0.3, 1) forwards;
+  }
+  @keyframes impression {
+    0% {
+      transform: translateY(-100%);
+    }
+    55% {
+      transform: translateY(-35%);
+    }
+    62% {
+      transform: translateY(-38%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  .ticket hr {
+    margin: 1rem 0;
+    border: 0;
+    border-top: 1.5px dashed var(--trait-fort);
+  }
+  .ticket__entete,
+  .ticket__merci {
+    text-align: center;
+  }
+  .ticket__marque {
+    font-family: var(--f-script);
+    font-size: 1.4rem;
+    line-height: 1.1;
+  }
+  .ticket__titre {
+    font-family: var(--f-titre);
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+  .ticket__discret {
+    font-size: 0.8rem;
+    color: var(--texte-doux);
+  }
+  .ticket__lignes {
+    list-style: none;
+    display: grid;
+    gap: 0.4rem;
+  }
+  .ticket__ligne {
+    display: grid;
+    grid-template-columns: 0.875rem 1fr auto;
+    gap: 0.6rem;
+    align-items: center;
+  }
+  .voyant {
+    width: 0.625rem;
+    height: 0.625rem;
+    border-radius: 50%;
+  }
+  .voyant--vert {
+    background: var(--vert);
+  }
+  .voyant--orange {
+    background: var(--orange);
+  }
+  .voyant--rouge {
+    background: var(--rouge);
+  }
+  .ticket__total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .ticket__score {
+    font-family: var(--f-titre);
+    font-size: 4rem;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: none;
+  }
+  .ticket__score small {
+    font-size: 1.3rem;
+    color: var(--texte-doux);
+  }
+  .ticket__niveau {
+    margin: 0.4rem 0 0.25rem;
+    font-weight: 700;
+  }
+
+  /* Priorités */
+  .priorites {
+    margin-top: 2.75rem;
+  }
+  .priorites__texte {
+    margin: 0.4rem 0 1.25rem;
+    color: var(--texte-doux);
+  }
+  .priorites__liste {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .priorites__liste :global(.conseil) {
+    padding: 0.25rem 0 0.25rem 1rem;
+    border-left: 4px solid var(--bleu);
+  }
+  .priorites__liste :global(.conseil strong) {
+    display: block;
+    margin-bottom: 0.15rem;
+    font-family: var(--f-titre);
+    font-size: 1.15rem;
+    font-weight: 400;
+  }
+  .priorites__liste :global(.conseil p) {
+    color: var(--texte-doux);
+  }
+
+  /* Appel à l'action, même esprit que le CTA final de la landing */
+  .score-cta {
+    position: relative;
+    display: grid;
+    justify-items: start;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    padding: 2.25rem clamp(1.4rem, 4vw, 2.25rem) 2rem;
+    border-radius: var(--r-l);
+    background: var(--bordeaux);
+    color: var(--creme);
+    overflow: hidden;
+  }
+  .score-cta__rayures {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 0.6rem;
+    background: var(--rayures);
+  }
+  .score-cta p {
+    color: rgb(255 242 172 / 0.85);
+  }
+
+  .resultat__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+  }
+  .resultat__avertissement {
+    margin-top: 2rem;
+    font-size: 0.825rem;
+    color: var(--texte-doux);
+  }
+</style>

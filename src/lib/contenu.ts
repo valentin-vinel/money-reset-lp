@@ -33,3 +33,10 @@ export async function page(id: string) {
   if (!entree) throw new Error(`Page « ${id} » introuvable dans src/content/pages/`);
   return entree.data;
 }
+
+/** Contenu du test « Money Reset Score » (page /score). */
+export async function testScore() {
+  const entree = await getEntry('score', 'money-reset-score');
+  if (!entree) throw new Error('Entrée « money-reset-score » introuvable dans src/content/score.yaml');
+  return entree.data;
+}

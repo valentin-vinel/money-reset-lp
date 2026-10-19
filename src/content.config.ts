@@ -105,6 +105,84 @@ const temoignages = defineCollection({
   }),
 });
 
+/** Test « Money Reset Score » (page /score) : une seule entrée, `money-reset-score`. */
+const score = defineCollection({
+  loader: file('src/content/score.yaml'),
+  schema: z
+    .object({
+      seo: z.object({ titre: z.string(), description: z.string() }),
+      intro: z.object({
+        titre: z.string(),
+        /** Fin du titre, surlignée. */
+        titreSouligne: z.string(),
+        texte: z.string(),
+        faits: z.array(z.string()),
+        bouton: z.string(),
+        legende: z.string(),
+      }),
+      quiz: z.object({
+        precedente: z.string(),
+        /** `{n}` et `{total}` sont remplacés par le numéro de la question et leur nombre. */
+        compteur: z.string(),
+      }),
+      piliers: z
+        .array(
+          z.object({
+            id: z.string(),
+            nom: z.string(),
+            max: z.number().int().positive(),
+            conseil: z.object({ titre: z.string(), texte: z.string() }),
+          }),
+        )
+        .min(2),
+      questions: z
+        .array(
+          z.object({
+            pilier: z.string(),
+            question: z.string(),
+            reponses: z.array(z.object({ texte: z.string(), points: z.number().int().min(0) })).min(2),
+          }),
+        )
+        .min(1),
+      /** Du plus haut au plus bas ; le dernier doit commencer à 0. */
+      niveaux: z.array(z.object({ min: z.number(), nom: z.string(), texte: z.string() })).min(1),
+      resultat: z.object({
+        titre: z.string(),
+        sousTitre: z.string(),
+        ticket: z.object({
+          marque: z.string(),
+          titre: z.string(),
+          /** `{date}` est remplacé par la date du jour. */
+          date: z.string(),
+          total: z.string(),
+          merci: z.string(),
+        }),
+        priorites: z.object({ titre: z.string(), texte: z.string() }),
+        cta: z.object({ titre: z.string(), texte: z.string(), bouton: z.string() }),
+        /** Retour à la dernière question, réponses conservées. */
+        modifier: z.string(),
+        recommencer: z.string(),
+        avertissement: z.string(),
+      }),
+    })
+    .superRefine((d, ctx) => {
+      const erreur = (message: string) => ctx.addIssue({ code: 'custom', message });
+      const maxAtteignable: Record<string, number> = {};
+      for (const q of d.questions) {
+        if (!d.piliers.some((p) => p.id === q.pilier)) erreur(`Question « ${q.question} » : pilier « ${q.pilier} » inconnu.`);
+        maxAtteignable[q.pilier] = (maxAtteignable[q.pilier] ?? 0) + Math.max(...q.reponses.map((r) => r.points));
+      }
+      for (const p of d.piliers) {
+        const atteignable = maxAtteignable[p.id] ?? 0;
+        if (atteignable !== p.max) erreur(`Pilier « ${p.id} » : max ${p.max}, mais les meilleures réponses donnent ${atteignable}.`);
+      }
+      const total = d.piliers.reduce((t, p) => t + p.max, 0);
+      if (total !== 100) erreur(`Les max des piliers totalisent ${total} au lieu de 100.`);
+      if (d.niveaux.at(-1)?.min !== 0) erreur('Le dernier niveau doit avoir `min: 0`.');
+      if (d.niveaux.some((n, i) => i > 0 && n.min >= d.niveaux[i - 1].min)) erreur('Les niveaux doivent aller du plus haut au plus bas.');
+    }),
+});
+
 const pages = defineCollection({
   loader: glob({ pattern: '*.yaml', base: './src/content/pages' }),
   schema: z.object({
@@ -137,4 +215,4 @@ const pages = defineCollection({
   }),
 });
 
-export const collections = { offres, fonctionnalites, faq, temoignages, pages };
+export const collections = { offres, fonctionnalites, faq, temoignages, score, pages };

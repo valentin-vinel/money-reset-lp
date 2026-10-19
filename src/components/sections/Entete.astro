@@ -17,7 +17,7 @@ const { cta, ctaHref } = Astro.props;
       <span>{site.nom}</span>
     </a>
     <nav class="entete__nav" aria-label="Navigation principale">
-      {navigation.map((l) => <a href={`#${l.ancre}`}>{l.libelle}</a>)}
+      {navigation.map((l) => <a href={url(`#${l.ancre}`)}>{l.libelle}</a>)}
     </nav>
     <Bouton href={ctaHref} class="entete__cta">{cta}</Bouton>
   </div>
