@@ -23,6 +23,7 @@ Il n'y a ni tests ni linter. `npm run build` sert de vérification : il échoue 
 - `pages/<id>.yaml` contient les textes propres à une page (hero, sections, SEO). `src/pages/index.astro` charge `page('google-sheets')` et transmet chaque bloc à son composant de section (souvent en `{...p.hero}`). Ajouter un champ demande donc de modifier à la fois le schéma `pages`, le YAML et les props du composant.
 - Les collections partagées (`offres`, `fonctionnalites`, `faq`, `temoignages`) se lisent **uniquement** via `src/lib/contenu.ts`, qui applique le tri par `ordre` et les filtres : `publie`, `brouillon`, `type` (`outil`/`service`), `formule`, et `pages` pour la FAQ. Ne pas appeler `getCollection` directement dans les pages.
 - Les offres de type `service` (Prise en main, Accompagnement 3 mois) s'affichent sur la landing uniquement dans la grille des tarifs, à côté des outils (`offresPubliees()` sans filtre). Le reste de la page (prix minimum, CTA final, section Complète) ne travaille qu'avec `offresPubliees('outil')`. La grille Tarifs crée une colonne par offre en desktop, passe en 2 × 2 sous 80rem et en carrousel horizontal sous 52rem.
+- Une offre avec un bloc `paiements` (Accompagnement 3 mois : comptant ou 3 fois) ouvre au clic une fenêtre de choix (`ui/ModalePaiement.astro`, élément `<dialog>`) ; son `lien` reste le lien de secours sans JavaScript.
 - La section Témoignages ne s'affiche que s'il existe au moins un témoignage publié.
 - La page `/score` (`src/pages/score.astro` → `sections/TestScore.astro`) est un test en 10 questions qui calcule un Money Reset Score indicatif, entièrement dans le navigateur. Textes, piliers, barème et niveaux sont dans `src/content/score.yaml` (collection `score`, lue via `testScore()`). Le schéma vérifie la cohérence du barème : chaque pilier doit pouvoir atteindre son `max` et le total doit faire 100.
 
@@ -38,7 +39,6 @@ Les réglages généraux (nom, marque, autrice, e-mail, réseaux, menu d'ancres)
 
 ## À compléter avant la mise en ligne (repris du README)
 
-- Liens des accompagnements (Calendly envisagé) : champ `lien` dans `offres.yaml`, encore `#` ; les outils ont leur lien Stripe
 - Domaine final : `site` dans `astro.config.mjs`
 - Réponse FAQ « Puis-je être remboursée ? » (passer ensuite `brouillon: false`)
 - Mentions légales / CGV

@@ -60,8 +60,7 @@ Dans les maquettes, le jaune crème = cases à remplir et le bleu pâle = cases 
 
 ## À compléter avant la mise en ligne
 
-- [x] Liens de paiement Stripe des outils (Essentielle, Complète)
-- [ ] Liens des accompagnements (Calendly envisagé) : champ `lien` dans `offres.yaml`, encore `#`
+- [x] Liens de paiement Stripe de toutes les offres (comptant et 3 fois pour l'Accompagnement 3 mois)
 - [ ] Adresse du site : `site` dans `astro.config.mjs`
 - [ ] Réponse « Puis-je être remboursée ? » dans `faq.yaml` (puis `brouillon: false`)
 - [ ] Optionnel : remplacer les maquettes par de vraies captures de l'outil (`src/components/visuels/`)
