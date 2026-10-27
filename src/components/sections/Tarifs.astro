@@ -142,12 +142,10 @@ const { titre, intro, conseil, offres } = Astro.props;
   .offre__titre {
     color: var(--texte-doux);
   }
-  /* Écart vertical resserré quand la mention passe sous le montant */
+  /* Mention (modalité de paiement) toujours sous le montant */
   .offre__prix {
-    display: flex;
-    align-items: baseline;
-    gap: 0.15rem 0.75rem;
-    flex-wrap: wrap;
+    display: grid;
+    gap: 0.15rem;
   }
   .offre__montant {
     font-family: var(--f-titre);
