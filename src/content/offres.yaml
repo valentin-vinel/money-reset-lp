@@ -103,8 +103,8 @@
   type: service
   nom: Accompagnement 3 mois
   prix: 249
-  prixDetail: ou 3 × 83 € sans frais
-  modalite: Paiement en une ou trois fois
+  prixDetail: ou en plusieurs fois avec Klarna
+  modalite: Paiement en une fois ou en plusieurs fois avec Klarna
   titre: 3 mois à tes côtés, jusqu'à ce que ton budget tienne tout seul
   resume: >-
     L'outil Money Reset Complète, trois appels de 1h30 (un par mois) et un accès direct à moi sur
@@ -125,18 +125,5 @@
     progrès mois après mois, tu as des objectifs chiffrés et réalistes pour la suite, l'habitude du
     suivi et l'autonomie pour continuer seule.
   bouton: Je commence mon accompagnement
+  # Le paiement en plusieurs fois est proposé par Klarna sur la page de paiement Stripe.
   lien: https://buy.stripe.com/4gM28s5s0b7vagf5lU2Nq02
-  # Le bouton ouvre une fenêtre pour choisir entre ces deux paiements.
-  paiements:
-    titre: Comment veux-tu régler ?
-    texte: Le même accompagnement au même prix. Choisis simplement le rythme qui te convient.
-    options:
-      - libelle: En une fois
-        montant: 249 €
-        detail: Paiement comptant
-        lien: https://buy.stripe.com/4gM28s5s0b7vagf5lU2Nq02
-      - libelle: En 3 fois sans frais
-        montant: 3 × 83 €
-        detail: 83 € par mois pendant 3 mois
-        lien: https://buy.stripe.com/3cI14obQoejH9cb6pY2Nq03
-    mention: Paiement sécurisé par Stripe

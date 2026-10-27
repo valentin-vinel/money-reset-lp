@@ -12,10 +12,10 @@ export async function offresPubliees(type?: 'outil' | 'service') {
   return toutes.sort(parOrdre);
 }
 
-/** Offre vendue par ce lien de paiement (`lien`, ou l'un des liens de `paiements`). */
+/** Offre vendue par ce lien de paiement. */
 export async function offreDuLien(lien: string) {
   const toutes = await getCollection('offres');
-  return toutes.find(({ data }) => data.lien === lien || data.paiements?.options.some((o) => o.lien === lien));
+  return toutes.find(({ data }) => data.lien === lien);
 }
 
 /** E-mail envoyé après l'achat d'une offre, avec ses fichiers dans l'ordre. */

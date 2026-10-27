@@ -3,7 +3,6 @@ import type { CollectionEntry } from 'astro:content';
 import EnteteSection from '../ui/EnteteSection.astro';
 import Bouton from '../ui/Bouton.astro';
 import Icone from '../ui/Icone.astro';
-import ModalePaiement from '../ui/ModalePaiement.astro';
 import { fr, prix } from '../../lib/format';
 
 interface Props {
@@ -39,16 +38,9 @@ const { titre, intro, conseil, offres } = Astro.props;
                 <span class="offre__modalite">{fr(o.prixDetail ?? o.modalite)}</span>
               </p>
 
-              <Bouton
-                href={o.lien}
-                taille="l"
-                pleineLargeur
-                data-ouvre-paiement={o.paiements && `paiement-${id}`}
-                aria-haspopup={o.paiements && 'dialog'}
-              >
+              <Bouton href={o.lien} taille="l" pleineLargeur>
                 {fr(o.bouton)}
               </Bouton>
-              {o.paiements && <ModalePaiement id={`paiement-${id}`} offre={o.nom} {...o.paiements} />}
 
               <div class="offre__bloc">
                 <p class="offre__sous-titre">{o.inclusIntro ? fr(o.inclusIntro) : 'Ce que tu reçois'}</p>

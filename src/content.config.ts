@@ -60,20 +60,6 @@ const offres = defineCollection({
     bouton: z.string(),
     /** Lien de paiement (Stripe, Gumroad, Lemon Squeezy…). */
     lien: z.string(),
-    /**
-     * Plusieurs façons de payer : le bouton ouvre une fenêtre de choix au lieu de suivre `lien`
-     * (qui reste le lien utilisé si JavaScript est désactivé).
-     */
-    paiements: z
-      .object({
-        titre: z.string(),
-        texte: z.string().optional(),
-        options: z
-          .array(z.object({ libelle: z.string(), montant: z.string(), detail: z.string().optional(), lien: z.string() }))
-          .min(2),
-        mention: z.string().optional(),
-      })
-      .optional(),
   }),
 });
 

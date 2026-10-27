@@ -99,7 +99,7 @@ Dans les maquettes, le jaune crème = cases à remplir et le bleu pâle = cases 
 
 ## À compléter avant la mise en ligne
 
-- [x] Liens de paiement Stripe de toutes les offres (comptant et 3 fois pour l'Accompagnement 3 mois)
+- [x] Liens de paiement Stripe de toutes les offres (paiement en plusieurs fois via Klarna, activé dans Stripe)
 - [ ] E-mail après achat : liens de `fichiers.yaml` et mise en route ci-dessus (Brevo, Stripe, Cloudflare)
 - [x] Adresse du site : `site` dans `astro.config.mjs` (money-reset.valentinvnl84.workers.dev, à changer si un nom de domaine est acheté)
 - [ ] Réponse « Puis-je être remboursée ? » dans `faq.yaml` (puis `brouillon: false`)
