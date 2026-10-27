@@ -3,7 +3,7 @@
  * Les textes se modifient dans src/content/*.yaml ; si un champ manque ou est mal
  * rempli, `npm run build` s'arrête avec un message clair indiquant lequel.
  */
-import { defineCollection, z } from 'astro:content';
+import { defineCollection, reference, z } from 'astro:content';
 import { file, glob } from 'astro/loaders';
 
 /** Noms des icônes disponibles (voir src/components/ui/Icone.astro). */
@@ -119,6 +119,32 @@ const temoignages = defineCollection({
   }),
 });
 
+/** Fichiers envoyés après l'achat (outil à copier, guides PDF…). */
+const fichiers = defineCollection({
+  loader: file('src/content/fichiers.yaml'),
+  schema: z.object({
+    titre: z.string(),
+    description: z.string(),
+    bouton: z.string(),
+    /** Vide tant que le fichier n'est pas prêt : l'e-mail qui le contient n'est alors pas envoyé. */
+    url: z.union([z.string().url(), z.literal('')]),
+  }),
+});
+
+/** E-mail envoyé après l'achat d'une offre (même id que l'offre). */
+const emails = defineCollection({
+  loader: file('src/content/emails.yaml'),
+  schema: z.object({
+    objet: z.string(),
+    titre: z.string(),
+    /** `{prenom}` est remplacé par le prénom de la cliente, ou retiré s'il est inconnu. */
+    salutation: z.string(),
+    intro: z.array(z.string()),
+    fichiers: z.array(reference('fichiers')).min(1),
+    fin: z.array(z.string()),
+  }),
+});
+
 /** Test « Money Reset Score » (page /score) : une seule entrée, `money-reset-score`. */
 const score = defineCollection({
   loader: file('src/content/score.yaml'),
@@ -229,4 +255,4 @@ const pages = defineCollection({
   }),
 });
 
-export const collections = { offres, fonctionnalites, faq, temoignages, score, pages };
+export const collections = { offres, fonctionnalites, faq, temoignages, fichiers, emails, score, pages };

@@ -1,0 +1,48 @@
+# ─────────────────────────────────────────────────────────────
+#  FICHIERS ENVOYÉS APRÈS L'ACHAT
+#  Chaque e-mail (emails.yaml) liste les fichiers qu'il contient, par leur id.
+#  • url : lien de partage du fichier. Tant qu'une url est vide, l'e-mail qui
+#    la contient n'est pas envoyé (Stripe réessaie pendant 3 jours : il suffit
+#    de la compléter et de remettre le site en ligne).
+#  • Lien de copie d'un Google Sheets : remplace la fin de l'adresse du fichier
+#    (« /edit… ») par « /copy ».
+#  • PDF : déposé sur Google Drive, partagé « Tous les utilisateurs disposant du lien ».
+# ─────────────────────────────────────────────────────────────
+
+- id: copie-essentielle
+  titre: Ton outil Money Reset Essentielle
+  description: >-
+    Clique sur le bouton puis sur « Créer une copie » : l'outil s'enregistre dans ton
+    Google Drive, il est à toi.
+  bouton: Faire ma copie
+  url: ""
+
+- id: copie-complete
+  titre: Ton outil Money Reset Complète
+  description: >-
+    Clique sur le bouton puis sur « Créer une copie » : l'outil s'enregistre dans ton
+    Google Drive, il est à toi.
+  bouton: Faire ma copie
+  url: ""
+
+- id: guide-demarrage
+  titre: Le guide de démarrage
+  description: Le PDF qui t'accompagne pour installer ton outil et faire tes premières saisies.
+  bouton: Ouvrir le guide
+  url: ""
+
+- id: exemple
+  titre: Un exemple rempli
+  description: >-
+    Un Money Reset déjà rempli avec des chiffres fictifs, pour voir à quoi ressemble l'outil
+    une fois en route.
+  bouton: Voir l'exemple
+  url: ""
+
+- id: guide-30-jours
+  titre: Le guide 30 jours
+  description: >-
+    Un petit pas par jour pour comprendre, nettoyer, organiser et construire ton système
+    financier.
+  bouton: Ouvrir le guide 30 jours
+  url: ""

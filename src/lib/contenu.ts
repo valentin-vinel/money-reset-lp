@@ -2,7 +2,7 @@
  * Accès au contenu : toutes les pages passent par ces fonctions,
  * pour que le tri et les filtres (publié, brouillon…) soient appliqués partout pareil.
  */
-import { getCollection, getEntry } from 'astro:content';
+import { getCollection, getEntries, getEntry } from 'astro:content';
 
 const parOrdre = <T extends { data: { ordre: number } }>(a: T, b: T) => a.data.ordre - b.data.ordre;
 
@@ -10,6 +10,20 @@ const parOrdre = <T extends { data: { ordre: number } }>(a: T, b: T) => a.data.o
 export async function offresPubliees(type?: 'outil' | 'service') {
   const toutes = await getCollection('offres', ({ data }) => data.publie && (!type || data.type === type));
   return toutes.sort(parOrdre);
+}
+
+/** Offre vendue par ce lien de paiement (`lien`, ou l'un des liens de `paiements`). */
+export async function offreDuLien(lien: string) {
+  const toutes = await getCollection('offres');
+  return toutes.find(({ data }) => data.lien === lien || data.paiements?.options.some((o) => o.lien === lien));
+}
+
+/** E-mail envoyé après l'achat d'une offre, avec ses fichiers dans l'ordre. */
+export async function emailApresAchat(offreId: string) {
+  const entree = await getEntry('emails', offreId);
+  if (!entree) return undefined;
+  const fichiers = await getEntries(entree.data.fichiers);
+  return { ...entree.data, fichiers: fichiers.map((f) => ({ id: f.id, ...f.data })) };
 }
 
 export async function fonctionnalites(formule?: 'essentielle' | 'complete') {

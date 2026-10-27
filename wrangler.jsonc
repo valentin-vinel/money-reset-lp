@@ -1,0 +1,8 @@
+// Réglages du Worker Cloudflare qui sert le site.
+// L'adaptateur Astro ajoute lui-même le point d'entrée et les fichiers statiques (dist/).
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Doit être identique au nom du projet créé dans Cloudflare (Workers & Pages).
+  "name": "money-reset",
+  "compatibility_flags": ["nodejs_compat"]
+}

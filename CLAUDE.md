@@ -25,6 +25,7 @@ Il n'y a ni tests ni linter. `npm run build` sert de vérification : il échoue 
 - Les offres de type `service` (Prise en main, Accompagnement 3 mois) s'affichent sur la landing uniquement dans la grille des tarifs, à côté des outils (`offresPubliees()` sans filtre). Le reste de la page (prix minimum, CTA final, section Complète) ne travaille qu'avec `offresPubliees('outil')`. La grille Tarifs crée une colonne par offre en desktop, passe en 2 × 2 sous 80rem et en carrousel horizontal sous 52rem.
 - Une offre avec un bloc `paiements` (Accompagnement 3 mois : comptant ou 3 fois) ouvre au clic une fenêtre de choix (`ui/ModalePaiement.astro`, élément `<dialog>`) ; son `lien` reste le lien de secours sans JavaScript.
 - La section Témoignages ne s'affiche que s'il existe au moins un témoignage publié.
+- **E-mail après achat** : le site est statique sauf `src/pages/api/` (`prerender = false`, adaptateur `@astrojs/cloudflare`, déployé en Worker Cloudflare, réglages dans `wrangler.jsonc`). `stripe-webhook.ts` reçoit `checkout.session.completed`, retrouve l'offre en comparant l'URL du lien de paiement Stripe aux liens de `offres.yaml` (`offreDuLien()`), compose l'e-mail (`src/lib/email.ts`, HTML à styles en ligne + texte) depuis `emails.yaml` (id = id de l'offre) et `fichiers.yaml`, puis l'envoie par l'API transactionnelle Brevo (`fetch`, expéditeur et réponse : le Gmail de la marque). Toute erreur renvoie 500 pour que Stripe réessaie ; une `url` vide dans `fichiers.yaml` bloque volontairement l'envoi. Secrets via `astro:env` (schéma dans `astro.config.mjs`). `apercu-email.ts` affiche les e-mails en dev seulement.
 - La page `/score` (`src/pages/score.astro` → `sections/TestScore.astro`) est un test en 10 questions qui calcule un Money Reset Score indicatif, entièrement dans le navigateur. Textes, piliers, barème et niveaux sont dans `src/content/score.yaml` (collection `score`, lue via `testScore()`). Le schéma vérifie la cohérence du barème : chaque pilier doit pouvoir atteindre son `max` et le total doit faire 100.
 
 **Typographie française** : les textes issus du contenu passent par `fr()` ou `frHtml()` (`src/lib/format.ts`). Ces fonctions ajoutent les espaces insécables avant `? ! ; : » € %` et transforment les apostrophes en apostrophes typographiques. `frHtml` gère en plus le gras Markdown `**…**`. Ne jamais saisir ces espaces à la main dans le YAML. Utiliser `prix()` pour les montants et `url()` pour les chemins internes (ce helper respecte `BASE_URL`).
@@ -39,6 +40,7 @@ Les réglages généraux (nom, marque, autrice, e-mail, réseaux, menu d'ancres)
 
 ## À compléter avant la mise en ligne (repris du README)
 
+- E-mail après achat : liens de `fichiers.yaml`, secrets du Worker Cloudflare et webhook Stripe (étapes dans le README)
 - Domaine final : `site` dans `astro.config.mjs`
 - Réponse FAQ « Puis-je être remboursée ? » (passer ensuite `brouillon: false`)
 - Mentions légales / CGV

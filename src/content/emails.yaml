@@ -1,0 +1,69 @@
+# ─────────────────────────────────────────────────────────────
+#  E-MAILS ENVOYÉS APRÈS L'ACHAT (un par offre)
+#  • id : le même que l'offre dans offres.yaml.
+#  • salutation : {prenom} est remplacé par le prénom saisi au paiement
+#    (s'il manque, il est simplement retiré).
+#  • fichiers : ids de fichiers.yaml, affichés dans cet ordre.
+#  • **texte** → texte en gras.
+#  • Aperçu pendant `npm run dev` : http://localhost:4321/api/apercu-email?offre=complete
+# ─────────────────────────────────────────────────────────────
+
+- id: essentielle
+  objet: Ton outil Money Reset Essentielle est prêt !
+  titre: Bienvenue dans Money Reset
+  salutation: Bonjour {prenom},
+  intro:
+    - >-
+      Merci pour ta confiance ! Ton outil **Money Reset Essentielle** t'attend, avec tout ce
+      qu'il te faut pour bien démarrer.
+  fichiers: [copie-essentielle, guide-demarrage, exemple]
+  fin:
+    - >-
+      Mon conseil : commence par faire ta copie de l'outil, puis laisse-toi guider par les
+      6 étapes de démarrage.
+    - Une question ? Réponds simplement à cet e-mail, je te lis.
+
+- id: complete
+  objet: Ton outil Money Reset Complète est prêt !
+  titre: Bienvenue dans Money Reset
+  salutation: Bonjour {prenom},
+  intro:
+    - >-
+      Merci pour ta confiance ! Ton outil **Money Reset Complète** t'attend, avec ses guides
+      pour reprendre ton budget en main.
+  fichiers: [copie-complete, guide-demarrage, exemple, guide-30-jours]
+  fin:
+    - >-
+      Mon conseil : commence par faire ta copie de l'outil et suis les 6 étapes de démarrage.
+      Ensuite, ouvre le guide 30 jours et avance d'un petit pas chaque jour.
+    - Une question ? Réponds simplement à cet e-mail, je te lis.
+
+- id: prise-en-main
+  objet: Ta Prise en main Money Reset
+  titre: On démarre ensemble
+  salutation: Bonjour {prenom},
+  intro:
+    - >-
+      Merci pour ta confiance ! Ta Prise en main comprend la version **Money Reset Complète** :
+      la voici, elle est à toi, à vie.
+    - >-
+      Je t'envoie très vite le lien pour réserver notre appel de 1h30 en visio. D'ici là, tu
+      peux déjà faire ta copie de l'outil : on la remplira ensemble avec tes vrais chiffres.
+  fichiers: [copie-complete, guide-demarrage, exemple, guide-30-jours]
+  fin:
+    - Une question ? Réponds simplement à cet e-mail, je te lis.
+
+- id: accompagnement-3-mois
+  objet: Ton Accompagnement 3 mois Money Reset
+  titre: 3 mois à tes côtés
+  salutation: Bonjour {prenom},
+  intro:
+    - >-
+      Merci pour ta confiance ! Ton accompagnement comprend la version **Money Reset Complète** :
+      la voici, elle est à toi, à vie.
+    - >-
+      Je t'envoie très vite le lien pour réserver notre premier appel de 1h30 en visio, ainsi que
+      mon accès WhatsApp. D'ici là, tu peux déjà faire ta copie de l'outil.
+  fichiers: [copie-complete, guide-demarrage, exemple, guide-30-jours]
+  fin:
+    - Une question ? Réponds simplement à cet e-mail, je te lis.
