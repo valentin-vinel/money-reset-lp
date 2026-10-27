@@ -94,10 +94,13 @@ const { titre, intro, conseil, offres } = Astro.props;
     gap: 1.25rem;
     align-items: stretch;
   }
+  /* Sous-grille : les 5 blocs de la carte (tête, prix, bouton, inclus, pour qui) partagent
+     les lignes de la grille, pour que prix et boutons soient alignés d'une carte à l'autre. */
   .offre {
     position: relative;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-row: span 5;
+    grid-template-rows: subgrid;
     gap: 1.5rem;
     padding: clamp(1.5rem, 3.5vw, 2.25rem);
     border-radius: var(--r-l);
