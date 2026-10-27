@@ -120,8 +120,11 @@ const { titre, intro, conseil, offres } = Astro.props;
     height: 0.6rem;
     background: var(--rayures);
   }
+  /* align-content: start : chaque bloc s'étire à la hauteur de sa ligne (sous-grille),
+     mais son contenu reste groupé en haut au lieu de se répartir. */
   .offre__tete {
     display: grid;
+    align-content: start;
     gap: 0.4rem;
   }
   .offre__noms {
@@ -148,6 +151,7 @@ const { titre, intro, conseil, offres } = Astro.props;
   /* Mention (modalité de paiement) toujours sous le montant */
   .offre__prix {
     display: grid;
+    align-content: start;
     gap: 0.15rem;
   }
   .offre__montant {
@@ -162,13 +166,14 @@ const { titre, intro, conseil, offres } = Astro.props;
   }
   .offre__bloc {
     display: grid;
+    align-content: start;
     gap: 0.85rem;
     padding-top: 1.5rem;
     border-top: 1px solid var(--trait);
   }
-  /* « Pour toi si… » en encadré : bleu clair, jaune clair pour la formule mise en avant. */
+  /* « Pour toi si… » en encadré : bleu clair, jaune clair pour la formule mise en avant.
+     Même ligne de sous-grille pour toutes les cartes : encadrés alignés et de même hauteur. */
   .offre__bloc--pour-qui {
-    margin-top: auto;
     padding: 1.25rem 1.25rem 1.35rem;
     border-top: 0;
     border-radius: var(--r-m);
