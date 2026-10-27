@@ -17,7 +17,7 @@ Toute commande implique l'acceptation pleine et entière des présentes CGV, que
 
 ### 2.1 Les fichiers Money Reset
 
-- **Money Reset Essentiel** : modèle Google Sheets de gestion de budget.
+- **Money Reset Essentielle** : modèle Google Sheets de gestion de budget.
 - **Money Reset Complète** : modèle Google Sheets de gestion de budget, comprenant notamment les onglets Money Audit, Soldes réels et Projection 12 mois, ainsi que le guide « 30 jours ».
 
 ### 2.2 La prise en main + audit de départ
@@ -36,18 +36,18 @@ Les prix sont indiqués en euros, toutes taxes comprises. TVA non applicable, ar
 
 | Offre | Prix |
 | --- | --- |
-| Money Reset Essentiel | 19 € |
+| Money Reset Essentielle | 19 € |
 | Money Reset Complète | 34 € |
 | Prise en main + audit de départ | 94 € |
-| Accompagnement 3 mois | 249 € ou 3 × 83 € |
+| Accompagnement 3 mois | 249 € (payable en plusieurs fois avec Klarna) |
 
 Le prix applicable est celui affiché au moment de la commande. Les codes promotionnels sont valables dans les conditions indiquées lors de leur diffusion (durée, produits concernés, nombre d'utilisations) et ne sont pas cumulables, sauf mention contraire.
 
 ## Article 4 — Commande et paiement
 
-La commande est validée après paiement intégral, ou paiement de la première échéance en cas de paiement en plusieurs fois. Le paiement s'effectue en ligne par l'intermédiaire de la plateforme sécurisée Stripe. La Vendeuse n'a jamais accès aux coordonnées bancaires de la Cliente.
+La commande est validée après paiement intégral. Le paiement s'effectue en ligne par l'intermédiaire de la plateforme sécurisée Stripe. La Vendeuse n'a jamais accès aux coordonnées bancaires de la Cliente.
 
-**Paiement en 3 fois (accompagnement 3 mois)** : la Cliente règle 83 € à la commande, puis 83 € à 30 jours et à 60 jours, prélevés automatiquement sur le même moyen de paiement. En cas d'échec d'une échéance, la Vendeuse en informe la Cliente, et l'accompagnement est suspendu jusqu'à régularisation. Le montant total reste dû.
+**Paiement en plusieurs fois** : il est proposé par Klarna sur la page de paiement, selon l'éligibilité de la Cliente et les conditions de Klarna, que la Cliente accepte auprès de Klarna. La Vendeuse reçoit le paiement intégral à la commande.
 
 Une confirmation de commande est envoyée par e-mail à la Cliente.
 
@@ -84,7 +84,7 @@ Si la Cliente demande expressément que la prestation commence avant la fin de c
 - si la prestation est entièrement exécutée avant la fin du délai, elle perd son droit de rétractation ;
 - si elle se rétracte après le début de la prestation, elle reste redevable d'un montant proportionnel aux prestations déjà fournies.
 
-Le fichier Money Reset Complète inclus dans ces offres étant livré immédiatement, avec renonciation expresse au droit de rétractation dans les conditions de l'article 8.1, sa valeur (94 €) reste due en cas de rétractation.
+Le fichier Money Reset Complète inclus dans ces offres étant livré immédiatement, avec renonciation expresse au droit de rétractation dans les conditions de l'article 8.1, sa valeur (34 €) reste due en cas de rétractation.
 
 **8.3 Exercice du droit.** Pour se rétracter, la Cliente adresse à [sheeptonorga@gmail.com](mailto:sheeptonorga@gmail.com) une déclaration dénuée d'ambiguïté, ou le formulaire ci-dessous. Le remboursement des sommes dues est effectué dans un délai de 14 jours suivant la réception de la demande, par le même moyen de paiement que celui utilisé lors de la commande.
 

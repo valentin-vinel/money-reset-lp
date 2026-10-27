@@ -44,7 +44,7 @@ Le site peut contenir des liens vers des sites tiers. L'éditrice n'exerce aucun
 
 ## Données personnelles
 
-Les données personnelles collectées sur le site (formulaires de contact, inscription à la newsletter, achats, réservations) sont traitées conformément au Règlement général sur la protection des données (RGPD) et à la loi Informatique et Libertés.
+Les données personnelles collectées sur le site (achats, réservations) sont traitées conformément au Règlement général sur la protection des données (RGPD) et à la loi Informatique et Libertés.
 
 Tu disposes d'un droit d'accès, de rectification, d'effacement, d'opposition et de portabilité de tes données. Pour l'exercer, écris à [sheeptonorga@gmail.com](mailto:sheeptonorga@gmail.com). Tu peux également introduire une réclamation auprès de la CNIL ([www.cnil.fr](https://www.cnil.fr)).
 
