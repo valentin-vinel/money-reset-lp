@@ -4,8 +4,8 @@ import cloudflare from '@astrojs/cloudflare';
 
 // https://astro.build/config
 export default defineConfig({
-  // Remplace par l'adresse finale du site (utile pour le SEO).
-  site: 'https://money-reset.fr',
+  // Adresse du site (URL canonique, image de partage). À changer si un nom de domaine est acheté.
+  site: 'https://money-reset.valentinvnl84.workers.dev',
   // Site statique ; seules les routes avec `prerender = false` (webhook Stripe) tournent dans un
   // Worker Cloudflare. Réglages du Worker : wrangler.jsonc
   adapter: cloudflare(),

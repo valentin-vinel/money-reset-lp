@@ -4,5 +4,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   // Doit être identique au nom du projet créé dans Cloudflare (Workers & Pages).
   "name": "money-reset",
+  // Garde l'adresse money-reset.valentinvnl84.workers.dev active à chaque déploiement.
+  "workers_dev": true,
   "compatibility_flags": ["nodejs_compat"]
 }
