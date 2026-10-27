@@ -30,21 +30,40 @@ export interface Email {
 const attribut = (valeur: string) => valeur.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
 const sansGras = (texte: string) => fr(texte).replace(/\*\*(.+?)\*\*/g, '$1');
 
+interface Options {
+  prenom?: string;
+  /** Couleur choisie sur la page de paiement, pour les fichiers déclinés en `couleurs`. */
+  couleur?: string;
+  /** Aperçu : pas d'erreur, liens manquants remplacés par « # », première couleur par défaut. */
+  apercu?: boolean;
+}
+
 /**
- * Compose l'e-mail d'une offre. Lève une erreur si l'e-mail n'existe pas ou si un lien manque,
- * sauf en `apercu`, où les liens manquants deviennent « # ».
+ * Compose l'e-mail d'une offre. Lève une erreur si l'e-mail n'existe pas, si un lien manque
+ * ou si la couleur choisie n'a pas de lien (sauf en `apercu`).
  */
-export async function composerEmail(offreId: string, prenom?: string, apercu = false): Promise<Email> {
+export async function composerEmail(offreId: string, { prenom, couleur, apercu = false }: Options = {}): Promise<Email> {
   const e = await emailApresAchat(offreId);
   if (!e) throw new Error(`Aucun e-mail pour l'offre « ${offreId} » dans src/content/emails.yaml`);
-  const manquants = e.fichiers.filter((f) => !f.url).map((f) => f.id);
-  if (manquants.length && !apercu) throw new Error(`Lien manquant dans fichiers.yaml : ${manquants.join(', ')}`);
-  for (const f of e.fichiers) f.url ||= '#';
+
+  const erreurs: string[] = [];
+  const fichiers = e.fichiers.map((f) => {
+    let url = f.url;
+    if (f.couleurs) {
+      const noms = Object.keys(f.couleurs);
+      const choix = noms.find((n) => n.toLowerCase() === couleur?.trim().toLowerCase());
+      if (!choix && !apercu) erreurs.push(`${f.id} : couleur « ${couleur ?? 'non choisie'} » absente (${noms.join(', ')})`);
+      url = f.couleurs[choix ?? noms[0]];
+    }
+    if (!url && !apercu) erreurs.push(`${f.id} : lien manquant`);
+    return { ...f, url: url || '#' };
+  });
+  if (erreurs.length) throw new Error(`fichiers.yaml : ${erreurs.join(' ; ')}`);
 
   const salutation = prenom ? e.salutation.replace('{prenom}', prenom) : e.salutation.replace(/\s*\{prenom\}/, '');
   const paragraphe = (t: string) => `<p style="margin:0 0 16px">${frHtml(t)}</p>`;
 
-  const blocsFichiers = e.fichiers
+  const blocsFichiers = fichiers
     .map(
       (f) => `
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 12px;background:${C.cremePale};border:1px solid ${C.trait};border-radius:12px">
@@ -82,7 +101,7 @@ export async function composerEmail(offreId: string, prenom?: string, apercu = f
   const texte = [
     sansGras(salutation),
     ...e.intro.map(sansGras),
-    ...e.fichiers.map((f) => `${sansGras(f.titre)}\n${sansGras(f.description)}\n${f.url}`),
+    ...fichiers.map((f) => `${sansGras(f.titre)}\n${sansGras(f.description)}\n${f.url}`),
     ...e.fin.map(sansGras),
     `${site.autrice}\n${site.marque} · ${site.nom}`,
   ].join('\n\n');

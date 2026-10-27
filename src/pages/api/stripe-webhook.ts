@@ -34,7 +34,18 @@ async function envoyer(destinataire: string, email: Email) {
   if (!res.ok) throw new Error(`Brevo a refusé l'envoi (${res.status}) : ${await res.text()}`);
 }
 
-const reponse = (status: number, message: string) => new Response(message, { status });
+/**
+ * Libellé de la couleur choisie dans la liste déroulante de la page de paiement
+ * (champ personnalisé « Choisis ton coloris » : libellé contenant « coloris » ou « couleur »,
+ * sinon la première liste déroulante).
+ */
+function couleurChoisie(session: Stripe.Checkout.Session) {
+  const listes = session.custom_fields.filter((c) => c.type === 'dropdown' && c.dropdown?.value);
+  const champ = listes.find((c) => /coloris|couleur/i.test(c.label.custom ?? '')) ?? listes[0];
+  return champ?.dropdown?.options.find((o) => o.value === champ.dropdown?.value)?.label;
+}
+
+const reponse =(status: number, message: string) => new Response(message, { status });
 
 export const POST: APIRoute = async ({ request }) => {
   let evenement: Stripe.Event;
@@ -68,7 +79,7 @@ export const POST: APIRoute = async ({ request }) => {
     if (!offre) throw new Error(`Aucune offre de offres.yaml n'utilise le lien ${url}`);
 
     const prenom = session.customer_details?.name?.trim().split(/\s+/)[0];
-    await envoyer(destinataire, await composerEmail(offre.id, prenom));
+    await envoyer(destinataire, await composerEmail(offre.id, { prenom, couleur: couleurChoisie(session) }));
     return reponse(200, `E-mail « ${offre.id} » envoyé`);
   } catch (erreur) {
     console.error(`Session ${session.id} :`, erreur);

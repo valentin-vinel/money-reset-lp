@@ -119,16 +119,24 @@ const temoignages = defineCollection({
   }),
 });
 
+/** Lien d'un fichier ; vide tant qu'il n'est pas prêt (l'e-mail qui le contient n'est alors pas envoyé). */
+const lienFichier = z.union([z.string().url(), z.literal('')]);
+
 /** Fichiers envoyés après l'achat (outil à copier, guides PDF…). */
 const fichiers = defineCollection({
   loader: file('src/content/fichiers.yaml'),
-  schema: z.object({
-    titre: z.string(),
-    description: z.string(),
-    bouton: z.string(),
-    /** Vide tant que le fichier n'est pas prêt : l'e-mail qui le contient n'est alors pas envoyé. */
-    url: z.union([z.string().url(), z.literal('')]),
-  }),
+  schema: z
+    .object({
+      titre: z.string(),
+      description: z.string(),
+      bouton: z.string(),
+      url: lienFichier.optional(),
+      /** Un lien par couleur, clé = libellé exact du choix sur la page de paiement Stripe. */
+      couleurs: z.record(z.string(), lienFichier).optional(),
+    })
+    .refine((f) => (f.url === undefined) !== (f.couleurs === undefined), {
+      message: 'Renseigner soit `url`, soit `couleurs` (un lien par couleur).',
+    }),
 });
 
 /** E-mail envoyé après l'achat d'une offre (même id que l'offre). */

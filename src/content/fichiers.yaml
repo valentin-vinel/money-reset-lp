@@ -6,6 +6,10 @@
 #    de la compléter et de remettre le site en ligne).
 #  • Lien de copie d'un Google Sheets : remplace la fin de l'adresse du fichier
 #    (« /edit… ») par « /copy ».
+#  • couleurs : un lien par couleur au lieu d'une seule url. Les noms doivent
+#    être écrits exactement comme dans la liste déroulante de la page de
+#    paiement Stripe ; si la couleur choisie n'est pas trouvée, l'e-mail
+#    n'est pas envoyé (Stripe réessaie, le temps de corriger).
 #  • PDF : déposé sur Google Drive, partagé « Tous les utilisateurs disposant du lien ».
 # ─────────────────────────────────────────────────────────────
 
@@ -15,7 +19,10 @@
     Clique sur le bouton puis sur « Créer une copie » : l'outil s'enregistre dans ton
     Google Drive, il est à toi.
   bouton: Faire ma copie
-  url: ""
+  couleurs:
+    Rose: ""
+    Beige: ""
+    Bleu: ""
 
 - id: copie-complete
   titre: Ton outil Money Reset Complète
@@ -23,7 +30,10 @@
     Clique sur le bouton puis sur « Créer une copie » : l'outil s'enregistre dans ton
     Google Drive, il est à toi.
   bouton: Faire ma copie
-  url: ""
+  couleurs:
+    Rose: ""
+    Beige: ""
+    Bleu: ""
 
 - id: guide-demarrage
   titre: Le guide de démarrage
