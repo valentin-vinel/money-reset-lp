@@ -65,7 +65,7 @@
     Un Money Reset Essentielle déjà rempli avec des chiffres fictifs, pour voir à quoi ressemble
     l'outil une fois en route.
   bouton: Voir l'exemple
-  url: https://docs.google.com/spreadsheets/d/1EUp1tf9IXPRS43jt3HP2xGT89A6PRV5butGz4tksPQs/copy
+  url: https://docs.google.com/spreadsheets/d/1EUp1tf9IXPRS43jt3HP2xGT89A6PRV5butGz4tksPQs/preview
 
 - id: exemple-complete
   titre: Un exemple rempli
@@ -73,7 +73,7 @@
     Un Money Reset Complète déjà rempli avec des chiffres fictifs, pour voir à quoi ressemble
     l'outil une fois en route.
   bouton: Voir l'exemple
-  url: https://docs.google.com/spreadsheets/d/1aeREVQafXcprn7NLl2idS2FggGV8ZvHL5zKU4_FjbCI/copy
+  url: https://docs.google.com/spreadsheets/d/1aeREVQafXcprn7NLl2idS2FggGV8ZvHL5zKU4_FjbCI/preview
 
 - id: guide-30-jours
   titre: Le guide 30 jours
