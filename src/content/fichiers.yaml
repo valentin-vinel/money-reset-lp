@@ -20,9 +20,9 @@
     Google Drive, il est à toi.
   bouton: Faire ma copie
   couleurs:
-    Rose: ""
-    Beige: ""
-    Bleu: ""
+    Rose: https://docs.google.com/spreadsheets/d/14bs084mmsj9rJgSTkD_WDdfY1MoOi4SwE7Weepanjyg/copy
+    Beige: https://docs.google.com/spreadsheets/d/1vBQr-mUezZtuUzvLgxnHCC96xs7jMRkOzctkNyhIJkc/copy
+    Bleu: https://docs.google.com/spreadsheets/d/1M7VxZz6uMGLBGC9WwiDIfSCo67okJ0nHy6jO3TI3Yn4/copy
 
 - id: copie-complete
   titre: Ton outil Money Reset Complète
@@ -31,23 +31,31 @@
     Google Drive, il est à toi.
   bouton: Faire ma copie
   couleurs:
-    Rose: ""
-    Beige: ""
-    Bleu: ""
+    Rose: https://docs.google.com/spreadsheets/d/1GDVhvPrO5BXARV-uzFoiHdKiktt5hQ23EXNxSKd-MY8/copy
+    Beige: https://docs.google.com/spreadsheets/d/1iDdnVEZmj1yJxWRk534FecDHZObdqdbR17GUnfQLkXA/copy
+    Bleu: https://docs.google.com/spreadsheets/d/1pZrKRGcBvPYFWl_ycE-L_2DfGQnZeNyZ0F5xn9N2uxg/copy
 
 - id: guide-demarrage
   titre: Le guide de démarrage
   description: Le PDF qui t'accompagne pour installer ton outil et faire tes premières saisies.
   bouton: Ouvrir le guide
-  url: ""
+  url: https://drive.google.com/file/d/1P2REJ7g4Rvq2ajU1BVxWpJjRQGn1ZxRI/view?usp=sharing
 
-- id: exemple
+- id: exemple-essentielle
   titre: Un exemple rempli
   description: >-
-    Un Money Reset déjà rempli avec des chiffres fictifs, pour voir à quoi ressemble l'outil
-    une fois en route.
+    Un Money Reset Essentielle déjà rempli avec des chiffres fictifs, pour voir à quoi ressemble
+    l'outil une fois en route.
   bouton: Voir l'exemple
-  url: ""
+  url: https://docs.google.com/spreadsheets/d/1EUp1tf9IXPRS43jt3HP2xGT89A6PRV5butGz4tksPQs/copy
+
+- id: exemple-complete
+  titre: Un exemple rempli
+  description: >-
+    Un Money Reset Complète déjà rempli avec des chiffres fictifs, pour voir à quoi ressemble
+    l'outil une fois en route.
+  bouton: Voir l'exemple
+  url: https://docs.google.com/spreadsheets/d/1aeREVQafXcprn7NLl2idS2FggGV8ZvHL5zKU4_FjbCI/copy
 
 - id: guide-30-jours
   titre: Le guide 30 jours
@@ -55,4 +63,4 @@
     Un petit pas par jour pour comprendre, nettoyer, organiser et construire ton système
     financier.
   bouton: Ouvrir le guide 30 jours
-  url: ""
+  url: https://drive.google.com/file/d/1hc3PLgdoi5v3oEWQ8D89DXRLsMqK4TVQ/view?usp=sharing

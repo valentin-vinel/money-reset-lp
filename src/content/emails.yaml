@@ -16,7 +16,7 @@
     - >-
       Merci pour ta confiance ! Ton outil **Money Reset Essentielle** t'attend, avec tout ce
       qu'il te faut pour bien démarrer.
-  fichiers: [copie-essentielle, guide-demarrage, exemple]
+  fichiers: [copie-essentielle, guide-demarrage, exemple-essentielle]
   fin:
     - >-
       Mon conseil : commence par faire ta copie de l'outil, puis laisse-toi guider par les
@@ -31,7 +31,7 @@
     - >-
       Merci pour ta confiance ! Ton outil **Money Reset Complète** t'attend, avec ses guides
       pour reprendre ton budget en main.
-  fichiers: [copie-complete, guide-demarrage, exemple, guide-30-jours]
+  fichiers: [copie-complete, guide-demarrage, exemple-complete, guide-30-jours]
   fin:
     - >-
       Mon conseil : commence par faire ta copie de l'outil et suis les 6 étapes de démarrage.
@@ -49,7 +49,7 @@
     - >-
       Je t'envoie très vite le lien pour réserver notre appel de 1h30 en visio. D'ici là, tu
       peux déjà faire ta copie de l'outil : on la remplira ensemble avec tes vrais chiffres.
-  fichiers: [copie-complete, guide-demarrage, exemple, guide-30-jours]
+  fichiers: [copie-complete, guide-demarrage, exemple-complete, guide-30-jours]
   fin:
     - Une question ? Réponds simplement à cet e-mail, je te lis.
 
@@ -64,6 +64,6 @@
     - >-
       Je t'envoie très vite le lien pour réserver notre premier appel de 1h30 en visio, ainsi que
       mon accès WhatsApp. D'ici là, tu peux déjà faire ta copie de l'outil.
-  fichiers: [copie-complete, guide-demarrage, exemple, guide-30-jours]
+  fichiers: [copie-complete, guide-demarrage, exemple-complete, guide-30-jours]
   fin:
     - Une question ? Réponds simplement à cet e-mail, je te lis.
