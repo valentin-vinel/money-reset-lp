@@ -42,6 +42,11 @@ export async function temoignagesPublies() {
   return tous.sort(parOrdre);
 }
 
+/** Pages légales (src/content/legal/*.md). */
+export async function pagesLegales() {
+  return getCollection('legal');
+}
+
 export async function page(id: string) {
   const entree = await getEntry('pages', id);
   if (!entree) throw new Error(`Page « ${id} » introuvable dans src/content/pages/`);

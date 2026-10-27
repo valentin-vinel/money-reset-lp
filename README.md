@@ -105,4 +105,4 @@ Dans les maquettes, le jaune crème = cases à remplir et le bleu pâle = cases 
 - [ ] Réponse « Puis-je être remboursée ? » dans `faq.yaml` (puis `brouillon: false`)
 - [ ] Optionnel : remplacer les maquettes par de vraies captures de l'outil (`src/components/visuels/`)
 - [ ] Optionnel : ajouter de vrais témoignages dans `temoignages.yaml`
-- [ ] Mentions légales / CGV (obligatoires pour vendre en ligne)
+- [x] Mentions légales, CGV et confidentialité : `src/content/legal/` (pages /mentions-legales, /cgv, /confidentialite)

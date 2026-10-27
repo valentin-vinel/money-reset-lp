@@ -26,6 +26,11 @@ export function frHtml(texte: string): string {
   return fr(echappe).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 }
 
+/** Applique `fr()` au texte d'un HTML déjà généré (Markdown rendu), sans toucher aux balises. */
+export function frDansHtml(html: string): string {
+  return html.replace(/>([^<]+)</g, (_, texte: string) => `>${fr(texte)}<`);
+}
+
 /** 19 → « 19 € ». */
 export function prix(montant: number): string {
   return `${new Intl.NumberFormat('fr-FR').format(montant)}${NBSP}€`;

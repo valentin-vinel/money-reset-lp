@@ -1,5 +1,5 @@
 ---
-import { navigation, site } from '../../config/site';
+import { navigation, pagesLegales, site } from '../../config/site';
 import { url } from '../../lib/format';
 const annee = new Date().getFullYear();
 ---
@@ -21,6 +21,9 @@ const annee = new Date().getFullYear();
   </div>
   <div class="conteneur pied__bas">
     <p>© {annee} {site.marque}</p>
+    <nav class="pied__legal" aria-label="Informations légales">
+      {pagesLegales.map((p) => <a href={url(p.chemin)}>{p.libelle}</a>)}
+    </nav>
   </div>
 </footer>
 
@@ -74,9 +77,16 @@ const annee = new Date().getFullYear();
     color: var(--bordeaux);
   }
   .pied__bas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.75rem 1.5rem;
     margin-top: 2rem;
     color: var(--texte-doux);
     font-size: 0.85rem;
+  }
+  .pied__legal {
+    gap: 0.5rem 1.25rem;
   }
   @media (min-width: 52rem) {
     .pied {

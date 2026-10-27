@@ -139,6 +139,17 @@ const emails = defineCollection({
   }),
 });
 
+/** Pages légales (mentions légales, CGV, confidentialité) : une page par fichier Markdown, URL = nom du fichier. */
+const legal = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/legal' }),
+  schema: z.object({
+    titre: z.string(),
+    description: z.string(),
+    /** Affichée telle quelle (« Dernière mise à jour : … »). */
+    miseAJour: z.string(),
+  }),
+});
+
 /** Test « Money Reset Score » (page /score) : une seule entrée, `money-reset-score`. */
 const score = defineCollection({
   loader: file('src/content/score.yaml'),
@@ -249,4 +260,4 @@ const pages = defineCollection({
   }),
 });
 
-export const collections = { offres, fonctionnalites, faq, temoignages, fichiers, emails, score, pages };
+export const collections = { offres, fonctionnalites, faq, temoignages, fichiers, emails, legal, score, pages };

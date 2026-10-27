@@ -1,0 +1,105 @@
+---
+/**
+ * Pages légales : /mentions-legales, /cgv, /confidentialite.
+ * Textes : src/content/legal/*.md (un fichier = une page, l'URL reprend le nom du fichier).
+ */
+import Base from '../layouts/Base.astro';
+import Entete from '../components/sections/Entete.astro';
+import PiedDePage from '../components/sections/PiedDePage.astro';
+import { pagesLegales } from '../lib/contenu';
+import { fr, frDansHtml, url } from '../lib/format';
+import { site } from '../config/site';
+
+export async function getStaticPaths() {
+  const pages = await pagesLegales();
+  return pages.map((entree) => ({ params: { legal: entree.id }, props: { entree } }));
+}
+
+const { entree } = Astro.props;
+const { titre, description, miseAJour } = entree.data;
+const html = frDansHtml(entree.rendered?.html ?? '');
+---
+
+<Base titre={`${titre} — ${site.nom}`} description={description}>
+  <Entete slot="entete" cta="Voir les formules" ctaHref={url('#formules')} />
+
+  <article class="section legal">
+    <div class="conteneur legal__conteneur">
+      <header class="legal__tete">
+        <h1>{fr(titre)}</h1>
+        <p class="legal__date">{fr(`Dernière mise à jour : ${miseAJour}`)}</p>
+      </header>
+      <div class="legal__texte" set:html={html} />
+    </div>
+  </article>
+
+  <PiedDePage slot="pied" />
+</Base>
+
+<style>
+  .legal__conteneur {
+    max-width: 46rem;
+  }
+  .legal__tete {
+    display: grid;
+    gap: 0.75rem;
+    margin-bottom: clamp(2rem, 5vw, 3rem);
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--trait);
+  }
+  .legal__tete h1 {
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+  }
+  .legal__date {
+    font-size: 0.9rem;
+    color: var(--texte-doux);
+  }
+
+  /* Texte issu du Markdown : styles appliqués aux balises générées. */
+  .legal__texte {
+    display: grid;
+    gap: 1rem;
+  }
+  .legal__texte :global(h2) {
+    margin-top: 1.5rem;
+    font-size: clamp(1.5rem, 3vw, 1.9rem);
+  }
+  .legal__texte :global(h3) {
+    margin-top: 0.5rem;
+    font-family: var(--f-texte);
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+  .legal__texte :global(ul) {
+    display: grid;
+    gap: 0.4rem;
+    padding-left: 1.25rem;
+  }
+  .legal__texte :global(a) {
+    text-underline-offset: 0.15em;
+    overflow-wrap: anywhere;
+  }
+  .legal__texte :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.975rem;
+  }
+  .legal__texte :global(th),
+  .legal__texte :global(td) {
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid var(--trait);
+    text-align: left;
+  }
+  .legal__texte :global(th) {
+    background: var(--bleu-voile);
+  }
+  .legal__texte :global(blockquote) {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 1.25rem 1.5rem;
+    border-radius: var(--r-m);
+    background: var(--creme-pale);
+  }
+</style>
