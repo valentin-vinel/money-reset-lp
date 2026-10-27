@@ -1,5 +1,5 @@
 # ─────────────────────────────────────────────────────────────
-#  FICHIERS ENVOYÉS APRÈS L'ACHAT
+#  FICHIERS ET LIENS ENVOYÉS APRÈS L'ACHAT
 #  Chaque e-mail (emails.yaml) liste les fichiers qu'il contient, par leur id.
 #  • url : lien de partage du fichier. Tant qu'une url est vide, l'e-mail qui
 #    la contient n'est pas envoyé (Stripe réessaie pendant 3 jours : il suffit
@@ -12,6 +12,24 @@
 #    n'est pas envoyé (Stripe réessaie, le temps de corriger).
 #  • PDF : déposé sur Google Drive, partagé « Tous les utilisateurs disposant du lien ».
 # ─────────────────────────────────────────────────────────────
+
+# ── Réservation des appels (accompagnements) ──
+
+- id: appel-prise-en-main
+  titre: Réserve notre appel
+  description: Choisis le créneau qui te convient pour notre appel de 1h30 en visio.
+  bouton: Choisir mon créneau
+  url: https://calendly.com/sheeptonorga/prise-en-main-audit-de-depart
+
+- id: appels-accompagnement
+  titre: Réserve nos appels
+  description: >-
+    Choisis le créneau de notre premier appel de 1h30 en visio. Tu reviendras sur ce même lien
+    pour réserver les deux suivants, un par mois.
+  bouton: Choisir mon créneau
+  url: https://calendly.com/sheeptonorga/accompagnement-3-mois
+
+# ── Outils et guides ──
 
 - id: copie-essentielle
   titre: Ton outil Money Reset Essentielle
