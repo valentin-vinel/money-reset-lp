@@ -53,6 +53,13 @@ export async function page(id: string) {
   return entree.data;
 }
 
+/** Textes des pages de remerciement (/merci/<offre>). */
+export async function pagesMerci() {
+  const entree = await getEntry('merci', 'merci');
+  if (!entree) throw new Error('Entrée « merci » introuvable dans src/content/merci.yaml');
+  return entree.data;
+}
+
 /** Contenu du test « Money Reset Score » (page /score). */
 export async function testScore() {
   const entree = await getEntry('score', 'money-reset-score');

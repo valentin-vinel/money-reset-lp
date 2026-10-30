@@ -139,6 +139,32 @@ const emails = defineCollection({
   }),
 });
 
+/**
+ * Pages de remerciement (/merci/<id de l'offre>), vers lesquelles Stripe redirige après le paiement.
+ * Une seule entrée, `merci` : textes communs + un bloc par offre (clé = id de l'offre).
+ */
+const merci = defineCollection({
+  loader: file('src/content/merci.yaml'),
+  schema: z.object({
+    seo: z.object({ titre: z.string(), description: z.string() }),
+    surtitre: z.string(),
+    etapesTitre: z.string(),
+    /** Encadré « Pas reçu l'e-mail ? ». */
+    aide: z.object({ titre: z.string(), texte: z.string(), email: z.string().email() }),
+    retour: z.string(),
+    offres: z.record(
+      z.string(),
+      z.object({
+        titre: z.string(),
+        intro: z.string(),
+        etapes: z.array(z.object({ titre: z.string(), texte: z.string() })).min(1),
+        /** Encadré mis en avant sous les étapes ; `lien` : chemin interne (« /score ») ou adresse complète. */
+        action: z.object({ titre: z.string(), texte: z.string(), bouton: z.string(), lien: z.string() }).optional(),
+      }),
+    ),
+  }),
+});
+
 /** Pages légales (mentions légales, CGV, confidentialité) : une page par fichier Markdown, URL = nom du fichier. */
 const legal = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/legal' }),
@@ -260,4 +286,4 @@ const pages = defineCollection({
   }),
 });
 
-export const collections = { offres, fonctionnalites, faq, temoignages, fichiers, emails, legal, score, pages };
+export const collections = { offres, fonctionnalites, faq, temoignages, fichiers, emails, merci, legal, score, pages };

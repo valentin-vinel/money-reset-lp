@@ -1,0 +1,133 @@
+# ─────────────────────────────────────────────────────────────
+#  PAGES DE REMERCIEMENT (/merci/<id de l'offre>)
+#  • Dans Stripe, chaque lien de paiement redirige vers sa page :
+#    Liens de paiement → le lien → Après le paiement → « Ne pas afficher de
+#    page de confirmation » → Rediriger vers https://<adresse-du-site>/merci/<id>
+#  • offres : une clé par offre publiée de offres.yaml (même id) ;
+#    `npm run build` s'arrête si une offre n'a pas sa page.
+#  • Ces pages sont publiques (adresse devinable) : n'y mettre aucun lien payant
+#    (outil, guides, réservation d'appel). Ils restent dans l'e-mail.
+#  • **texte** → texte en gras.
+#  • Les espaces insécables (avant ? ! : € %…) sont ajoutés automatiquement.
+# ─────────────────────────────────────────────────────────────
+
+merci:
+  seo:
+    titre: Merci pour ta commande — Money Reset
+    description: Ta commande Money Reset est confirmée. Voici les prochaines étapes.
+
+  surtitre: Commande confirmée
+  etapesTitre: Et maintenant ?
+  aide:
+    titre: Pas reçu l'e-mail ?
+    texte: >-
+      Il arrive en général en moins de 5 minutes. Pense à regarder dans tes spams et dans l'onglet
+      Promotions. Toujours rien au bout d'une heure ? Écris-moi en indiquant l'adresse utilisée pour
+      ta commande, je te renvoie tout.
+    email: sheeptonorga@gmail.com
+  retour: Revenir à l'accueil
+
+  offres:
+    essentielle:
+      titre: Merci, ton outil Money Reset est en route !
+      intro: >-
+        Ton paiement est bien passé. Tu viens de faire le premier pas pour voir enfin où va ton
+        argent, et je suis ravie de t'accompagner.
+      etapes:
+        - titre: Ouvre ton e-mail
+          texte: >-
+            Tu viens de recevoir le lien de ton outil **Money Reset Essentielle**, ton guide de
+            démarrage et un exemple déjà rempli.
+        - titre: Fais ta copie
+          texte: >-
+            Clique sur « Faire ma copie », puis sur « Créer une copie » : l'outil s'enregistre dans
+            ton Google Drive. Il est à toi, à vie.
+        - titre: Laisse-toi guider
+          texte: >-
+            Prévois une petite demi-heure au calme pour les 6 étapes de démarrage. Ensuite, quelques
+            minutes par jour suffisent.
+      action:
+        titre: Note ton point de départ
+        texte: >-
+          En 2 minutes, calcule ton Money Reset Score. Dans quelques mois, tu verras tout le chemin
+          parcouru.
+        bouton: Calculer mon score
+        lien: /score
+
+    complete:
+      titre: Merci, ton Money Reset Complète est en route !
+      intro: >-
+        Ton paiement est bien passé. Dans 30 jours, ton budget ne sera plus flou ni stressant :
+        on y va, un petit pas après l'autre.
+      etapes:
+        - titre: Ouvre ton e-mail
+          texte: >-
+            Tu viens de recevoir le lien de ton outil **Money Reset Complète**, ton guide de
+            démarrage, un exemple déjà rempli et le guide « 30 jours ».
+        - titre: Fais ta copie
+          texte: >-
+            Clique sur « Faire ma copie », puis sur « Créer une copie » : l'outil s'enregistre dans
+            ton Google Drive. Il est à toi, à vie.
+        - titre: Démarre ton mois
+          texte: >-
+            Suis les 6 étapes de démarrage, puis ouvre le guide 30 jours et avance d'un petit pas
+            chaque jour.
+      action:
+        titre: Note ton point de départ
+        texte: >-
+          En 2 minutes, calcule ton Money Reset Score. À la fin de tes 30 jours, tu verras tout le
+          chemin parcouru.
+        bouton: Calculer mon score
+        lien: /score
+
+    prise-en-main:
+      titre: Merci, on démarre bientôt ensemble !
+      intro: >-
+        Ton paiement est bien passé. J'ai hâte de découvrir ta situation et de construire avec toi
+        un budget qui te ressemble.
+      etapes:
+        - titre: Réserve notre appel
+          texte: >-
+            Dans ton e-mail, tu trouves le lien pour choisir le créneau de notre appel de 1h30 en
+            visio. Il doit avoir lieu dans les **60 jours** qui suivent ta commande.
+        - titre: Fais ta copie de l'outil
+          texte: >-
+            Ta version **Money Reset Complète** est aussi dans l'e-mail. Fais-en une copie dans ton
+            Google Drive : on la remplira ensemble avec tes vrais chiffres.
+        - titre: Prépare tes chiffres
+          texte: >-
+            Avant l'appel, rassemble tes derniers relevés de compte et la liste de tes abonnements.
+            Pas besoin que ce soit parfait, on trie ensemble.
+      action:
+        titre: Fais ton score avant notre appel
+        texte: >-
+          En 2 minutes, calcule ton Money Reset Score. On s'en servira comme point de départ pendant
+          ton audit.
+        bouton: Calculer mon score
+        lien: /score
+
+    accompagnement-3-mois:
+      titre: Merci, c'est parti pour 3 mois ensemble !
+      intro: >-
+        Ton paiement est bien passé. Pendant 3 mois, je suis à tes côtés jusqu'à ce que ton budget
+        tienne tout seul.
+      etapes:
+        - titre: Réserve notre premier appel
+          texte: >-
+            Dans ton e-mail, tu trouves le lien pour choisir le créneau de notre premier appel de
+            1h30 en visio. Tu reviendras sur ce même lien pour les deux suivants, un par mois.
+        - titre: Fais ta copie de l'outil
+          texte: >-
+            Ta version **Money Reset Complète** est aussi dans l'e-mail. Fais-en une copie dans ton
+            Google Drive : on la remplira ensemble avec tes vrais chiffres.
+        - titre: Garde un œil sur WhatsApp
+          texte: >-
+            Je t'envoie très vite mon accès WhatsApp : tu pourras m'écrire pendant les 3 mois, pour
+            toutes tes questions entre deux appels.
+      action:
+        titre: Fais ton score avant notre premier appel
+        texte: >-
+          En 2 minutes, calcule ton Money Reset Score. On le refera ensemble à la fin des 3 mois
+          pour mesurer tes progrès.
+        bouton: Calculer mon score
+        lien: /score

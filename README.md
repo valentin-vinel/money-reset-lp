@@ -22,6 +22,7 @@ npm run build    # dist/ : pages statiques + Worker Cloudflare (déployé automa
 | `temoignages.yaml` | Vrais retours clients. La section n'apparaît qu'avec au moins un témoignage publié |
 | `emails.yaml` | L'e-mail envoyé après chaque achat, un par offre (objet, textes, fichiers inclus) |
 | `fichiers.yaml` | Les fichiers envoyés dans ces e-mails : outil à copier, guides PDF, exemple, avec leur lien |
+| `merci.yaml` | Les pages de remerciement après l'achat (`/merci/<offre>`), une par offre |
 
 Pas besoin de gérer les espaces insécables (avant `? ! : €`…) ni les apostrophes : c'est automatique.
 Si un champ est manquant ou mal écrit, `npm run build` s'arrête et indique lequel (schémas dans `src/content.config.ts`).
@@ -77,7 +78,10 @@ Mise en route (une seule fois) :
    variables vont dans un fichier `.dev.vars` (jamais commité).
 4. Remplir les liens de `fichiers.yaml`. Tant qu'un lien manque, l'e-mail n'est pas envoyé et Stripe
    réessaie pendant 3 jours : rien n'est perdu, il suffit de compléter et redéployer.
-5. Tester avec un vrai achat de l'Essentielle, puis le rembourser depuis Stripe.
+5. **Page de remerciement** : dans Stripe, pour chaque lien de paiement → Modifier → Après le paiement →
+   « Ne pas afficher de page de confirmation » → rediriger vers `https://<adresse-du-site>/merci/<id>`
+   (`essentielle`, `complete`, `prise-en-main`, `accompagnement-3-mois`).
+6. Tester avec un vrai achat de l'Essentielle, puis le rembourser depuis Stripe.
 
 En cas de souci, Stripe → Webhooks affiche chaque envoi et le message d'erreur renvoyé par le site ;
 Brevo → Transactionnel → Logs montre chaque e-mail parti (délivré, ouvert, en spam…).
@@ -101,6 +105,7 @@ Dans les maquettes, le jaune crème = cases à remplir et le bleu pâle = cases 
 
 - [x] Liens de paiement Stripe de toutes les offres (paiement en plusieurs fois via Klarna, activé dans Stripe)
 - [ ] E-mail après achat : liens de `fichiers.yaml` et mise en route ci-dessus (Brevo, Stripe, Cloudflare)
+- [ ] Redirection de chaque lien de paiement Stripe vers sa page `/merci/<id>` (étape 5 ci-dessus)
 - [x] Adresse du site : `site` dans `astro.config.mjs` (money-reset.valentinvnl84.workers.dev, à changer si un nom de domaine est acheté)
 - [ ] Optionnel : remplacer les maquettes par de vraies captures de l'outil (`src/components/visuels/`)
 - [ ] Optionnel : ajouter de vrais témoignages dans `temoignages.yaml`

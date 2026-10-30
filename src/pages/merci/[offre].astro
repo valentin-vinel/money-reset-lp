@@ -1,0 +1,342 @@
+---
+/**
+ * Pages de remerciement : /merci/essentielle, /merci/complete…
+ * Chaque lien de paiement Stripe redirige vers la page de son offre (réglage « Après le paiement »).
+ * Textes : src/content/merci.yaml. Pages publiques et non indexées : aucun lien payant ici.
+ */
+import Base from '../../layouts/Base.astro';
+import Entete from '../../components/sections/Entete.astro';
+import PiedDePage from '../../components/sections/PiedDePage.astro';
+import Bouton from '../../components/ui/Bouton.astro';
+import Icone from '../../components/ui/Icone.astro';
+import { offresPubliees, pagesMerci } from '../../lib/contenu';
+import { fr, frHtml, url } from '../../lib/format';
+
+export async function getStaticPaths() {
+  const textes = await pagesMerci();
+  const offres = await offresPubliees();
+  const manquantes = offres.filter((o) => !textes.offres[o.id]).map((o) => o.id);
+  if (manquantes.length) throw new Error(`merci.yaml : aucune page pour ${manquantes.join(', ')}`);
+  return offres.map((o) => ({ params: { offre: o.id }, props: { textes, page: textes.offres[o.id] } }));
+}
+
+const { textes, page } = Astro.props;
+const { action } = page;
+const { aide } = textes;
+const lienAction = action && (action.lien.startsWith('/') ? url(action.lien) : action.lien);
+---
+
+<Base titre={textes.seo.titre} description={textes.seo.description} indexer={false}>
+  <!-- Animation d'arrivée : masque la page avant le premier affichage (pas de flash). Sans JavaScript ou
+       avec « réduire les animations », la page s'affiche directement. Filet de sécurité : tout réapparaît
+       au bout de 6 s si le script d'animation ne se charge pas. -->
+  <script is:inline slot="head">
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const racine = document.documentElement;
+      racine.classList.add('intro-merci');
+      setTimeout(() => racine.classList.remove('intro-merci'), 6000);
+    }
+  </script>
+  <Entete slot="entete" cta={fr(textes.retour)} ctaHref={url()} />
+
+  <section class="section merci" aria-labelledby="merci-titre">
+    <div class="conteneur merci__conteneur">
+      <header class="merci__tete">
+        <p class="merci__surtitre" data-surtitre>
+          <span class="merci__pastille" data-pastille>
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+              <path d="M5 12.5l4.5 4.5L19 7.5" pathLength="1" data-trait />
+            </svg>
+          </span>
+          <span class="merci__libelle" data-libelle><span>{fr(textes.surtitre)}</span></span>
+        </p>
+        <h1 id="merci-titre" data-apparition>{fr(page.titre)}</h1>
+        <p class="merci__intro" data-apparition>{fr(page.intro)}</p>
+      </header>
+
+      <div class="merci__etapes" data-apparition>
+        <h2>{fr(textes.etapesTitre)}</h2>
+        <ol>
+          {
+            page.etapes.map((e) => (
+              <li>
+                <h3>{fr(e.titre)}</h3>
+                <p set:html={frHtml(e.texte)} />
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+
+      {
+        action && (
+          <aside class="merci__action" data-apparition>
+            <span class="merci__rayures" aria-hidden="true" />
+            <h2>{fr(action.titre)}</h2>
+            <p>{fr(action.texte)}</p>
+            <Bouton href={lienAction} taille="l">
+              {fr(action.bouton)}
+            </Bouton>
+          </aside>
+        )
+      }
+
+      <aside class="merci__aide" data-apparition>
+        <Icone nom="mail" taille={22} />
+        <div>
+          <h2>{fr(aide.titre)}</h2>
+          <p>{fr(aide.texte)}</p>
+          <a href={`mailto:${aide.email}`}>{aide.email}</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <PiedDePage slot="pied" />
+</Base>
+
+<script>
+  // Animation d'arrivée : le badge « Commande confirmée » s'affiche en grand au centre de l'écran
+  // (pastille, coche qui se dessine, libellé qui glisse), puis rejoint sa place pendant que le reste apparaît.
+  const racine = document.documentElement;
+  const badge = document.querySelector<HTMLElement>('[data-surtitre]');
+  const pastille = badge?.querySelector<HTMLElement>('[data-pastille]');
+  const trait = badge?.querySelector<SVGPathElement>('[data-trait]');
+  const libelle = badge?.querySelector<HTMLElement>('[data-libelle]');
+  const texte = libelle?.firstElementChild;
+
+  async function animer() {
+    if (!badge || !pastille || !trait || !libelle || !texte) return;
+    const doux = 'cubic-bezier(0.22, 1, 0.36, 1)';
+    const attendre = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+    // Position et taille finales du badge, puis décalage vers le centre de l'écran (le badge reste
+    // centré horizontalement même replié, seul le décalage vertical compte).
+    const r = badge.getBoundingClientRect();
+    const largeurLibelle = libelle.scrollWidth;
+    const echelle = Math.min(2.4, (window.innerWidth * 0.86) / r.width);
+    const centre = `translateY(${window.innerHeight / 2 - (r.top + r.height / 2)}px) scale(${echelle})`;
+    badge.style.transform = centre;
+    libelle.style.maxWidth = '0px';
+    racine.classList.add('intro-merci--badge');
+
+    const animations = [
+      pastille.animate([{ transform: 'scale(0)' }, { transform: 'scale(1.15)', offset: 0.6 }, { transform: 'scale(1)' }], {
+        duration: 500,
+        easing: 'ease-out',
+        fill: 'both',
+      }),
+      trait.animate([{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { delay: 300, duration: 400, easing: 'ease-out', fill: 'both' }),
+      libelle.animate([{ maxWidth: '0px' }, { maxWidth: `${largeurLibelle}px` }], { delay: 850, duration: 600, easing: doux, fill: 'both' }),
+      texte.animate(
+        [
+          { opacity: 0, transform: 'translateX(-1.5em)' },
+          { opacity: 1, transform: 'none' },
+        ],
+        { delay: 850, duration: 600, easing: doux, fill: 'both' },
+      ),
+    ];
+    await Promise.all(animations.map((a) => a.finished));
+    await attendre(550);
+
+    // Le badge reprend sa place, le reste de la page apparaît en cascade.
+    const deplacement = badge.animate([{ transform: centre }, { transform: 'none' }], { duration: 750, easing: doux, fill: 'both' });
+    badge.style.transform = '';
+    const elements = [...document.querySelectorAll<HTMLElement>('body > :not(main, .entete), [data-apparition]')];
+    const apparitions = elements.map((el, i) =>
+      el.animate(
+        [
+          { opacity: 0, transform: 'translateY(1rem)' },
+          { opacity: 1, transform: 'none' },
+        ],
+        { delay: 350 + i * 70, duration: 600, easing: doux, fill: 'both' },
+      ),
+    );
+    await Promise.all([deplacement, ...apparitions].map((a) => a.finished));
+
+    racine.classList.remove('intro-merci', 'intro-merci--badge');
+    libelle.style.maxWidth = '';
+    [...animations, deplacement, ...apparitions].forEach((a) => a.cancel());
+  }
+
+  if (racine.classList.contains('intro-merci')) animer();
+</script>
+
+<style>
+  .merci {
+    background: linear-gradient(180deg, var(--bleu-pale) 0%, var(--bleu-voile) 35%, var(--blanc) 80%);
+  }
+  .merci__conteneur {
+    display: grid;
+    gap: clamp(2rem, 5vw, 3rem);
+    max-width: 44rem;
+  }
+
+  .merci__tete {
+    display: grid;
+    justify-items: center;
+    gap: 1rem;
+    text-align: center;
+  }
+  /* Badge : pastille bordeaux + libellé. Replié (libellé à largeur 0), il forme un rond crème
+     autour de la pastille ; le libellé s'ouvre pendant l'animation d'arrivée. */
+  .merci__surtitre {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem;
+    border-radius: 999px;
+    background: var(--creme);
+    font-size: 0.875rem;
+    font-weight: 700;
+    transform-origin: center;
+  }
+  .merci__pastille {
+    display: grid;
+    place-items: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    background: var(--bordeaux);
+    color: var(--creme);
+  }
+  .merci__pastille path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+  }
+  .merci__libelle {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .merci__libelle > span {
+    display: block;
+    padding-inline: 0.5rem 0.65rem;
+  }
+
+  /* Animation d'arrivée (classes posées sur <html> par les scripts de la page) :
+     tout est masqué sauf l'en-tête et le badge, qui n'apparaît qu'une fois placé au centre. */
+  :global(html.intro-merci) {
+    overflow: hidden;
+  }
+  :global(html.intro-merci body > :not(main, .entete)),
+  :global(html.intro-merci) [data-apparition] {
+    opacity: 0;
+  }
+  :global(html.intro-merci:not(.intro-merci--badge)) [data-surtitre] {
+    visibility: hidden;
+  }
+  .merci__tete h1 {
+    font-size: clamp(2.3rem, 6vw, 3.6rem);
+  }
+  .merci__intro {
+    max-width: 34em;
+    font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+    color: var(--texte-doux);
+  }
+
+  .merci__etapes {
+    display: grid;
+    gap: 1.25rem;
+    padding: clamp(1.5rem, 4vw, 2.25rem);
+    border: 1px solid var(--trait);
+    border-radius: var(--r-l);
+    background: var(--blanc);
+    box-shadow: var(--ombre);
+  }
+  .merci__etapes h2 {
+    font-size: clamp(1.6rem, 3.5vw, 2.1rem);
+  }
+  /* Étapes numérotées : pastilles bordeaux générées par un compteur CSS. */
+  .merci__etapes ol {
+    display: grid;
+    gap: 1.25rem;
+    list-style: none;
+    counter-reset: etape;
+  }
+  .merci__etapes li {
+    display: grid;
+    grid-template-columns: 2.25rem 1fr;
+    column-gap: 1rem;
+    row-gap: 0.25rem;
+    counter-increment: etape;
+  }
+  .merci__etapes li::before {
+    content: counter(etape);
+    grid-row: span 2;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    background: var(--bordeaux);
+    color: var(--creme);
+    font-weight: 700;
+  }
+  .merci__etapes h3 {
+    align-self: center;
+    font-family: var(--f-texte);
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+  .merci__etapes li p {
+    color: var(--texte-doux);
+  }
+
+  .merci__action {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 1rem;
+    padding: clamp(2rem, 5vw, 2.75rem) clamp(1.5rem, 4vw, 2.25rem);
+    border-radius: var(--r-l);
+    background: var(--creme-pale);
+    text-align: center;
+    overflow: hidden;
+  }
+  .merci__rayures {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 0.5rem;
+    background: var(--rayures);
+  }
+  .merci__action h2 {
+    font-size: clamp(1.6rem, 3.5vw, 2.1rem);
+  }
+  .merci__action p {
+    max-width: 30em;
+  }
+
+  .merci__aide {
+    display: flex;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    border-radius: var(--r-m);
+    background: var(--bleu-voile);
+    border: 1px solid var(--trait);
+    font-size: 0.975rem;
+  }
+  .merci__aide > :global(svg) {
+    flex: none;
+    margin-top: 0.15rem;
+  }
+  .merci__aide div {
+    display: grid;
+    gap: 0.4rem;
+  }
+  .merci__aide h2 {
+    font-family: var(--f-texte);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+  .merci__aide a {
+    font-weight: 700;
+    text-underline-offset: 0.15em;
+    overflow-wrap: anywhere;
+  }
+</style>

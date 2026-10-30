@@ -10,8 +10,10 @@ import { url } from '../lib/format';
 interface Props {
   titre: string;
   description: string;
+  /** `false` = page exclue des moteurs de recherche (pages de remerciement). */
+  indexer?: boolean;
 }
-const { titre, description } = Astro.props;
+const { titre, description, indexer = true } = Astro.props;
 const canonique = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
 const image = Astro.site ? new URL(url('logo.jpg'), Astro.site).href : url('logo.jpg');
 ---
@@ -23,6 +25,7 @@ const image = Astro.site ? new URL(url('logo.jpg'), Astro.site).href : url('logo
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{titre}</title>
     <meta name="description" content={description} />
+    {!indexer && <meta name="robots" content="noindex" />}
     {canonique && <link rel="canonical" href={canonique} />}
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="fr_FR" />
