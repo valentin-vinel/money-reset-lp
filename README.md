@@ -102,7 +102,6 @@ Dans les maquettes, le jaune crème = cases à remplir et le bleu pâle = cases 
 - [x] Liens de paiement Stripe de toutes les offres (paiement en plusieurs fois via Klarna, activé dans Stripe)
 - [ ] E-mail après achat : liens de `fichiers.yaml` et mise en route ci-dessus (Brevo, Stripe, Cloudflare)
 - [x] Adresse du site : `site` dans `astro.config.mjs` (money-reset.valentinvnl84.workers.dev, à changer si un nom de domaine est acheté)
-- [ ] Réponse « Puis-je être remboursée ? » dans `faq.yaml` (puis `brouillon: false`)
 - [ ] Optionnel : remplacer les maquettes par de vraies captures de l'outil (`src/components/visuels/`)
 - [ ] Optionnel : ajouter de vrais témoignages dans `temoignages.yaml`
 - [x] Mentions légales, CGV et confidentialité : `src/content/legal/` (pages /mentions-legales, /cgv, /confidentialite)

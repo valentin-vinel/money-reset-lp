@@ -41,5 +41,4 @@ Les réglages généraux (nom, marque, autrice, e-mail, réseaux, menu d'ancres)
 ## À compléter avant la mise en ligne (repris du README)
 
 - E-mail après achat : liens de `fichiers.yaml`, secrets du Worker Cloudflare et webhook Stripe (étapes dans le README)
-- Réponse FAQ « Puis-je être remboursée ? » (passer ensuite `brouillon: false`)
 - Pages légales en ligne (`src/content/legal/*.md`) : ajouter dans Stripe la case de renonciation au droit de rétractation citée à l'article 8.1 des CGV

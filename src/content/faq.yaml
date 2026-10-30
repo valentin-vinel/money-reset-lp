@@ -61,9 +61,12 @@
 - id: remboursement
   ordre: 7
   pages: [google-sheets]
-  brouillon: true
   question: Puis-je être remboursée ?
-  # À définir. Pour les produits numériques, le droit de rétractation de 14 jours ne s'applique
-  # pas si le client y renonce expressément au moment de l'achat : prévoir une case à cocher
-  # sur la page de paiement.
-  reponse: À définir.
+  # Reprend l'article 8 des CGV (droit de rétractation) : garder les deux textes cohérents.
+  reponse: >-
+    Pour les outils seuls, non : tu reçois ton fichier tout de suite, et en cochant la case prévue
+    au moment du paiement, tu renonces à ton droit de rétractation. Si ton fichier ne fonctionne
+    pas (lien inaccessible, formule cassée), écris-moi et je t'en envoie un qui marche. Pour la
+    Prise en main et l'Accompagnement 3 mois, tu as **14 jours** pour changer d'avis, sans te
+    justifier : il suffit de m'écrire. Je te rembourse alors le prix payé, moins la version
+    Complète déjà reçue (34 €) et les appels déjà faits. Tous les détails sont dans les CGV.
