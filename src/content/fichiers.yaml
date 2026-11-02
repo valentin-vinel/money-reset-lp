@@ -19,7 +19,7 @@
   titre: Réserve notre appel
   description: Choisis le créneau qui te convient pour notre appel de 1h30 en visio.
   bouton: Choisir mon créneau
-  url: https://calendly.com/sheeptonorga/prise-en-main-audit-de-depart
+  url: https://calendly.com/sheeptonorga/accompagnement
 
 - id: appels-accompagnement
   titre: Réserve nos appels
@@ -27,7 +27,7 @@
     Choisis le créneau de notre premier appel de 1h30 en visio. Tu reviendras sur ce même lien
     pour réserver les deux suivants, un par mois.
   bouton: Choisir mon créneau
-  url: https://calendly.com/sheeptonorga/accompagnement-3-mois
+  url: https://calendly.com/sheeptonorga/accompagnement
 
 # ── Outils et guides ──
 
